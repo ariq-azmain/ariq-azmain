@@ -1,0 +1,496 @@
+/* Blog Page Specific Styles */
+
+/* Carousel Styles */
+.pr {
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.tit {
+  height: 45vh;
+  width: auto;
+  text-align: center;
+  border-radius: 29px;
+  padding: 19px;
+  background: linear-gradient(45deg, #c18eff, #9967ff, #0700de);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.tit h1 {
+  margin-top: 0px;
+  display: block;
+  font-size: 400%;
+}
+
+.tit h2 {
+  display: block;
+  font-size: 250%;
+}
+
+/* Fixed Carousel Container */
+.carousel-container {
+  position: relative;
+  max-width: 1200px;
+  margin: 50px auto;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  height: 500px;
+}
+
+.carousel {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  height: 100%;
+  width: 500%; /* 5 slides * 100% each */
+}
+
+.carousel-slide {
+  width: 20%; /* 100% / 5 slides = 20% */
+  height: 100%;
+  flex-shrink: 0;
+  display: flex;
+}
+
+.carousel-image {
+  width: 50%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.carousel-content {
+  width: 50%;
+  padding: 40px 50px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.carousel-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  font-family: sans-serif;
+  line-height: 1.2;
+}
+
+.carousel-content p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  font-family: sans-serif;
+  opacity: 0.9;
+}
+
+/* Arrow Buttons - Fixed Position */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 100;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  color: #333;
+}
+
+.carousel-btn:hover {
+  background: white;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-prev {
+  left: 15px;
+}
+
+.carousel-next {
+  right: 15px;
+}
+
+/* Carousel Dots */
+.carousel-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 100;
+}
+
+.carousel-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.carousel-dot.active {
+  background: white;
+  transform: scale(1.2);
+}
+
+/* Blog Page Content */
+.blog-page-content {
+  padding: 40px 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.blog-page-heading {
+  text-align: center;
+  font-size: 3.5rem;
+  margin: 30px 0 60px 0;
+  color: #333;
+  font-family: sans-serif;
+  position: relative;
+}
+
+.blog-page-heading::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 4px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 2px;
+}
+
+/* Blog Categories */
+.blog-category-section {
+  margin-bottom: 70px;
+}
+
+.blog-category-heading {
+  font-size: 2.5rem;
+  margin: 0 0 25px 20px;
+  color: #222;
+  font-family: sans-serif;
+  padding-bottom: 10px;
+  border-bottom: 3px solid #764ba2;
+  display: inline-block;
+}
+
+.blog-cards-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 30px;
+  padding: 25px;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  background: #f8f9fa;
+  border-radius: 15px;
+}
+
+.blog-cards-container::-webkit-scrollbar {
+  height: 10px;
+}
+
+.blog-cards-container::-webkit-scrollbar-track {
+  background: #e9ecef;
+  border-radius: 5px;
+}
+
+.blog-cards-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 5px;
+}
+
+.blog-page-card {
+  flex: 0 0 auto;
+  width: 350px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  background: white;
+  padding: 30px;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.blog-page-card:hover {
+  transform: translateY(-15px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.blog-page-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.blog-page-card h3 {
+  font-size: 1.6rem;
+  margin: 15px 0;
+  color: #333;
+  font-family: sans-serif;
+  min-height: 60px;
+}
+
+.blog-page-card p {
+  color: #666;
+  line-height: 1.7;
+  margin-bottom: 20px;
+  flex-grow: 1;
+  font-family: sans-serif;
+  font-size: 1rem;
+}
+
+.blog-page-card small {
+  color: #888;
+  font-size: 0.9rem;
+  display: block;
+  text-align: right;
+  font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .carousel-container {
+    max-width: 95%;
+    height: 450px;
+  }
+  
+  .carousel-content {
+    padding: 35px 40px;
+  }
+  
+  .carousel-content h2 {
+    font-size: 2.2rem;
+  }
+  
+  .carousel-content p {
+    font-size: 1rem;
+  }
+  
+  .tit h1 {
+    font-size: 630%;
+  }
+  
+  .tit h2 {
+    font-size: 590%;
+  }
+}
+
+@media (max-width: 992px) {
+  .carousel-container {
+    height: 400px;
+  }
+  
+  .carousel-slide {
+    flex-direction: column;
+  }
+  
+  .carousel-image {
+    width: 100%;
+    height: 50%;
+  }
+  
+  .carousel-content {
+    width: 100%;
+    height: 50%;
+    padding: 25px 30px;
+  }
+  
+  .carousel-content h2 {
+    font-size: 1.8rem;
+  }
+  
+  .carousel-content p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  
+  .blog-page-heading {
+    font-size: 3rem;
+  }
+  
+  .blog-category-heading {
+    font-size: 2.2rem;
+  }
+  
+  .tit h1 {
+    font-size: 520%;
+  }
+  
+  .tit h2 {
+    font-size: 420%;
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel-container {
+    height: 350px;
+    margin: 30px auto;
+  }
+  
+  .carousel-content {
+    padding: 20px 25px;
+  }
+  
+  .carousel-content h2 {
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+  }
+  
+  .carousel-content p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+  
+  .carousel-btn {
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+  }
+  
+  .carousel-prev {
+    left: 10px;
+  }
+  
+  .carousel-next {
+    right: 10px;
+  }
+  
+  .blog-page-heading {
+    font-size: 2.5rem;
+    margin: 20px 0 40px 0;
+  }
+  
+  .blog-category-heading {
+    font-size: 1.8rem;
+    margin: 0 0 20px 15px;
+  }
+  
+  .blog-page-card {
+    width: 300px;
+    padding: 25px;
+  }
+  
+  .blog-page-card h3 {
+    font-size: 1.4rem;
+    min-height: 50px;
+  }
+  
+  .tit h1 {
+    font-size: 490%;
+  }
+  
+  .tit h2 {
+    font-size: 390%;
+  }
+}
+
+@media (max-width: 576px) {
+  .carousel-container {
+    height: 300px;
+    border-radius: 15px;
+  }
+  
+  .carousel-content {
+    padding: 15px 20px;
+  }
+  
+  .carousel-content h2 {
+    font-size: 1.4rem;
+  }
+  
+  .carousel-content p {
+    font-size: 0.85rem;
+    line-height: 1.3;
+  }
+  
+  .carousel-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+  
+  .carousel-prev {
+    left: 8px;
+  }
+  
+  .carousel-next {
+    right: 8px;
+  }
+  
+  .carousel-dots {
+    bottom: 15px;
+  }
+  
+  .blog-page-heading {
+    font-size: 2rem;
+  }
+  
+  .blog-category-heading {
+    font-size: 1.5rem;
+  }
+  
+  .blog-page-card {
+    width: 280px;
+    padding: 20px;
+  }
+  
+  .blog-page-card h3 {
+    font-size: 1.3rem;
+  }
+  
+  .tit h1 {
+    font-size: 360%;
+  }
+  
+  .tit h2 {
+    font-size: 290%;
+  }
+}
+
+@media (max-width: 400px) {
+  .carousel-container {
+    height: 280px;
+  }
+  
+  .carousel-content h2 {
+    font-size: 1.2rem;
+  }
+  
+  .carousel-content p {
+    font-size: 0.8rem;
+  }
+  
+  .blog-page-card {
+    width: 260px;
+  }
+  
+  .tit h1 {
+    font-size: 200%;
+  }
+  
+  .tit h2 {
+    font-size: 139%;
+  }
+}

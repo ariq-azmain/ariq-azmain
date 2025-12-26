@@ -1,0 +1,284 @@
+
+:root {
+    --dev-purple: #8a2be2;
+    --ai-green: #00ff88;
+    --js-yellow: #f0db4f;
+    --react-blue: #61dafb;
+}
+
+body {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: #f0f0f0;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    line-height: 1.8;
+}
+
+.webdev-container {
+    max-width: 1200px;
+    background: rgba(25, 25, 45, 0.95);
+    border-radius: 25px;
+    box-shadow: 
+0 25px 75px rgba(138, 43, 226, 0.2),
+inset 0 0 100px rgba(138, 43, 226, 0.05);
+    margin: 40px auto;
+    overflow: hidden;
+    border: 1px solid rgba(138, 43, 226, 0.2);
+    position: relative;
+}
+
+.webdev-header {
+    background: 
+linear-gradient(135deg, rgba(138, 43, 226, 0.9) 0%, rgba(96, 0, 255, 0.9) 100%),
+url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 10 L90 50 L50 90 L10 50 Z" fill="white" opacity="0.05"/></svg>');
+    color: white;
+    padding: 70px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.code-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.2;
+    pointer-events: none;
+}
+
+.webdev-title {
+    font-size: 4rem;
+    font-weight: 900;
+    text-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+    position: relative;
+    z-index: 2;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+.webdev-subtitle {
+    font-size: 1.5rem;
+    color: #d0b3ff;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    line-height: 1.6;
+}
+
+.content-area {
+    padding: 60px;
+    position: relative;
+}
+
+.trend-section {
+    margin-bottom: 60px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 20px;
+    border-left: 5px solid var(--dev-purple);
+    transition: transform 0.3s;
+}
+
+.trend-section:hover {
+    transform: translateX(10px);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.section-title {
+    color: var(--dev-purple);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.section-title i {
+    margin-right: 15px;
+    font-size: 2rem;
+}
+
+.trend-card {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    padding: 25px;
+    margin: 20px 0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s;
+}
+
+.trend-card:hover {
+    border-color: var(--dev-purple);
+    box-shadow: 0 10px 30px rgba(138, 43, 226, 0.2);
+}
+
+.trend-card h4 {
+    color: var(--ai-green);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.trend-card h4 i {
+    margin-right: 10px;
+}
+
+.dev-joke {
+    background: linear-gradient(135deg, rgba(240, 219, 79, 0.1) 0%, rgba(138, 43, 226, 0.1) 100%);
+    border: 2px dashed var(--js-yellow);
+    border-radius: 15px;
+    padding: 30px;
+    margin: 40px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.dev-joke::before {
+    content: '{ }';
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 4rem;
+    opacity: 0.1;
+    font-family: monospace;
+}
+
+.framework-comparison {
+    background: rgba(97, 218, 251, 0.05);
+    border-radius: 15px;
+    padding: 30px;
+    margin: 40px 0;
+    border: 2px solid var(--react-blue);
+}
+
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.comparison-table th {
+    background: rgba(97, 218, 251, 0.2);
+    color: var(--react-blue);
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.comparison-table td {
+    padding: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.comparison-table tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.ai-demo {
+    background: rgba(0, 255, 136, 0.05);
+    border-radius: 20px;
+    padding: 40px;
+    margin: 50px 0;
+    border: 2px solid var(--ai-green);
+    position: relative;
+}
+
+.ai-demo::before {
+    content: '🤖';
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    font-size: 3rem;
+    opacity: 0.2;
+}
+
+.code-editor {
+    background: #1e1e1e;
+    border-radius: 10px;
+    padding: 20px;
+    font-family: 'Courier New', monospace;
+    margin: 20px 0;
+    overflow-x: auto;
+    position: relative;
+}
+
+.code-line {
+    margin: 5px 0;
+    color: #d4d4d4;
+}
+
+.code-comment {
+    color: #6a9955;
+}
+
+.code-keyword {
+    color: #569cd6;
+}
+
+.code-string {
+    color: #ce9178;
+}
+
+.interactive-btn {
+    background: linear-gradient(135deg, var(--dev-purple), #6a0dad);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.interactive-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(138, 43, 226, 0.3);
+}
+
+.interactive-btn i {
+    margin-right: 10px;
+}
+
+.tech-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    margin: 5px;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+}
+
+.tech-badge:hover {
+    background: var(--dev-purple);
+    transform: scale(1.05);
+}
+
+.word-count {
+    color: #8888aa;
+    font-size: 0.9rem;
+    text-align: right;
+    margin-top: 60px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+    .webdev-title {
+font-size: 2.8rem;
+    }
+    .content-area {
+padding: 30px;
+    }
+}

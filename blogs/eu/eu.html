@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medieval Europe: Where Plague Was Trendy and Knights Had Day Jobs</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Crimson+Text:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="eu.css" type="text/css" media="all" />
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="castle-bg"></div>
+    <div class="banner-animation" id="bannerContainer"></div>
+    
+    <div class="medieval-container">
+        <!-- Header -->
+        <header class="medieval-header">
+            <h1 class="medieval-title">
+                ⚔️ Medieval Europe
+            </h1>
+            <p class="medieval-subtitle">
+                Where Knights Had Student Loans and Plague Doctors Were "Essential Workers"
+            </p>
+            <div class="mt-4">
+                <span class="badge" style="background: var(--royal-purple); color: white; padding: 12px 24px; font-size: 1.1rem;">
+                    <i class="fas fa-crown me-2"></i>Feudal Society
+                </span>
+                <span class="badge" style="background: var(--knight-gold); color: #000; padding: 12px 24px; font-size: 1.1rem;">
+                    <i class="fas fa-shield-alt me-2"></i>Knights & Castles
+                </span>
+                <span class="badge" style="background: var(--manuscript-red); color: white; padding: 12px 24px; font-size: 1.1rem;">
+                    <i class="fas fa-book-medical me-2"></i>Black Death
+                </span>
+            </div>
+        </header>
+        
+        <!-- Main Manuscript Layout -->
+        <div class="manuscript-layout">
+            <!-- Left Column: Feudal Pyramid -->
+            <aside class="manuscript-column feudal-pyramid">
+                <h3 style="font-family: 'MedievalSharp'; color: var(--forest-green);">
+                    <i class="fas fa-chess-king me-2"></i>Feudal Hierarchy
+                </h3>
+                
+                <div class="pyramid-level" style="background: linear-gradient(135deg, var(--royal-purple), rgba(107, 33, 168, 0.8));">
+                    <h5>👑 Monarch</h5>
+                    <p><small>Owns everything, does very little actual work. Spends most time on throne.</small></p>
+                </div>
+                
+                <div class="pyramid-level" style="background: linear-gradient(135deg, var(--knight-gold), rgba(245, 158, 11, 0.8));">
+                    <h5>⚔️ Nobles & Knights</h5>
+                    <p><small>Military elite. Job description: Look intimidating, collect taxes, occasionally fight.</small></p>
+                </div>
+                
+                <div class="pyramid-level" style="background: linear-gradient(135deg, var(--forest-green), rgba(6, 95, 70, 0.8));">
+                    <h5>⛪ Clergy</h5>
+                    <p><small>Spiritual guidance, education, and land management. Also: excellent handwriting.</small></p>
+                </div>
+                
+                <div class="pyramid-level" style="background: linear-gradient(135deg, var(--castle-gray), rgba(107, 114, 128, 0.8));">
+                    <h5>🏘️ Peasants (90% of Population)</h5>
+                    <p><small>Does all actual work. Paid in grain and existential dread. No vacation days.</small></p>
+                </div>
+                
+                <!-- Interactive Hierarchy Controls -->
+                <div class="mt-4">
+                    <h6>Adjust Feudal System:</h6>
+                    <div class="mb-3">
+                        <label class="form-label">Tax Rate: <span id="taxRate">50%</span></label>
+                        <input type="range" class="form-range" id="taxSlider" min="10" max="90" value="50">
+                    </div>
+                    <button id="revoltBtn" class="btn w-100" style="background: var(--manuscript-red); color: white;">
+                        <i class="fas fa-fist-raised me-2"></i>Start Peasant Revolt
+                    </button>
+                </div>
+            </aside>
+            
+            <!-- Center Column: Main Article -->
+            <main class="manuscript-column">
+                <!-- Author & Metadata -->
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-5">
+                    <div class="text-start text-md-end">
+                        <div class="h4 mb-1">December 3, 2025</div>
+                        <small>⏳ 20 min read • 🏰 1800+ words</small>
+                    </div>
+                </div>
+                
+                <!-- Opening Illuminated Letter -->
+                <div class="mb-5" style="border-left: 5px solid var(--knight-gold); padding-left: 2rem;">
+                    <span style="font-family: 'MedievalSharp'; font-size: 5rem; color: var(--knight-gold); float: left; margin-right: 1rem; line-height: 0.8;">I</span>
+                    <p style="font-size: 1.2rem;">n an age before coffee shops, social media, and pants that fit properly, Medieval Europe thrived for a thousand years. This was a time when "going viral" meant catching the plague, and your social status was determined by who your great-great-grandfather annoyed in 1066.</p>
+                </div>
+                
+                <!-- Introduction -->
+                <section class="mb-5">
+                    <h2 style="font-family: 'MedievalSharp'; color: var(--knight-gold); border-bottom: 3px solid var(--knight-gold); padding-bottom: 0.5rem;">
+                        The Not-So-Dark Ages
+                    </h2>
+                    <p>Contrary to popular belief, Medieval Europe wasn't just mud, misery, and Monty Python references. Sure, there were plagues, wars, and questionable hygiene practices, but there were also universities, cathedrals, and the Magna Carta (the original terms of service agreement).</p>
+                    
+                    <p>The Medieval period (500-1500 CE) saw the rise of:</p>
+                    
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <ul>
+                                <li>Feudal system (the original pyramid scheme)</li>
+                                <li>Gothic architecture (flying buttresses!)</li>
+                                <li>Universities (Oxford founded 1096!)</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul>
+                                <li>Chivalry (mostly theoretical)</li>
+                                <li>Trade networks (Medieval Amazon)</li>
+                                <li>The Three-Field System (crop rotation!)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Castle Builder Interactive -->
+                <section class="castle-builder">
+                    <h3 style="font-family: 'MedievalSharp'; color: var(--castle-gray);">
+                        <i class="fas fa-chess-rook me-2"></i>Build Your Castle
+                    </h3>
+                    <p>Drag and drop to build your medieval fortress:</p>
+                    
+                    <div class="mb-4">
+                        <div class="castle-part" draggable="true" data-part="keep">
+                            <i class="fas fa-tower fa-2x mb-2"></i><br>
+                            Keep
+                        </div>
+                        <div class="castle-part" draggable="true" data-part="wall">
+                            <i class="fas fa-wall fa-2x mb-2"></i><br>
+                            Wall
+                        </div>
+                        <div class="castle-part" draggable="true" data-part="gate">
+                            <i class="fas fa-door-closed fa-2x mb-2"></i><br>
+                            Gate
+                        </div>
+                        <div class="castle-part" draggable="true" data-part="moat">
+                            <i class="fas fa-water fa-2x mb-2"></i><br>
+                            Moat
+                        </div>
+                    </div>
+                    
+                    <div style="min-height: 200px; background: rgba(107, 114, 128, 0.1); border: 3px dashed var(--castle-gray); border-radius: 15px; padding: 2rem;" 
+                         id="castleConstructionArea">
+                        <p class="text-muted mb-0">Drag castle parts here to build</p>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <button id="resetCastleBtn" class="btn btn-sm me-2" style="background: var(--castle-gray); color: white;">
+                            <i class="fas fa-redo me-1"></i>Reset
+                        </button>
+                        <button id="siegeBtn" class="btn btn-sm" style="background: var(--manuscript-red); color: white;">
+                            <i class="fas fa-catapult me-1"></i>Test Against Siege
+                        </button>
+                    </div>
+                </section>
+                
+                <!-- Daily Life Section -->
+                <section class="mb-5">
+                    <h2 style="font-family: 'MedievalSharp'; color: var(--forest-green); border-bottom: 3px solid var(--forest-green); padding-bottom: 0.5rem;">
+                        Daily Life: Less Game of Thrones, More Farmville
+                    </h2>
+                    
+                    <div class="estate-grid">
+                        <div class="estate-card">
+                            <h5 style="color: var(--forest-green);">
+                                <i class="fas fa-wheat-alt me-2"></i>Peasant Life
+                            </h5>
+                            <p><strong>Workday:</strong> Sunrise to sunset, 6 days a week</p>
+                            <p><strong>Diet:</strong> Bread, porridge, occasional meat if lucky</p>
+                            <p><strong>Entertainment:</strong> Church festivals, drinking, more church</p>
+                        </div>
+                        
+                        <div class="estate-card">
+                            <h5 style="color: var(--royal-purple);">
+                                <i class="fas fa-crown me-2"></i>Noble Life
+                            </h5>
+                            <p><strong>Workday:</strong> Administration, hunting, political intrigue</p>
+                            <p><strong>Diet:</strong> Meat, wine, spices, elaborate feasts</p>
+                            <p><strong>Entertainment:</strong> Tournaments, feasts, courtly love</p>
+                        </div>
+                        
+                        <div class="estate-card">
+                            <h5 style="color: var(--knight-gold);">
+                                <i class="fas fa-pray me-2"></i>Monastic Life
+                            </h5>
+                            <p><strong>Schedule:</strong> 7 prayer services daily + work</p>
+                            <p><strong>Diet:</strong> Simple meals, often vegetarian</p>
+                            <p><strong>Entertainment:</strong> Prayer, copying manuscripts, more prayer</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Black Death Section -->
+                <section class="mb-5">
+                    <h2 style="font-family: 'MedievalSharp'; color: var(--manuscript-red); border-bottom: 3px solid var(--manuscript-red); padding-bottom: 0.5rem;">
+                        The Black Death: History's Worst Party Crasher
+                    </h2>
+                    
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <p>The Bubonic Plague (1347-1351) killed 30-60% of Europe's population. That's like every third person you know disappearing. Suddenly.</p>
+                            
+                            <ul class="mt-3">
+                                <li><strong>Causes:</strong> Fleas on rats (not angry gods)</li>
+                                <li><strong>Symptoms:</strong> Buboes (swellings), fever, death</li>
+                                <li><strong>Cures attempted:</strong> Bloodletting, prayers, herbal remedies (none worked)</li>
+                                <li><strong>Impact:</strong> Labor shortage, wage increases, social upheaval</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <i class="fas fa-skull-crossbones fa-6x" style="color: var(--manuscript-red); opacity: 0.3;"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- Plague Spread Simulator -->
+                    <div class="mt-4 p-3 rounded" style="background: rgba(220, 38, 38, 0.1); border: 2px solid var(--manuscript-red);">
+                        <h6><i class="fas fa-virus me-2"></i>Plague Spread Simulator</h6>
+                        <div class="mb-3">
+                            <label class="form-label">Population: <span id="population">1000</span></label>
+                            <input type="range" class="form-range" id="plagueSlider" min="0" max="100" value="0">
+                        </div>
+                        <div class="progress" style="height: 25px;">
+                            <div class="progress-bar" id="plagueBar" 
+                                 style="width: 0%; background: linear-gradient(90deg, var(--manuscript-red), #000);"></div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <small>Healthy</small>
+                            <small id="deathCount">Deaths: 0</small>
+                            <small>Total Infection</small>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Medieval Timeline -->
+                <section class="scroll-timeline">
+                    <h3 style="font-family: 'MedievalSharp'; color: var(--royal-purple);">
+                        <i class="fas fa-scroll me-2"></i>Medieval Timeline
+                    </h3>
+                    
+                    <div class="timeline-item mb-4">
+                        <h6 style="color: var(--knight-gold);">476 CE</h6>
+                        <p>Fall of Western Roman Empire. Europe enters "temporary reorganization phase" that lasts 1,000 years.</p>
+                    </div>
+                    
+                    <div class="timeline-item mb-4">
+                        <h6 style="color: var(--knight-gold);">800 CE</h6>
+                        <p>Charlemagne crowned Holy Roman Emperor. Basically becomes CEO of Europe.</p>
+                    </div>
+                    
+                    <div class="timeline-item mb-4">
+                        <h6 style="color: var(--knight-gold);">1066 CE</h6>
+                        <p>Norman Conquest of England. French people invade Britain, begin complaining about food.</p>
+                    </div>
+                    
+                    <div class="timeline-item mb-4">
+                        <h6 style="color: var(--knight-gold);">1095–1291 CE</h6>
+                        <p>Crusades. Europeans go on poorly planned religious road trips to Middle East.</p>
+                    </div>
+                    
+                    <div class="timeline-item mb-4">
+                        <h6 style="color: var(--knight-gold);">1215 CE</h6>
+                        <p>Magna Carta signed. Kings learn they can't just do whatever they want. Mostly.</p>
+                    </div>
+                    
+                    <div class="timeline-item mb-4">
+                        <h6 style="color: var(--knight-gold);">1347–1351 CE</h6>
+                        <p>Black Death. Population reduction sale: 50% off humans!</p>
+                    </div>
+                    
+                    <div class="timeline-item mb-4">
+                        <h6 style="color: var(--knight-gold);">1453 CE</h6>
+                        <p>Fall of Constantinople. End of Byzantine Empire, start of Ottoman Empire's glow-up.</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <h6 style="color: var(--knight-gold);">1492 CE</h6>
+                        <p>Columbus "discovers" America. Europeans begin globalization experiment.</p>
+                    </div>
+                </section>
+                
+                <!-- Legacy Section -->
+                <section class="mb-5">
+                    <h2 style="font-family: 'MedievalSharp'; color: var(--knight-gold); border-bottom: 3px solid var(--knight-gold); padding-bottom: 0.5rem;">
+                        Medieval Legacy: More Than Just Dragons
+                    </h2>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100" style="background: rgba(107, 33, 168, 0.1); border-color: var(--royal-purple);">
+                                <div class="card-body">
+                                    <h5 class="card-title" style="color: var(--royal-purple);">
+                                        <i class="fas fa-graduation-cap me-2"></i>Education
+                                    </h5>
+                                    <p class="card-text">Universities founded in Bologna (1088), Paris (1150), Oxford (1096). Students complained about tuition even then.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100" style="background: rgba(245, 158, 11, 0.1); border-color: var(--knight-gold);">
+                                <div class="card-body">
+                                    <h5 class="card-title" style="color: var(--knight-gold);">
+                                        <i class="fas fa-balance-scale me-2"></i>Law & Governance
+                                    </h5>
+                                    <p class="card-text">Magna Carta (1215) established rule of law. Common law systems developed. Trial by combat discontinued (mostly).</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100" style="background: rgba(6, 95, 70, 0.1); border-color: var(--forest-green);">
+                                <div class="card-body">
+                                    <h5 class="card-title" style="color: var(--forest-green);">
+                                        <i class="fas fa-church me-2"></i>Architecture
+                                    </h5>
+                                    <p class="card-text">Gothic cathedrals with flying buttresses, stained glass, and vaulted ceilings. Took centuries to build—no rush.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100" style="background: rgba(107, 114, 128, 0.1); border-color: var(--castle-gray);">
+                                <div class="card-body">
+                                    <h5 class="card-title" style="color: var(--castle-gray);">
+                                        <i class="fas fa-book me-2"></i>Literature
+                                    </h5>
+                                    <p class="card-text">Chaucer's Canterbury Tales, Dante's Divine Comedy, epic poems, and illuminated manuscripts. No printing press yet.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Conclusion -->
+                <section>
+                    <h2 style="font-family: 'MedievalSharp'; color: var(--forest-green); border-bottom: 3px solid var(--forest-green); padding-bottom: 0.5rem;">
+                        Conclusion: Not So Dark After All
+                    </h2>
+                    
+                    <p>The Medieval period was complex, innovative, and foundational to modern Europe. While it had its challenges (plagues, invasions, questionable medical practices), it also gave us universities, cathedrals, and concepts of law that still shape our world.</p>
+                    
+                    <div class="alert mt-4" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(107, 33, 168, 0.1)); border-color: var(--knight-gold);">
+                        <h5 style="color: var(--knight-gold);">
+                            <i class="fas fa-dragon me-2"></i>Modern Parallel
+                        </h5>
+                        <p class="mb-0">Medieval people faced pandemics, climate change (Little Ice Age), and social upheaval—sound familiar? Their resilience teaches us that societies can adapt and rebuild, even after devastating challenges.</p>
+                    </div>
+                    
+                    <p class="mt-4">Next time you complain about Wi-Fi speed, remember: Medieval Europeans built Notre Dame Cathedral without power tools. It only took 200 years—no big deal.</p>
+                </section>
+                
+                <!-- Footer -->
+                <div class="border-top border-secondary mt-5 pt-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <p class="mb-0"><strong>Word Count:</strong> Approximately 1,800 words of medieval mayhem</p>
+                            <small>About the Author: Sir Ariq once tried jousting with a pool noodle. It went poorly.</small>
+                        </div>
+                        <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                            <button class="btn me-2" style="background: var(--castle-gray); color: white; padding: 12px 30px;">
+                                <i class="fas fa-arrow-left me-2"></i>Ancient Civilizations
+                            </button>
+                            <button class="btn" style="background: var(--knight-gold); color: #000; padding: 12px 30px;">
+                                Next: World War History <i class="fas fa-arrow-right ms-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            
+            <!-- Right Column: Medieval Facts & Trivia -->
+            <aside class="manuscript-column">
+                <h3 style="font-family: 'MedievalSharp'; color: var(--manuscript-red);">
+                    <i class="fas fa-hat-wizard me-2"></i>Medieval Trivia
+                </h3>
+                
+                <!-- Fact Cards -->
+                <div class="card mb-3" style="background: rgba(220, 38, 38, 0.1); border-color: var(--manuscript-red);">
+                    <div class="card-body">
+                        <h6 style="color: var(--manuscript-red);">
+                            <i class="fas fa-bread-slice me-2"></i>Medieval Diet
+                        </h6>
+                        <p class="small mb-0">Peasants ate 2-3 pounds of bread daily. Carbs were life.</p>
+                    </div>
+                </div>
+                
+                <div class="card mb-3" style="background: rgba(107, 33, 168, 0.1); border-color: var(--royal-purple);">
+                    <div class="card-body">
+                        <h6 style="color: var(--royal-purple);">
+                            <i class="fas fa-bath me-2"></i>Hygiene
+                        </h6>
+                        <p class="small mb-0">Contrary to myth, many medieval people bathed regularly. Public baths were popular until plague fears closed them.</p>
+                    </div>
+                </div>
+                
+                <div class="card mb-3" style="background: rgba(245, 158, 11, 0.1); border-color: var(--knight-gold);">
+                    <div class="card-body">
+                        <h6 style="color: var(--knight-gold);">
+                            <i class="fas fa-gavel me-2"></i>Legal System
+                        </h6>
+                        <p class="small mb-0">Trial by ordeal involved hot iron or water. If you healed quickly, God declared you innocent. Scientific!</p>
+                    </div>
+                </div>
+                
+                <div class="card mb-3" style="background: rgba(6, 95, 70, 0.1); border-color: var(--forest-green);">
+                    <div class="card-body">
+                        <h6 style="color: var(--forest-green);">
+                            <i class="fas fa-clock me-2"></i>Timekeeping
+                        </h6>
+                        <p class="small mb-0">Days were divided into canonical hours for prayer. No one was late for meetings because there were no meetings.</p>
+                    </div>
+                </div>
+                
+                <!-- Medieval Calculator -->
+                <div class="mt-4 p-3 rounded" style="background: rgba(107, 114, 128, 0.1); border: 2px solid var(--castle-gray);">
+                    <h6><i class="fas fa-calculator me-2"></i>Feudal Calculator</h6>
+                    <div class="mb-3">
+                        <label class="form-label small">Land Size (acres)</label>
+                        <input type="number" class="form-control form-control-sm" id="landInput" value="100" 
+                               style="background: rgba(255, 255, 255, 0.1); color: white; border-color: var(--castle-gray);">
+                    </div>
+                    <button id="calculateTaxBtn" class="btn btn-sm w-100" style="background: var(--forest-green); color: white;">
+                        Calculate Annual Tax
+                    </button>
+                    <div class="mt-3 text-center">
+                        <h4 id="taxResult" style="color: var(--knight-gold);">-</h4>
+                        <small class="text-muted">bushels of grain</small>
+                    </div>
+                </div>
+                
+                <!-- Quick Quiz -->
+                <div class="mt-4 p-3 rounded" style="background: rgba(107, 33, 168, 0.1); border: 2px dashed var(--royal-purple);">
+                    <h6><i class="fas fa-question-circle me-2"></i>Medieval Quiz</h6>
+                    <p class="small mb-3">What was a "jongleur"?</p>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="radio" name="quiz" id="quiz1">
+                        <label class="form-check-label small" for="quiz1">A type of knight</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="radio" name="quiz" id="quiz2">
+                        <label class="form-check-label small" for="quiz2">A traveling entertainer</label>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="radio" name="quiz" id="quiz3">
+                        <label class="form-check-label small" for="quiz3">A medieval lawyer</label>
+                    </div>
+                    <button id="checkQuizBtn" class="btn btn-sm w-100" style="background: var(--royal-purple); color: white;">
+                        Check Answer
+                    </button>
+                </div>
+            </aside>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Medieval JavaScript -->
+    <script src="eu.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

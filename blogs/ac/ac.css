@@ -1,0 +1,409 @@
+
+:root {
+    --ancient-gold: #D4AF37;
+    --stone-gray: #8B7355;
+    --papyrus-cream: #F5E6D3;
+    --hieroglyph-blue: #0A2463;
+    --ruin-red: #B22222;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Raleway', sans-serif;
+    background: linear-gradient(135deg, #2C1810 0%, #1A120B 100%);
+    color: var(--papyrus-cream);
+    line-height: 1.8;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.history-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: rgba(26, 18, 11, 0.95);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Ancient Papyrus Texture Background */
+.papyrus-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><path d="M0,50 Q25,40 50,50 T100,50" stroke="%238B7355" fill="none" opacity="0.05"/></svg>'),
+linear-gradient(90deg, rgba(139,115,85,0.03) 1px, transparent 1px),
+linear-gradient(rgba(139,115,85,0.03) 1px, transparent 1px);
+    background-size: 100% 100%, 50px 50px, 50px 50px;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Hieroglyph Animation */
+.hieroglyph-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.05;
+}
+
+.hieroglyph {
+    position: absolute;
+    font-size: 2rem;
+    color: var(--ancient-gold);
+    opacity: 0;
+    animation: floatHieroglyph 20s linear infinite;
+}
+
+@keyframes floatHieroglyph {
+    0% {
+transform: translateY(100vh) rotate(0deg);
+opacity: 0;
+    }
+    10% {
+opacity: 0.3;
+    }
+    90% {
+opacity: 0.3;
+    }
+    100% {
+transform: translateY(-100px) rotate(360deg);
+opacity: 0;
+    }
+}
+
+/* Header Styles */
+.history-header {
+    background: 
+linear-gradient(rgba(10, 36, 99, 0.9), rgba(26, 18, 11, 0.95)),
+url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="%23D4AF37" stroke-width="2"/></svg>');
+    padding: 4rem 2rem;
+    text-align: center;
+    position: relative;
+    border-bottom: 8px solid var(--ancient-gold);
+    margin-bottom: 3rem;
+}
+
+.history-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    color: var(--ancient-gold);
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+    margin-bottom: 1.5rem;
+    letter-spacing: 2px;
+    line-height: 1.2;
+}
+
+.history-subtitle {
+    font-size: clamp(1.1rem, 2.5vw, 1.8rem);
+    color: var(--papyrus-cream);
+    max-width: 900px;
+    margin: 0 auto;
+    opacity: 0.9;
+    font-weight: 300;
+}
+
+/* Main Content Layout */
+.content-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 3rem;
+    padding: 0 2rem 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Timeline Feature */
+.timeline-container {
+    background: rgba(139, 115, 85, 0.1);
+    border: 2px solid var(--ancient-gold);
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+    position: sticky;
+    top: 2rem;
+    height: fit-content;
+}
+
+.timeline-item {
+    position: relative;
+    padding: 1.5rem 0 1.5rem 2.5rem;
+    border-left: 3px solid var(--ancient-gold);
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 2rem;
+    width: 16px;
+    height: 16px;
+    background: var(--ancient-gold);
+    border-radius: 50%;
+    border: 3px solid var(--stone-gray);
+}
+
+/* Article Content */
+.article-content {
+    background: rgba(245, 230, 211, 0.05);
+    border-radius: 20px;
+    padding: 3rem;
+    backdrop-filter: blur(10px);
+}
+
+.section-title {
+    font-family: 'Cinzel', serif;
+    color: var(--ancient-gold);
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    margin: 3rem 0 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 3px solid var(--ancient-gold);
+    position: relative;
+}
+
+.section-title::after {
+    content: '𓀀';
+    position: absolute;
+    right: 0;
+    bottom: -5px;
+    font-size: 1.5rem;
+    opacity: 0.7;
+}
+
+/* Civilization Cards */
+.civilization-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 3rem 0;
+}
+
+.civ-card {
+    background: linear-gradient(145deg, rgba(212, 175, 55, 0.1), rgba(139, 115, 85, 0.1));
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 15px;
+    padding: 2rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+.civ-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--ancient-gold), var(--hieroglyph-blue));
+}
+
+.civ-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border-color: var(--ancient-gold);
+}
+
+/* Interactive Elements */
+.discovery-tool {
+    background: rgba(10, 36, 99, 0.1);
+    border: 2px dashed var(--hieroglyph-blue);
+    border-radius: 15px;
+    padding: 2.5rem;
+    margin: 3rem 0;
+    text-align: center;
+}
+
+.artifact-display {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.artifact {
+    background: rgba(245, 230, 211, 0.1);
+    border: 2px solid var(--stone-gray);
+    border-radius: 10px;
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.artifact:hover {
+    transform: scale(1.05);
+    border-color: var(--ancient-gold);
+    background: rgba(212, 175, 55, 0.1);
+}
+
+/* Quote Styling */
+.ancient-quote {
+    font-family: 'Cinzel', serif;
+    font-size: 1.4rem;
+    color: var(--ancient-gold);
+    padding: 2.5rem;
+    margin: 3rem 0;
+    background: rgba(139, 115, 85, 0.1);
+    border-left: 5px solid var(--ancient-gold);
+    border-radius: 0 15px 15px 0;
+    position: relative;
+}
+
+.ancient-quote::before {
+    content: '"';
+    font-size: 5rem;
+    color: rgba(212, 175, 55, 0.2);
+    position: absolute;
+    left: 1rem;
+    top: 0.5rem;
+}
+
+/* Responsive Design Improvements */
+@media (max-width: 1200px) {
+    .content-wrapper {
+grid-template-columns: 1fr;
+gap: 2rem;
+    }
+    
+    .timeline-container {
+position: static;
+margin: 2rem auto;
+max-width: 800px;
+    }
+}
+
+@media (max-width: 768px) {
+    .history-header {
+padding: 3rem 1rem;
+    }
+    
+    .content-wrapper {
+padding: 0 1rem 3rem;
+gap: 1.5rem;
+    }
+    
+    .article-content {
+padding: 2rem 1.5rem;
+    }
+    
+    .civilization-grid {
+grid-template-columns: 1fr;
+gap: 1.5rem;
+    }
+    
+    .artifact-display {
+grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .discovery-tool {
+padding: 1.5rem;
+    }
+    
+    .section-title {
+font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .history-title {
+font-size: 2.2rem;
+    }
+    
+    .history-subtitle {
+font-size: 1.1rem;
+    }
+    
+    .artifact-display {
+grid-template-columns: 1fr;
+    }
+    
+    .civ-card {
+padding: 1.5rem;
+    }
+    
+    .ancient-quote {
+padding: 1.5rem;
+font-size: 1.2rem;
+    }
+}
+
+/* Print Styles */
+@media print {
+    body {
+background: white;
+color: black;
+    }
+    
+    .history-container {
+background: white;
+    }
+    
+    .timeline-container,
+    .discovery-tool,
+    .artifact-display {
+display: none;
+    }
+}
+
+/* Dark/Light Mode Support */
+@media (prefers-color-scheme: light) {
+    body {
+background: linear-gradient(135deg, #E6D5B8 0%, #F5E6D3 100%);
+color: #2C1810;
+    }
+    
+    .history-container {
+background: rgba(245, 230, 211, 0.95);
+    }
+    
+    .history-header {
+background: linear-gradient(rgba(212, 175, 55, 0.9), rgba(245, 230, 211, 0.95));
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .hieroglyph,
+    .civ-card,
+    .artifact {
+animation: none;
+transition: none;
+    }
+    
+    .civ-card:hover {
+transform: none;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    :root {
+--ancient-gold: #FFD700;
+--stone-gray: #000000;
+--papyrus-cream: #FFFFFF;
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .civ-card:hover {
+transform: none;
+    }
+    
+    .artifact {
+padding: 2rem;
+margin: 1rem 0;
+    }
+}

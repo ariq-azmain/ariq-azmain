@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ariq Azmain - Physics & Chemistry Virtual Lab</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Chemical Background Elements -->
+    <div class="chemical-bg" id="chemicalBg"></div>
+    
+    <!-- Navigation Bar -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-atom"></i>
+                    Ariq Azmain
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#stats">Statistics</a></li>
+                    <li><a href="#labs">Laboratory</a></li>
+                    <li><a href="#periodic-table">Periodic Table</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="floating">Physics & Chemistry Virtual Lab</h1>
+            <p>An interactive platform where you can explore the world of science. Learn through virtual labs, 3D models, and interactive simulations.</p>
+            <a href="#labs" class="cta-btn">Explore Labs <i class="fas fa-flask"></i></a>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="stats-section" id="stats">
+        <div class="container">
+            <h2 class="section-title">Statistics</h2>
+            <div class="stats-container">
+                <div class="stat-box">
+                    <i class="fas fa-flask"></i>
+                    <span class="stat-number" data-count="150">0</span>
+                    <span class="stat-text">Virtual Experiments</span>
+                </div>
+                <div class="stat-box">
+                    <i class="fas fa-atom"></i>
+                    <span class="stat-number" data-count="118">0</span>
+                    <span class="stat-text">Chemical Elements</span>
+                </div>
+                <div class="stat-box">
+                    <i class="fas fa-users"></i>
+                    <span class="stat-number" data-count="5000">0</span>
+                    <span class="stat-text">Active Users</span>
+                </div>
+                <div class="stat-box">
+                    <i class="fas fa-project-diagram"></i>
+                    <span class="stat-number" data-count="12">0</span>
+                    <span class="stat-text">Interactive Projects</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Labs Section -->
+    <section class="labs-section" id="labs">
+        <div class="container">
+            <h2 class="section-title">Virtual Laboratory</h2>
+            <div class="labs-container">
+                <!-- Physics Lab -->
+                <div class="lab-card physics">
+                    <div class="lab-header">
+                        <i class="fas fa-satellite"></i>
+                        <h3>Physics Lab</h3>
+                        <p>Various physics simulations and experiments</p>
+                    </div>
+                    <div class="lab-content">
+                        <p>Learn fundamental physics principles through interactive simulations. Explore motion, force, energy, waves, and more.</p>
+                        <div class="action-buttons" style="margin-top: 20px;">
+                            <button class="action-btn create">Open Lab</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chemistry Lab -->
+                <div class="lab-card chemistry">
+                    <div class="lab-header">
+                        <i class="fas fa-flask"></i>
+                        <h3>Chemistry Lab</h3>
+                        <p>Create elements and compounds, view 3D models</p>
+                    </div>
+                    <div class="lab-content chemistry-lab">
+                        <div class="lab-controls">
+                            <div class="element-selector">
+                                <h4>Select Elements</h4>
+                                <div class="elements-grid" id="elementsGrid">
+                                    <!-- Element buttons will be created by JavaScript -->
+                                </div>
+                            </div>
+                            <div class="compound-creator">
+                                <h4>Create Compound</h4>
+                                <div class="selected-elements" id="selectedElements">
+                                    <!-- Selected elements will be displayed here -->
+                                    <p style="color: rgba(255,255,255,0.5);">Select elements...</p>
+                                </div>
+                                <div class="action-buttons">
+                                    <button class="action-btn create" id="createCompound">Create Compound</button>
+                                    <button class="action-btn reset" id="resetSelection">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="compound-result">
+                            <h4>Created Compound</h4>
+                            <div id="compoundFormula">H₂O</div>
+                            <div class="compound-name" id="compoundName">Water</div>
+                        </div>
+                        
+                        <div class="model-viewer">
+                            <div id="compoundModel"></div>
+                            <div class="model-controls">
+                                <button class="model-btn" id="rotateModel"><i class="fas fa-sync-alt"></i></button>
+                                <button class="model-btn" id="zoomIn"><i class="fas fa-search-plus"></i></button>
+                                <button class="model-btn" id="zoomOut"><i class="fas fa-search-minus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Periodic Table Section -->
+    <section class="periodic-table-section" id="periodic-table">
+        <div class="container">
+            <h2 class="section-title">Periodic Table</h2>
+            <p style="text-align: center; color: rgba(255,255,255,0.8); margin-bottom: 30px; max-width: 800px; margin-left: auto; margin-right: auto;">Complete list of chemical elements. Click on any element to view detailed information.</p>
+            
+            <!-- Element Detail Modal -->
+            <div class="element-modal" id="elementModal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 id="modalElementName">Element Details</h2>
+                        <button class="close-modal" id="closeModal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="element-basic-info">
+                            <div class="element-symbol-large" id="modalElementSymbol">H</div>
+                            <div class="element-details">
+                                <h3 id="modalElementFullName">Hydrogen</h3>
+                                <p>Atomic Number: <span id="modalAtomicNumber">1</span></p>
+                                <p>Atomic Mass: <span id="modalAtomicMass">1.008</span></p>
+                                <p>Category: <span id="modalCategory">Nonmetal</span></p>
+                            </div>
+                        </div>
+                        
+                        <div class="element-properties">
+                            <h3>Properties</h3>
+                            <div class="properties-grid">
+                                <div class="property">
+                                    <span class="property-label">Period:</span>
+                                    <span class="property-value" id="modalPeriod">1</span>
+                                </div>
+                                <div class="property">
+                                    <span class="property-label">Group:</span>
+                                    <span class="property-value" id="modalGroup">1</span>
+                                </div>
+                                <div class="property">
+                                    <span class="property-label">Block:</span>
+                                    <span class="property-value" id="modalBlock">s</span>
+                                </div>
+                                <div class="property">
+                                    <span class="property-label">State:</span>
+                                    <span class="property-value" id="modalState">Gas</span>
+                                </div>
+                                <div class="property">
+                                    <span class="property-label">Density:</span>
+                                    <span class="property-value" id="modalDensity">0.0899 g/L</span>
+                                </div>
+                                <div class="property">
+                                    <span class="property-label">Melting Point:</span>
+                                    <span class="property-value" id="modalMeltingPoint">-259.16°C</span>
+                                </div>
+                                <div class="property">
+                                    <span class="property-label">Boiling Point:</span>
+                                    <span class="property-value" id="modalBoilingPoint">-252.87°C</span>
+                                </div>
+                                <div class="property">
+                                    <span class="property-label">Electronegativity:</span>
+                                    <span class="property-value" id="modalElectronegativity">2.20</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="element-description">
+                            <h3>Description</h3>
+                            <p id="modalDescription">Hydrogen is the lightest and most abundant chemical element in the universe. It is a colorless, odorless, tasteless, non-toxic, and highly combustible diatomic gas.</p>
+                        </div>
+                        
+                        <div class="element-uses">
+                            <h3>Common Uses</h3>
+                            <p id="modalUses">Used in petroleum refining, ammonia production, metal refining, and as a rocket fuel. Also being explored as a clean energy source in fuel cells.</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="action-btn create" id="useInLab">Use in Chemistry Lab</button>
+                        <button class="action-btn reset" id="closeModalBtn">Close</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Periodic Table Container -->
+            <div class="table-container">
+                <div class="periodic-table" id="periodicTable">
+                    <!-- Periodic table will be generated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects-section" id="projects">
+        <div class="container">
+            <h2 class="section-title">My Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-img">
+                        <i class="fas fa-vr-cardboard"></i>
+                    </div>
+                    <div class="project-content">
+                        <h4>Virtual Reality Lab</h4>
+                        <p>Fully immersive lab experience using VR headsets. Users can perform chemical reactions virtually.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">VR</span>
+                            <span class="project-tag">3D</span>
+                            <span class="project-tag">Interactive</span>
+                        </div>
+                        <button class="action-btn create" style="width: 100%;">View Details</button>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-img">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="project-content">
+                        <h4>AI Lab Assistant</h4>
+                        <p>Artificial intelligence that assists in lab experiments. Answers user questions and helps design experiments.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">AI</span>
+                            <span class="project-tag">Machine Learning</span>
+                            <span class="project-tag">Automation</span>
+                        </div>
+                        <button class="action-btn create" style="width: 100%;">View Details</button>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-img">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="project-content">
+                        <h4>Mobile Lab App</h4>
+                        <p>Fully featured lab app for smartphones. Works offline and provides real-time data analysis.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Mobile</span>
+                            <span class="project-tag">Offline</span>
+                            <span class="project-tag">Real-time</span>
+                        </div>
+                        <button class="action-btn create" style="width: 100%;">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Ariq Azmain</h3>
+                    <p>An innovative platform for learning science through Physics and Chemistry Virtual Labs. Understand complex scientific concepts easily using interactive tools and 3D models.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#stats">Statistics</a></li>
+                        <li><a href="#labs">Virtual Lab</a></li>
+                        <li><a href="#periodic-table">Periodic Table</a></li>
+                        <li><a href="#projects">Projects</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p><i class="fas fa-envelope"></i> contact@ariqazmain.com</p>
+                    <p><i class="fas fa-phone"></i> +880 1XXX-XXXXXX</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Dhaka, Bangladesh</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023 Ariq Azmain. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="script.js"></script>
+</body>
+</html>

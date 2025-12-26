@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockchain: The Technology That Made "Trust" Obsolete</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="blc.css">
+</head>
+<body>
+    <div class="blockchain-container">
+        <!-- Chain Animation -->
+        <div class="chain-animation" id="chainAnimation"></div>
+        
+        <div class="blockchain-header">
+            <h1 class="blockchain-title">
+                <i class="fas fa-link"></i>
+                BLOCKCHAIN TECHNOLOGY
+            </h1>
+            <p class="blockchain-subtitle">
+                The Distributed Ledger That's Making Middlemen Sweat Since 2009
+            </p>
+            <div class="mt-4">
+                <span class="badge bg-primary me-2" style="background: var(--blockchain-blue)!important;">Cryptocurrency</span>
+                <span class="badge bg-warning me-2" style="background: var(--crypto-gold)!important; color: #000;">Decentralization</span>
+                <span class="badge bg-success" style="background: var(--block-green)!important;">Innovation</span>
+            </div>
+        </div>
+        
+        <div class="content-area">
+            <!-- Author Info -->
+            <div class="d-flex justify-content-between align-items-center mb-5">
+                <div class="d-flex align-items-center">
+                    <div class="rounded-circle p-3 me-3" style="background: linear-gradient(135deg, var(--blockchain-blue), var(--crypto-gold));">
+                        <i class="fas fa-coins fa-lg" style="color: white;"></i>
+                    </div>
+                    <div>
+                        <h5 class="mb-1">Ariq Azmain</h5>
+                        <small class="text-muted">Blockchain Enthusiast & Former Middleman</small>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <div class="h5 mb-1">December 6, 2025</div>
+                    <small>⏱️ 14 min read • ⛓️ 1300+ words</small>
+                </div>
+            </div>
+            
+            <!-- Opening Joke -->
+            <div class="crypto-joke">
+                <div class="row align-items-center">
+                    <div class="col-md-3 text-center mb-3 mb-md-0">
+                        <i class="fas fa-grin-tongue-wink fa-3x" style="color: var(--crypto-gold);"></i>
+                    </div>
+                    <div class="col-md-9">
+                        <h4>Blockchain Joke of the Day</h4>
+                        <p class="mb-2">Why did the blockchain break up with the centralized database?</p>
+                        <p class="h4" style="color: var(--crypto-gold);">
+                            <strong>Because it wanted to see other nodes!</strong>
+                        </p>
+                        <small class="text-muted mt-2 d-block">(Also because trust is so 2010)</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Introduction -->
+            <section>
+                <h2 class="section-title">Welcome to the Trustless Revolution</h2>
+                <p>Imagine a world where you don't need to trust banks, governments, or that guy Craig who promises he'll pay you back "next Tuesday." A world where trust isn't a human emotion but a mathematical certainty. Welcome to blockchain—the technology that's making intermediaries as obsolete as floppy disks.</p>
+                
+                <p>First things first: blockchain is NOT just Bitcoin. Bitcoin is to blockchain what email is to the internet. One popular application of a much broader technology. Saying blockchain is just Bitcoin is like saying the internet is just cat videos (though, to be fair, that's 80% of it).</p>
+                
+                <p>At its core, blockchain is a <strong>distributed, decentralized, immutable ledger</strong>. In English: It's a shared record book that nobody controls, everyone can see, and nobody can change. It's like a Google Doc that edits itself, verifies itself, and pays you cryptocurrency for watching it work.</p>
+            </section>
+            
+            <!-- How It Works -->
+            <section>
+                <h2 class="section-title">How Blockchain Works (Without the Math Headache)</h2>
+                
+                <div class="block-visual">
+                    <h4>The Blockchain Visualized</h4>
+                    <div class="block">
+                        <h6>Block #1 (Genesis Block)</h6>
+                        <small>Contains: First Bitcoin transaction<br>Hash: 000000000019d6...</small>
+                    </div>
+                    <div class="block">
+                        <h6>Block #2</h6>
+                        <small>Contains: More transactions<br>Hash: 00000000839a8e...</small>
+                    </div>
+                    <div class="block">
+                        <h6>Block #3</h6>
+                        <small>Contains: Pizza purchase (10,000 BTC!)<br>Hash: 00000000aabd41...</small>
+                    </div>
+                    <div class="progress-chain">
+                        <div class="progress-chain-fill" id="blockProgress" style="width: 33%"></div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <button id="addBlockBtn" class="blockchain-btn">
+                            <i class="fas fa-plus-circle me-2"></i>Add New Block
+                        </button>
+                    </div>
+                </div>
+                
+                <p>Think of blockchain as a digital chain of blocks (creative name, I know). Each block contains:</p>
+                
+                <ol class="mb-4">
+                    <li><strong>Transaction data:</strong> Who sent what to whom</li>
+                    <li><strong>A timestamp:</strong> When it happened</li>
+                    <li><strong>A hash:</strong> A unique digital fingerprint of the block</li>
+                    <li><strong>The previous block's hash:</strong> This is what creates the "chain"</li>
+                </ol>
+                
+                <p>Here's the magic: If you try to change even a single comma in Block #2, its hash changes completely. Since Block #3 contains Block #2's hash, Block #3 would now be invalid. You'd have to change EVERY subsequent block, on EVERY copy of the blockchain, simultaneously. Good luck with that.</p>
+                
+                <div class="hash-display" id="hashExample">
+                    Original: "Hello World" → Hash: a591a6d40bf420404a011733...
+                    <br>Change: "Hello World!" → Hash: 7f83b1657ff1fc53b92dc181...
+                </div>
+            </section>
+            
+            <!-- Mining Section -->
+            <section>
+                <h2 class="section-title">Mining: The Digital Gold Rush</h2>
+                
+                <div class="mining-simulator">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4><i class="fas fa-digging me-2"></i>Mining Simulator</h4>
+                            <p>Try mining a block (without the electricity bill):</p>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Mining Power: <span id="miningPower">5</span> TH/s</label>
+                                <input type="range" class="form-range" id="miningSlider" min="1" max="10" value="5">
+                            </div>
+                            
+                            <div class="d-grid gap-2 d-md-block mb-4">
+                                <button id="mineBtn" class="blockchain-btn me-2">
+                                    <i class="fas fa-hammer me-2"></i>Start Mining
+                                </button>
+                                <button id="resetMineBtn" class="btn btn-outline-light">
+                                    <i class="fas fa-redo me-2"></i>Reset
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="hash-display" id="miningOutput">
+                                Mining block #<span id="blockNumber">789123</span>...
+                                <br>Target: 0000000000000000000a398...
+                                <br>Attempts: <span id="attemptCount">0</span>
+                                <br>Status: <span id="miningStatus">Ready</span>
+                            </div>
+                            
+                            <div class="mt-3">
+                                <h6>Mining Stats</h6>
+                                <div class="row text-center">
+                                    <div class="col-md-4">
+                                        <div class="p-2 bg-dark rounded">
+                                            <div class="h6 mb-1" id="blocksMined">0</div>
+                                            <small>Blocks</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="p-2 bg-dark rounded">
+                                            <div class="h6 mb-1" id="bitcoinEarned">0</div>
+                                            <small>BTC Earned</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="p-2 bg-dark rounded">
+                                            <div class="h6 mb-1" id="energyUsed">0</div>
+                                            <small>kWh Used</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <p>Mining is how new blocks are added to the blockchain. Miners compete to solve a complex mathematical puzzle. The first to solve it gets to add the next block and receives a reward (currently 6.25 BTC, or about $300,000 as of 2025).</p>
+                
+                <p>The puzzle is designed to be hard to solve but easy to verify. It's like trying to guess a combination lock—you have to try millions of combinations, but when you find the right one, everyone can instantly see it's correct.</p>
+                
+                <div class="crypto-joke">
+                    <h5><i class="fas fa-bolt me-2"></i>Mining Joke</h5>
+                    <p>Why did the Bitcoin miner get a divorce?</p>
+                    <p class="h5" style="color: var(--crypto-gold);">
+                        <strong>Because their marriage wasn't generating enough hash power!</strong>
+                    </p>
+                </div>
+            </section>
+            
+            <!-- Blockchain vs Traditional -->
+            <section>
+                <h2 class="section-title">Blockchain vs Traditional Systems: The Smackdown</h2>
+                
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h5><i class="fas fa-university me-2"></i>Traditional Banking</h5>
+                        <ul>
+                            <li>Centralized control</li>
+                            <li>Single point of failure</li>
+                            <li>Slow international transfers</li>
+                            <li>Banking hours (seriously?)</li>
+                            <li>Trust required</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="comparison-card">
+                        <h5><i class="fas fa-link me-2"></i>Blockchain</h5>
+                        <ul>
+                            <li>Decentralized network</li>
+                            <li>No single point of failure</li>
+                            <li>Fast global transactions</li>
+                            <li>24/7 operation</li>
+                            <li>Trustless by design</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <p><strong>The irony:</strong> Banks are now adopting blockchain technology to make their own systems more efficient. It's like the horse carriage industry inventing cars to improve carriages, then realizing cars don't need horses.</p>
+            </section>
+            
+            <!-- Real-World Applications -->
+            <section>
+                <h2 class="section-title">Beyond Crypto: Real-World Applications</h2>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="use-case-card">
+                            <h5><i class="fas fa-notes-medical me-2"></i>Healthcare</h5>
+                            <p>Secure, immutable medical records that patients control. No more faxing records between hospitals. Also prevents prescription fraud.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="use-case-card">
+                            <h5><i class="fas fa-truck me-2"></i>Supply Chain</h5>
+                            <p>Track products from farm to table. That organic avocado? Verify it's actually organic and didn't spend 3 months on a shipping container.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="use-case-card">
+                            <h5><i class="fas fa-vote-yea me-2"></i>Voting Systems</h5>
+                            <p>Transparent, tamper-proof voting. Each vote is recorded but identities are protected. Could eliminate election disputes (theoretically).</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="use-case-card">
+                            <h5><i class="fas fa-file-contract me-2"></i>Smart Contracts</h5>
+                            <p>Self-executing contracts when conditions are met. Rent an apartment? Payment releases key code automatically. No landlords needed.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="alert alert-info mt-4" style="background: rgba(0, 102, 204, 0.1); border-color: var(--blockchain-blue);">
+                    <h5><i class="fas fa-lightbulb me-2"></i>Smart Contracts Explained</h5>
+                    <p>Smart contracts are like vending machines: If you insert $2 (condition), you get a soda (result). The machine doesn't need to trust you, and you don't need to trust the machine. The code is the contract.</p>
+                </div>
+            </section>
+            
+            <!-- Challenges -->
+            <section>
+                <h2 class="section-title">The Not-So-Shiny Side of Blockchain</h2>
+                
+                <p>Blockchain isn't a magical solution to all problems. It has significant challenges:</p>
+                
+                <div class="row mt-4">
+                    <div class="col-md-4 mb-3">
+                        <div class="card bg-dark h-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-warning"><i class="fas fa-bolt me-2"></i>Energy Consumption</h5>
+                                <p class="card-text">Bitcoin mining uses more electricity than some countries. That's not very eco-friendly for a digital currency.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card bg-dark h-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-warning"><i class="fas fa-tachometer-alt me-2"></i>Scalability Issues</h5>
+                                <p class="card-text">Bitcoin processes 7 transactions per second. Visa does 24,000. There's room for improvement.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card bg-dark h-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-warning"><i class="fas fa-user-secret me-2"></i>Regulation Uncertainty</h5>
+                                <p class="card-text">Governments can't decide if crypto is currency, property, or a security. This creates legal gray areas.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="mt-4"><strong>The 51% Attack:</strong> If one entity controls 51% of the network's mining power, they could theoretically manipulate the blockchain. Fortunately, this would require billions of dollars of equipment. But hey, Jeff Bezos might get bored one day.</p>
+            </section>
+            
+            <!-- Future of Blockchain -->
+            <section>
+                <h2 class="section-title">The Future: Web3 and Beyond</h2>
+                
+                <p>The next evolution is <strong>Web3</strong>—a decentralized internet where users own their data, not corporations. Imagine social media where you get paid for your content, not Mark Zuckerberg.</p>
+                
+                <div class="progress-chain mb-4">
+                    <div class="progress-chain-fill" style="width: 70%"></div>
+                </div>
+                <div class="d-flex justify-content-between mb-4">
+                    <span>Web1 (1990s): Read-only</span>
+                    <span>Web2 (2000s): Read-write</span>
+                    <span>Web3 (2020s+): Read-write-own</span>
+                </div>
+                
+                <p><strong>NFTs (Non-Fungible Tokens):</strong> Yes, those digital monkey pictures selling for millions. Beyond the hype, NFTs represent true digital ownership. Could be used for tickets, deeds, certificates—not just cartoon apes.</p>
+                
+                <div class="crypto-joke">
+                    <h5><i class="fas fa-palette me-2"></i>NFT Joke</h5>
+                    <p>Why did the NFT go to therapy?</p>
+                    <p class="h5" style="color: var(--crypto-gold);">
+                        <strong>Because it had too many issues (and not the collectible kind)!</strong>
+                    </p>
+                </div>
+            </section>
+            
+            <!-- Conclusion -->
+            <section>
+                <h2 class="section-title">Conclusion: To Chain or Not to Chain?</h2>
+                
+                <p>Blockchain is a revolutionary technology, but it's not the solution to everything. Need a decentralized, trustless, immutable record? Blockchain is perfect. Need to store cat videos? Maybe just use Google Drive.</p>
+                
+                <p>The technology is still maturing. Like the early internet, we're figuring out what works and what doesn't. Some projects will fail spectacularly (looking at you, crypto projects with dog mascots). Others will change the world.</p>
+                
+                <div class="alert alert-success mt-4" style="background: rgba(0, 204, 102, 0.1); border-color: var(--block-green);">
+                    <h5><i class="fas fa-graduation-cap me-2"></i>Key Takeaways</h5>
+                    <ul class="mb-0">
+                        <li>Blockchain ≠ Bitcoin (it's much bigger)</li>
+                        <li>Decentralization eliminates single points of failure</li>
+                        <li>Immutability creates trust through math, not people</li>
+                        <li>Smart contracts automate agreements</li>
+                        <li>The technology is young—expect bumps in the road</li>
+                    </ul>
+                </div>
+                
+                <p class="mt-4">Whether blockchain becomes as fundamental as the internet or remains a niche technology, one thing's for sure: it's made us rethink how we establish trust in a digital world. And that's worth more than all the Bitcoin in circulation.</p>
+            </section>
+            
+            <!-- Word Count -->
+            <div class="word-count">
+                <p><strong>Word Count:</strong> Approximately 1,350 words of blockchain brilliance</p>
+                <p><strong>About the Author:</strong> Ariq Azmain once lost his Bitcoin wallet password. He's still crying about it. Don't be like Ariq.</p>
+            </div>
+            
+            <!-- Navigation -->
+            <div class="d-flex justify-content-between mt-5 pt-4 border-top border-secondary">
+                <a href="#" class="blockchain-btn" style="background: linear-gradient(135deg, #666, #999);">
+                    <i class="fas fa-arrow-left me-2"></i>Previous: Cybersecurity
+                </a>
+                <a href="#" class="blockchain-btn">
+                    Next: Web Dev 2025 <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Blockchain JS -->
+<script type="text/javascript" src="bld.js" charset="utf-8">
+  
+</script>
+</body>
+</html>

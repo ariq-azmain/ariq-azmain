@@ -1,0 +1,116 @@
+    :root{
+      --accent-1: #0d6efd; /* blue */
+      --accent-2: #ff6b6b; /* coral */
+      --accent-3: #6f42c1; /* purple */
+      --accent-4: #20c997; /* teal */
+      --muted:#f3b7e8;
+      --card-bg: #ffffff;
+      --page-bg: linear-gradient(180deg,#fbfbff,#ffffff);
+    }
+
+    /* Base */
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:var(--page-bg);
+      color: #866161;
+      font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.6;
+      padding: 0;
+    }
+
+    .container-article{max-width:1000px; margin:36px auto; padding:0 16px;}
+
+    /* Hero */
+    .hero {
+      border-radius:14px;
+      overflow:hidden;
+      position:relative;
+      min-height:260px;
+      display:flex;
+      align-items:flex-end;
+      color:white;
+      box-shadow: 0 10px 30px rgba(16,24,40,0.06);
+    }
+    .hero img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:contrast(.95) saturate(.95); }
+    .hero .overlay{
+      position:relative; z-index:2; padding:28px; width:100%;
+      background: linear-gradient(180deg, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.55) 100%);
+    }
+    .tag-pill{ display:inline-block; padding:.28rem .7rem; border-radius:999px; background:rgba(255,255,255,0.12); font-weight:600; font-size:.85rem; }
+
+    h1.title{ font-family: "Merriweather", serif; font-weight:700; margin:0 0 .1rem; letter-spacing:.2px; font-size:2.05rem; }
+    .meta{ color:rgba(255,255,255,0.9); font-size:.94rem; }
+
+    /* Article card */
+    article.post{
+      margin-top:18px;
+      padding:26px;
+      background:var(--card-bg);
+      border-radius:12px;
+      box-shadow: 0 6px 18px rgba(17,24,39,0.06);
+    }
+    .lead{ font-size:1.05rem; color:#744c81; }
+
+    /* Pull-quote */
+    .pull-quote{
+      border-left:4px solid var(--accent-1);
+      padding:14px 18px;
+      background:linear-gradient(90deg, rgba(13,110,253,0.04), transparent);
+      margin:18px 0;
+      font-style:italic;
+      color:#3e7e82;
+    }
+
+    /* Interactive blocks */
+    .fun-widget{
+      border-radius:10px; padding:16px; background:linear-gradient(180deg,#fff,#fbfcff); border:1px solid #f1f3f5;
+    }
+    .fun-widget .heading-row { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+    .quiz-option{ cursor:pointer; transition: transform .12s ease, box-shadow .12s ease;}
+    .quiz-option:hover{ transform: translateY(-4px); box-shadow:0 8px 24px rgba(16,24,40,0.06); }
+
+    /* Bitcoin miner (joke) */
+    .miner{
+      display:flex; gap:12px; align-items:center; padding:12px; border-radius:10px;
+      background:linear-gradient(90deg, rgba(255,235,205,0.12), rgba(255,255,255,0.02));
+      border:1px dashed rgba(255,193,7,0.18);
+    }
+    .miner .chip{ width:72px; height:72px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:700; color:#fff; background:linear-gradient(135deg,#6f42c1,#ff6b6b); box-shadow: 0 6px 18px rgba(111,66,193,0.18); }
+    .miner .stats small{ color:var(--muted); display:block; }
+
+    /* Related cards */
+    .related-card{ transition: transform .16s ease; overflow:hidden; border-radius:10px; }
+    .related-card:hover{ transform: translateY(-6px); box-shadow: 0 12px 36px rgba(16,24,40,0.08); }
+
+    /* Read progress */
+    #read-progress{ position:fixed; left:0; top:0; height:4px; background:linear-gradient(90deg,var(--accent-1),var(--accent-2)); width:0%; z-index:2000; transition:width .12s linear; }
+    #toggle-theme{
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+    }
+
+    /* Ensure quiz options are full-width on small */
+    #quiz-options .quiz-option { width:100%; }
+
+    /* Responsive tweaks */
+    @media (max-width:576px){
+      h1.title{ font-size:1.45rem; }
+      .hero{ min-height:160px; }
+      .hero .overlay{ padding:16px; }
+
+      /* Make quiz heading + score stack vertically and options flow beneath */
+      .fun-widget .heading-row { flex-direction: column; align-items: flex-start; }
+      .fun-widget .heading-row .small { margin-top:6px; }
+      #quiz-options { margin-top:8px; }
+      #quiz-options .col-12) */
+    .accent-blue{ --accent: var(--accent-1); }
+    .accent-coral{ --accent: var(--accent-2); }
+    .accent-purple{ --accent: var(--accent-3); }
+    .accent-teal{ --accent: var(--accent-4); }
+
+    /* small footer style */
+    footer.article-footer{ border-top:1px dashed #eef2f5; margin-top:18px; padding-top:12px; color:var(--muted); display:flex; justify-content:space-between; gap:12px; align-items:center; flex-wrap:wrap; }

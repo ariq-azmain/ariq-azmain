@@ -1,0 +1,218 @@
+ :root {
+     --primary-color: #4361ee;
+     --secondary-color: #3a0ca3;
+     --accent-color: #4cc9f0;
+     --light-bg: #f8f9fa;
+     --dark-text: #212529;
+     --light-text: #6c757d;
+ }
+ 
+ body {
+     font-family: 'Open Sans', sans-serif;
+     color: var(--dark-text);
+     line-height: 1.7;
+     background-color: #fff;
+     padding-top: 56px;
+ }
+ 
+ h1, h2, h3, h4, h5 {
+     font-family: 'Poppins', sans-serif;
+     font-weight: 600;
+ }
+ 
+ .hero-image {
+     background: linear-gradient(rgba(67, 97, 238, 0.7), rgba(58, 12, 163, 0.7)), 
+   url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+     background-size: cover;
+     background-position: center;
+     height: 400px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     margin-bottom: 2rem;
+     border-radius: 0 0 20px 20px;
+     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+ }
+ 
+ .hero-title {
+     color: white;
+     font-size: 3.5rem;
+     text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+     text-align: center;
+     max-width: 800px;
+     padding: 0 20px;
+ }
+ 
+ article {
+     max-width: 900px;
+     margin: 0 auto 4rem auto;
+     padding: 0 20px;
+ }
+ 
+ .article-intro {
+     font-size: 1.25rem;
+     color: var(--secondary-color);
+     font-weight: 500;
+     margin-bottom: 2rem;
+     border-left: 4px solid var(--accent-color);
+     padding-left: 1.5rem;
+ }
+ 
+ .section-title {
+     color: var(--secondary-color);
+     padding-bottom: 0.5rem;
+     margin-top: 2.5rem;
+     margin-bottom: 1.5rem;
+     border-bottom: 2px solid #e9ecef;
+     position: relative;
+ }
+ 
+ .section-title:after {
+     content: '';
+     position: absolute;
+     bottom: -2px;
+     left: 0;
+     width: 80px;
+     height: 2px;
+     background-color: var(--accent-color);
+ }
+ 
+ .highlight-box {
+     background-color: var(--light-bg);
+     border-left: 4px solid var(--primary-color);
+     padding: 1.5rem;
+     margin: 1.5rem 0;
+     border-radius: 0 8px 8px 0;
+ }
+ 
+ .fun-fact {
+     background-color: #e8f4fc;
+     border-radius: 10px;
+     padding: 1.5rem;
+     margin: 2rem 0;
+     border-left: 5px solid var(--accent-color);
+ }
+ 
+ .fun-fact h5 {
+     color: var(--secondary-color);
+     margin-bottom: 0.5rem;
+ }
+ 
+ .fun-fact i {
+     color: var(--accent-color);
+     margin-right: 10px;
+ }
+ 
+ .ai-example {
+     background-color: white;
+     border-radius: 10px;
+     padding: 1.5rem;
+     margin: 1.5rem 0;
+     box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+     border-top: 3px solid var(--primary-color);
+ }
+ 
+ .ai-example i {
+     color: var(--primary-color);
+     font-size: 1.5rem;
+     margin-bottom: 1rem;
+ }
+ 
+ .conclusion {
+     background: linear-gradient(to right, #4361ee, #3a0ca3);
+     color: white;
+     padding: 2.5rem;
+     border-radius: 15px;
+     margin: 3rem 0;
+     box-shadow: 0 10px 30px rgba(67, 97, 238, 0.2);
+ }
+ 
+ .conclusion h3 {
+     color: white;
+ }
+ 
+ footer {
+     background-color: var(--dark-text);
+     color: white;
+     padding: 2rem 0;
+     margin-top: 3rem;
+     text-align: center;
+ }
+ 
+ .social-icons a {
+     color: white;
+     margin: 0 10px;
+     font-size: 1.2rem;
+     transition: color 0.3s;
+ }
+ 
+ .social-icons a:hover {
+     color: var(--accent-color);
+ }
+ 
+ .quote {
+     font-style: italic;
+     font-size: 1.2rem;
+     color: var(--secondary-color);
+     text-align: center;
+     padding: 2rem;
+     margin: 2rem 0;
+     position: relative;
+ }
+ 
+ .quote:before, .quote:after {
+     content: '"';
+     font-size: 3rem;
+     color: var(--accent-color);
+     opacity: 0.3;
+     position: absolute;
+ }
+ 
+ .quote:before {
+     top: 0;
+     left: 10px;
+ }
+ 
+ .quote:after {
+     bottom: -20px;
+     right: 10px;
+ }
+ 
+ @media (max-width: 768px) {
+     .hero-title {
+  font-size: 2.5rem;
+     }
+     
+     .hero-image {
+  height: 300px;
+     }
+     
+     article {
+  padding: 0 15px;
+     }
+ }
+ 
+ .back-to-top {
+     position: fixed;
+     bottom: 30px;
+     right: 30px;
+     background-color: var(--primary-color);
+     color: white;
+     width: 50px;
+     height: 50px;
+     border-radius: 50%;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     font-size: 1.2rem;
+     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+     z-index: 100;
+     transition: all 0.3s;
+     text-decoration: none;
+ }
+ 
+ .back-to-top:hover {
+     background-color: var(--secondary-color);
+     color: white;
+     transform: translateY(-5px);
+ }

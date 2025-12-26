@@ -1,0 +1,240 @@
+
+:root {
+    --hacker-green: #00ff00;
+    --matrix-dark: #0a0a0a;
+    --warning-red: #ff3333;
+    --encryption-blue: #0066ff;
+}
+
+body {
+    background: var(--matrix-dark);
+    color: #e0e0e0;
+    font-family: 'Courier New', monospace;
+    line-height: 1.8;
+    overflow-x: hidden;
+}
+
+.cyber-container {
+    max-width: 1100px;
+    background: rgba(10, 20, 15, 0.95);
+    border: 1px solid var(--hacker-green);
+    border-radius: 10px;
+    box-shadow: 0 0 50px rgba(0, 255, 0, 0.1);
+    margin: 40px auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.cyber-header {
+    background: 
+linear-gradient(rgba(0, 30, 0, 0.8), rgba(0, 10, 0, 0.9)),
+url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">01</text></svg>');
+    color: var(--hacker-green);
+    padding: 60px 40px;
+    text-align: center;
+    border-bottom: 3px solid var(--hacker-green);
+    position: relative;
+    overflow: hidden;
+}
+
+.matrix-rain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.1;
+}
+
+.cyber-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    text-shadow: 0 0 20px var(--hacker-green);
+    letter-spacing: 3px;
+    position: relative;
+    font-family: Monospace;
+    z-index: 2;
+}
+
+.cyber-subtitle {
+    font-size: 1.3rem;
+    color: #88ff88;
+    margin-top: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.content-area {
+    padding: 50px;
+    position: relative;
+}
+
+.section-title {
+    color: var(--hacker-green);
+    border-left: 5px solid var(--hacker-green);
+    padding-left: 20px;
+    margin: 40px 0 25px;
+    font-size: 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cyber-joke {
+    background: rgba(0, 255, 0, 0.05);
+    border: 2px dashed var(--hacker-green);
+    border-radius: 10px;
+    padding: 25px;
+    margin: 30px 0;
+    position: relative;
+}
+
+.cyber-joke::before {
+    content: '⚡';
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 2rem;
+    opacity: 0.3;
+}
+
+.password-meter {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 25px 0;
+    border: 1px solid #333;
+}
+
+.meter-bar {
+    height: 20px;
+    background: linear-gradient(90deg, #ff0000, #ffff00, #00ff00);
+    border-radius: 10px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.meter-fill {
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    transition: width 0.5s;
+}
+
+.threat-card {
+    background: rgba(255, 0, 0, 0.05);
+    border-left: 5px solid var(--warning-red);
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 0 10px 10px 0;
+}
+
+.protection-card {
+    background: rgba(0, 255, 0, 0.05);
+    border-left: 5px solid var(--hacker-green);
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 0 10px 10px 0;
+}
+
+.interactive-panel {
+    background: rgba(0, 50, 0, 0.3);
+    border: 2px solid var(--hacker-green);
+    border-radius: 15px;
+    padding: 30px;
+    margin: 40px 0;
+}
+
+.hacker-terminal {
+    background: #000;
+    color: var(--hacker-green);
+    font-family: 'Courier New', monospace;
+    padding: 20px;
+    border-radius: 5px;
+    min-height: 200px;
+    margin: 20px 0;
+    overflow-y: auto;
+    border: 1px solid #333;
+}
+
+.terminal-line {
+    margin-bottom: 5px;
+    animation: typing 2s steps(40, end);
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+.cyber-btn {
+    background: transparent;
+    color: var(--hacker-green);
+    border: 2px solid var(--hacker-green);
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.cyber-btn:hover {
+    background: var(--hacker-green);
+    color: #000;
+    box-shadow: 0 0 20px var(--hacker-green);
+}
+
+.encryption-animation {
+    width: 100%;
+    height: 150px;
+    background: #000;
+    border: 2px solid var(--encryption-blue);
+    border-radius: 10px;
+    margin: 30px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.data-bit {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--hacker-green);
+    border-radius: 50%;
+    animation: encrypt 3s linear infinite;
+}
+
+@keyframes encrypt {
+    0% { left: 0%; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { left: 100%; opacity: 0; }
+}
+
+.word-count {
+    color: #888;
+    font-size: 0.9rem;
+    text-align: right;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #333;
+}
+
+@media (max-width: 768px) {
+    .cyber-title {
+font-size: 2.5rem;
+    }
+    .content-area {
+padding: 25px;
+    }
+}
+@media (max-width: 368px) {
+    .cyber-title {
+font-size: 2rem;
+    }
+    .content-area {
+padding: 18px;
+    }
+}
