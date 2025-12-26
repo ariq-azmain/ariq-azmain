@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.body.classList.add('no-scroll');
   
   const preloader = document.querySelector('.pre');
-  const minLoadingTime = 3890; // ন্যূনতম ৩.৮৯ সেকেন্ড
+  const minLoadingTime = 0; // ন্যূনতম ৩.৮৯ সেকেন্ড
   
   // Start dot animation
   startDotAnimation();
