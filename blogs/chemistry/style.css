@@ -1,5 +1,7 @@
 /* style.css - Complete CSS for the website */
-
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lilex:ital,wght@0,100..700;1,100..700&display=swap');
 * {
     margin: 0;
     padding: 0;
@@ -301,6 +303,8 @@ nav {
 .lab-content {
     padding: 30px;
     background: rgba(0, 0, 0, 0.2);
+    color: #fff6f6;
+    font-family: Roboto Flex;
 }
 
 /* Chemistry Lab */
