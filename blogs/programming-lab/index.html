@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ariq Azmain - Full Stack Developer & Programmer</title>
+    
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/animations.css">
+    
+    <!-- Meta Tags -->
+    <meta name="description" content="Ariq Azmain - Full Stack Developer, Programmer, and Tech Enthusiast. Explore my programming lab with 10+ languages support.">
+    <meta name="keywords" content="Ariq Azmain, programmer, full stack developer, programming lab, online IDE">
+    <meta name="author" content="Ariq Azmain">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Ariq Azmain - Programming Lab">
+    <meta property="og:description" content="Interactive programming lab with 10+ languages support">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+    <meta property="og:url" content="https://ariq-azmain-xi.vercel.app/">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+        <div class="particles-container"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <span class="logo-text">Ariq Azmain</span>
+                </a>
+            </div>
+            
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="nav-menu" id="navMenu">
+                <ul class="nav-links">
+                    <li><a href="index.html" class="nav-link active"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="lab/index.html" class="nav-link"><i class="fas fa-flask"></i> Programming Lab</a></li>
+                    <li><a href="#about" class="nav-link"><i class="fas fa-user"></i> About</a></li>
+                    <li><a href="#skills" class="nav-link"><i class="fas fa-cogs"></i> Skills</a></li>
+                    <li><a href="#projects" class="nav-link"><i class="fas fa-project-diagram"></i> Projects</a></li>
+                    <li><a href="#contact" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
+                </ul>
+                
+                <div class="nav-actions">
+                    <a href="lab/index.html" class="btn btn-primary">
+                        <i class="fas fa-rocket"></i> Launch Lab
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="badge">
+                        <i class="fas fa-star"></i>
+                        <span>Full Stack Developer</span>
+                    </div>
+                    
+                    <h1 class="hero-title">
+                        <span class="gradient-text">Code</span> 
+                    </h1>
+                    
+                    <p class="hero-subtitle">
+                        Welcome to my interactive programming lab where you can code, compile, and debug in 10+ programming languages. Explore, learn, and build amazing projects.
+                    </p>
+                    
+                    <div class="hero-actions">
+                        <a href="lab/index.html" class="btn btn-primary btn-large">
+                            <i class="fas fa-play-circle"></i> Start Coding Now
+                        </a>
+                        <a href="#features" class="btn btn-outline">
+                            <i class="fas fa-info-circle"></i> Learn More
+                        </a>
+                    </div>
+                    
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <h3>10+</h3>
+                            <p>Languages</p>
+                        </div>
+                        <div class="stat">
+                            <h3>100+</h3>
+                            <p>Code Examples</p>
+                        </div>
+                        <div class="stat">
+                            <h3>24/7</h3>
+                            <p>Available</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hero-visual">
+                    <div class="code-preview">
+                        <div class="code-header">
+                            <div class="code-dots">
+                                <span class="dot red"></span>
+                                <span class="dot yellow"></span>
+                                <span class="dot green"></span>
+                            </div>
+                            <span class="code-title">main.js</span>
+                        </div>
+                        <pre class="code-content">
+<span class="code-keyword">function</span> <span class="code-function">welcome</span>() {
+    <span class="code-keyword">const</span> message = <span class="code-string">"Hello, Programmer!"</span>;
+    <span class="code-builtin">console</span>.<span class="code-function">log</span>(message);
+    
+    <span class="code-comment">// Interactive coding lab</span>
+    <span class="code-keyword">const</span> languages = [
+        <span class="code-string">"JavaScript"</span>,
+        <span class="code-string">"Python"</span>,
+        <span class="code-string">"Java"</span>,
+        <span class="code-string">"C++"</span>,
+        <span class="code-string">"Go"</span>
+    ];
+    
+    <span class="code-keyword">return</span> <span class="code-string">`Start coding in ${languages.length} languages`</span>;
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Why Choose My Programming Lab?</h2>
+                <p class="section-subtitle">A comprehensive coding environment with powerful features</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card" style="--animation-order: 1;">
+                    <div class="feature-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Interactive IDE</h3>
+                    <p>Real-time code editing with syntax highlighting, auto-completion, and intelligent suggestions for all supported languages.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Syntax Highlighting</li>
+                        <li><i class="fas fa-check"></i> Auto Completion</li>
+                        <li><i class="fas fa-check"></i> Error Detection</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card" style="--animation-order: 2;">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Fast Execution</h3>
+                    <p>Run your code instantly with cloud-based compilation. Get results in seconds without any setup or installation.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Cloud Compilation</li>
+                        <li><i class="fas fa-check"></i> Instant Results</li>
+                        <li><i class="fas fa-check"></i> No Setup Required</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card" style="--animation-order: 3;">
+                    <div class="feature-icon">
+                        <i class="fas fa-bug"></i>
+                    </div>
+                    <h3>Advanced Debugging</h3>
+                    <p>Set breakpoints, step through code, inspect variables, and find bugs efficiently with integrated debugging tools.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Breakpoints</li>
+                        <li><i class="fas fa-check"></i> Variable Inspection</li>
+                        <li><i class="fas fa-check"></i> Step-by-Step Execution</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card" style="--animation-order: 4;">
+                    <div class="feature-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h3>Flexible Layouts</h3>
+                    <p>Customize your workspace with resizable panels, multiple layouts, and adjustable themes for optimal coding experience.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Resizable Panels</li>
+                        <li><i class="fas fa-check"></i> Multiple Layouts</li>
+                        <li><i class="fas fa-check"></i> Custom Themes</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Languages Overview -->
+    <section class="languages-section" id="languages">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Supported Programming Languages</h2>
+                <p class="section-subtitle">Comprehensive support for both compiled and interpreted languages</p>
+            </div>
+            
+            <div class="languages-overview">
+                <div class="language-type">
+                    <h3><i class="fas fa-microchip"></i> Compiled Languages</h3>
+                    <div class="type-description">
+                        <p>These languages are compiled into machine code before execution, offering high performance and efficiency for system-level programming.</p>
+                    </div>
+                    
+                    <div class="languages-grid">
+                        <a href="lab/languages/c/index.html" class="language-item">
+                            <div class="language-icon c">
+                                <i class="fab fa-c"></i>
+                            </div>
+                            <h4>C Programming</h4>
+                            <p>Low-level system programming language known for efficiency and hardware control.</p>
+                            <span class="language-status">
+                                <i class="fas fa-circle online"></i> Online
+                            </span>
+                        </a>
+                        
+                        <a href="lab/languages/cpp/index.html" class="language-item">
+                            <div class="language-icon cpp">
+                                C++
+                            </div>
+                            <h4>C++</h4>
+                            <p>Object-oriented extension of C with classes, templates, and STL library.</p>
+                            <span class="language-status">
+                                <i class="fas fa-circle online"></i> Online
+                            </span>
+                        </a>
+                        
+                        <a href="lab/languages/java/index.html" class="language-item">
+                            <div class="language-icon java">
+                                <i class="fab fa-java"></i>
+                            </div>
+                            <h4>Java</h4>
+                            <p>Platform-independent language with "write once, run anywhere" capability.</p>
+                            <span class="language-status">
+                                <i class="fas fa-circle online"></i> Online
+                            </span>
+                        </a>
+                        
+                        <a href="lab/languages/csharp/index.html" class="language-item">
+                            <div class="language-icon csharp">
+                                <i class="fas fa-hashtag"></i>
+                            </div>
+                            <h4>C#</h4>
+                            <p>Modern language for .NET framework with strong typing and component orientation.</p>
+                            <span class="language-status">
+                                <i class="fas fa-circle online"></i> Online
+                            </span>
+                        </a>
+                        
+                        <a href="lab/languages/go/index.html" class="language-item">
+                            <div class="language-icon go">
+                                Go
+                            </div>
+                            <h4>Go (Golang)</h4>
+                            <p>Concurrent programming language developed by Google with garbage collection.</p>
+                            <span class="language-status">
+                                <i class="fas fa-circle online"></i> Online
+                            </span>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="language-type">
+                    <h3><i class="fas fa-play-circle"></i> Interpreted Languages</h3>
+                    <div class="type-description">
+                        <p>These languages are executed line by line by an interpreter, offering flexibility and rapid development for scripting and web applications.</p>
+                    </div>
+                    
+                    <div class="languages-grid">
+                        <a href="lab/languages/python/index.html" class="language-item">
+                            <div class="language-icon python">
+                                <i class="fab fa-python"></i>
+                            </div>
+                            <h4>Python</h4>
+                            <p>High-level language emphasizing readability and rapid application development.</p>
+                            <span class="language-status">
+                                <i class="fas fa-circle online"></i> Online
+                            </span>
+                        </a>
+                        
+                        <a href="lab/languages/javascript/index.html" class="language-item">
+                            <div class="language-icon javascript">
+                                <i class="fab fa-js"></i>
+                            </div>
+                            <h4>JavaScript</h4>
+                            <p>Web programming language for interactive web pages and server-side development.</p>
+                            <span class="language-status">
+                                <i class="fas fa-circle online"></i> Online
+                            </span>
+                        </a>
+                        
+                        <a href="lab/languages/php/index.html" class="language-item">
+                            <div class="language-icon php">
+                                <i class="fab fa-php"></i>
+                            </div>
+                            <h4>PHP</h4>
+                            <p>Server-side scripting language designed for web development and can be embedded into HTML.</p>
+                            <span class="language-status">
+                                <i class="fas fa-circle online"></i> Online
+                            </span>
+                        </a>
+                        
+                        <a href="lab/languages/ruby/index.html" class="language-item">
+                            <div class="language-icon ruby">
+                                <i class="fab fa-ruby"></i>
+                            </div>
+                            <h4>Ruby</h4>
+                            <p>Dynamic language focused on simplicity and productivity with elegant syntax.</p>
+                            <span class="language-status">
+                                <i class="fas fa-circle online"></i> Online
+                            </span>
+                        </a>
+                        
+                        <a href="lab/languages/typescript/index.html" class="language-item">
+                            <div class="language-icon typescript">
+                                TS
+                            </div>
+                            <h4>TypeScript</h4>
+                            <p>Typed superset of JavaScript that compiles to plain JavaScript.</p>
+                            <span class="language-status">
+                                <i class="fas fa-circle online"></i> Online
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         alt="Programming Setup" class="about-img">
+                    <div class="image-overlay">
+                        <div class="overlay-content">
+                            <h4>Always Learning</h4>
+                            <p>Exploring new technologies</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-content">
+                    <div class="section-header">
+                        <h2 class="section-title">About Me</h2>
+                        <p class="section-subtitle">Full Stack Developer & Programming Enthusiast</p>
+                    </div>
+                    
+                    <p class="about-text">
+                        I'm Ariq Azmain, a passionate full-stack developer dedicated to creating innovative solutions and sharing knowledge through interactive programming tools. My journey in technology has led me to build this comprehensive programming lab.
+                    </p>
+                    
+                    <div class="about-features">
+                        <div class="about-feature">
+                            <i class="fas fa-code-branch"></i>
+                            <div>
+                                <h4>Open Source Advocate</h4>
+                                <p>Believe in sharing knowledge and collaborating with the developer community.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="about-feature">
+                            <i class="fas fa-users"></i>
+                            <div>
+                                <h4>Community Focused</h4>
+                                <p>Creating tools that help developers learn and grow together.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="about-feature">
+                            <i class="fas fa-rocket"></i>
+                            <div>
+                                <h4>Innovation Driven</h4>
+                                <p>Constantly exploring new technologies and programming paradigms.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="about-actions">
+                        <a href="#contact" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Get In Touch
+                        </a>
+                        <a href="#projects" class="btn btn-outline">
+                            <i class="fas fa-eye"></i> View Projects
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills-section" id="skills">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Technical Skills & Expertise</h2>
+                <p class="section-subtitle">Mastering multiple technologies across the stack</p>
+            </div>
+            
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3><i class="fas fa-layer-group"></i> Frontend</h3>
+                    <div class="skill-items">
+                        <span class="skill-item">HTML5</span>
+                        <span class="skill-item">CSS3</span>
+                        <span class="skill-item">JavaScript</span>
+                        <span class="skill-item">React</span>
+                        <span class="skill-item">Vue.js</span>
+                        <span class="skill-item">TypeScript</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3><i class="fas fa-server"></i> Backend</h3>
+                    <div class="skill-items">
+                        <span class="skill-item">Node.js</span>
+                        <span class="skill-item">Python</span>
+                        <span class="skill-item">Java</span>
+                        <span class="skill-item">Express.js</span>
+                        <span class="skill-item">Django</span>
+                        <span class="skill-item">Spring Boot</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3><i class="fas fa-database"></i> Database</h3>
+                    <div class="skill-items">
+                        <span class="skill-item">MySQL</span>
+                        <span class="skill-item">PostgreSQL</span>
+                        <span class="skill-item">MongoDB</span>
+                        <span class="skill-item">Redis</span>
+                        <span class="skill-item">Firebase</span>
+                        <span class="skill-item">SQLite</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3><i class="fas fa-tools"></i> Tools & DevOps</h3>
+                    <div class="skill-items">
+                        <span class="skill-item">Git</span>
+                        <span class="skill-item">Docker</span>
+                        <span class="skill-item">AWS</span>
+                        <span class="skill-item">CI/CD</span>
+                        <span class="skill-item">Linux</span>
+                        <span class="skill-item">Nginx</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Preview -->
+    <section class="projects-section" id="projects">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Featured Projects</h2>
+                <p class="section-subtitle">Some of my recent work and contributions</p>
+            </div>
+            
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                             alt="Programming Lab Project">
+                    </div>
+                    <div class="project-content">
+                        <h3>Interactive Programming Lab</h3>
+                        <p>A comprehensive online IDE supporting 10+ programming languages with real-time compilation and debugging features.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">HTML/CSS</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">Docker</span>
+                        </div>
+                        <a href="lab/index.html" class="project-link">
+                            <i class="fas fa-external-link-alt"></i> View Project
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                             alt="E-commerce Platform">
+                    </div>
+                    <div class="project-content">
+                        <h3>E-commerce Platform</h3>
+                        <p>Full-featured online shopping platform with payment integration, user management, and inventory system.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">MongoDB</span>
+                            <span class="tech-tag">Stripe API</span>
+                        </div>
+                        <a href="#" class="project-link">
+                            <i class="fas fa-external-link-alt"></i> View Demo
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                             alt="Data Visualization Tool">
+                    </div>
+                    <div class="project-content">
+                        <h3>Data Visualization Dashboard</h3>
+                        <p>Interactive data visualization tool with real-time analytics, charts, and reporting capabilities.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">D3.js</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Flask</span>
+                            <span class="tech-tag">Chart.js</span>
+                        </div>
+                        <a href="#" class="project-link">
+                            <i class="fas fa-external-link-alt"></i> View Demo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="section-header">
+                        <h2 class="section-title">Get In Touch</h2>
+                        <p class="section-subtitle">Let's connect and create something amazing together</p>
+                    </div>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4>Email</h4>
+                                <p>ariqazmain@example.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4>Location</h4>
+                                <p>Dhaka, Bangladesh</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <div>
+                                <h4>Website</h4>
+                                <p>ariq-azmain-xi.vercel.app</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-stack-overflow"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" id="name" placeholder="Your Name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="email" id="email" placeholder="Your Email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="text" id="subject" placeholder="Subject" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <textarea id="message" placeholder="Your Message" rows="5" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <span class="logo-text">Ariq Azmain</span>
+                    </a>
+                    <p class="footer-text">
+                        Building tools to empower developers and make programming accessible to everyone.
+                    </p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="lab/index.html">Programming Lab</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#projects">Projects</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Languages</h4>
+                    <ul>
+                        <li><a href="lab/languages/javascript/index.html">JavaScript</a></li>
+                        <li><a href="lab/languages/python/index.html">Python</a></li>
+                        <li><a href="lab/languages/java/index.html">Java</a></li>
+                        <li><a href="lab/languages/cpp/index.html">C++</a></li>
+                        <li><a href="lab/languages/go/index.html">Go</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-newsletter">
+                    <h4>Stay Updated</h4>
+                    <p>Subscribe to get updates on new features and projects.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Enter your email" required>
+                        <button type="submit">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Ariq Azmain. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- JavaScript Files -->
+    <script src="scripts/main.js"></script>
+    <script src="scripts/animations.js"></script>
+</body>
+</html>

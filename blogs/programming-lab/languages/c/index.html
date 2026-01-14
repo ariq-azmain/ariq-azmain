@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>C Programming IDE - Ariq Azmain Lab</title>
+
+        <!-- Fonts & Icons -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- CodeMirror -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/dracula.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/display/fullscreen.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/fold/foldgutter.min.css"
+        />
+
+        <!-- CSS Files -->
+        <link rel="stylesheet" href="../../../styles/main.css" />
+        <link rel="stylesheet" href="../../styles/animations.css" />
+        <link rel="stylesheet" href="style.css" />
+
+        <style>
+            /* Animation Timeline Example 1: Code Editor Fade In */
+            .code-editor-container {
+                animation: editorFadeIn linear both;
+                animation-timeline: view();
+                animation-range: entry 0% cover 30%;
+            }
+
+            @keyframes editorFadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            /* Animation Timeline Example 2: Console Slide Up */
+            .console-panel {
+                animation: consoleSlideUp linear both;
+                animation-timeline: view();
+                animation-range: entry 10% cover 40%;
+            }
+
+            @keyframes consoleSlideUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(40px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            /* Animation Timeline Example 3: Examples Scale In */
+            .examples-container {
+                animation: examplesScaleIn linear both;
+                animation-timeline: view();
+                animation-range: entry 20% cover 50%;
+            }
+
+            @keyframes examplesScaleIn {
+                from {
+                    opacity: 0;
+                    transform: scale(0.8);
+                }
+                to {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+
+            /* Animation Timeline Example 4: Button Pulse */
+            .btn-run {
+                animation: buttonPulse linear both;
+                animation-timeline: view();
+                animation-range: entry 0% cover 25%;
+            }
+
+            @keyframes buttonPulse {
+                0%,
+                100% {
+                    transform: scale(1);
+                }
+                50% {
+                    transform: scale(1.05);
+                }
+            }
+
+            /* Animation Timeline Example 5: Panel Glow */
+            .ide-panel {
+                animation: panelGlow linear both;
+                animation-timeline: view();
+                animation-range: entry 0% cover 35%;
+            }
+
+            @keyframes panelGlow {
+                from {
+                    box-shadow: 0 0 0 rgba(59, 130, 246, 0);
+                }
+                to {
+                    box-shadow: 0 0 30px rgba(59, 130, 246, 0.2);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Animated Background -->
+        <div class="animated-bg">
+            <div class="code-particles"></div>
+        </div>
+
+        <!-- IDE Container -->
+        <div class="ide-container">
+            <!-- Top Bar -->
+            <div class="ide-topbar">
+                <div class="topbar-left">
+                    <a href="../../index.html" class="back-btn">
+                        <i class="fas fa-arrow-left"></i> Back to Lab
+                    </a>
+                    <div class="language-info">
+                        <div class="lang-icon c">
+                            <i class="fab fa-c"></i>
+                        </div>
+                        <div>
+                            <h2>C Programming IDE</h2>
+                            <p>Write, compile and debug C programs</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="topbar-right">
+                    <div class="file-menu">
+                        <button class="btn btn-menu" id="fileMenuBtn">
+                            <i class="fas fa-file"></i> File
+                        </button>
+                        <div class="dropdown-menu" id="fileDropdown">
+                            <a href="#" id="newFileBtn"
+                                ><i class="fas fa-file"></i> New File</a
+                            >
+                            <a href="#" id="openFileBtn"
+                                ><i class="fas fa-folder-open"></i> Open File</a
+                            >
+                            <a href="#" id="saveFileBtn"
+                                ><i class="fas fa-save"></i> Save File</a
+                            >
+                            <a href="#" id="saveAsBtn"
+                                ><i class="fas fa-save"></i> Save As...</a
+                            >
+                            <hr />
+                            <a href="#" id="exportCodeBtn"
+                                ><i class="fas fa-download"></i> Export Code</a
+                            >
+                        </div>
+                    </div>
+
+                    <button class="btn btn-run" id="runBtn">
+                        <i class="fas fa-play"></i> Run (Ctrl+Enter)
+                    </button>
+                    <button class="btn btn-debug" id="debugBtn">
+                        <i class="fas fa-bug"></i> Debug
+                    </button>
+                    <button class="btn btn-layout" id="layoutBtn">
+                        <i class="fas fa-exchange-alt"></i> Layout
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main IDE Area -->
+            <div class="ide-main" id="ideMain">
+                <!-- Left Panel: Editor -->
+                <div class="ide-panel editor-panel" id="editorPanel">
+                    <div class="panel-header">
+                        <div class="panel-tabs">
+                            <button class="tab active" data-tab="main.c">
+                                main.c
+                            </button>
+                            <div class="tab-actions">
+                                <button
+                                    class="tab-action-btn"
+                                    id="addTabBtn"
+                                    title="New Tab"
+                                >
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <button
+                                    class="tab-action-btn"
+                                    id="closeTabBtn"
+                                    title="Close Tab"
+                                >
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="panel-actions">
+                            <button
+                                class="action-btn"
+                                id="formatBtn"
+                                title="Format Code"
+                            >
+                                <i class="fas fa-indent"></i>
+                            </button>
+                            <button
+                                class="action-btn"
+                                id="themeToggle"
+                                title="Toggle Theme"
+                            >
+                                <i class="fas fa-moon"></i>
+                            </button>
+                            <button
+                                class="action-btn"
+                                id="fullscreenBtn"
+                                title="Fullscreen"
+                            >
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="code-editor-container">
+                        <textarea
+                            id="codeEditor"
+                            class="code-editor"
+                        ></textarea>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="editor-info">
+                            <span class="cursor-position">Ln 1, Col 1</span>
+                            <span class="file-size">0 bytes</span>
+                            <span class="language-tag">C</span>
+                        </div>
+                        <div class="editor-status">
+                            <i class="fas fa-circle status-ready"></i>
+                            <span>Ready</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resizer -->
+                <div
+                    class="panel-resizer vertical-resizer"
+                    id="verticalResizer"
+                ></div>
+
+                <!-- Right Panel: Output/Console -->
+                <div class="ide-panel console-panel" id="consolePanel">
+                    <div class="panel-header">
+                        <div class="panel-tabs">
+                            <button class="tab active" data-tab="output">
+                                Output
+                            </button>
+                            <button class="tab" data-tab="debug">Debug</button>
+                            <button class="tab" data-tab="terminal">
+                                Terminal
+                            </button>
+                            <button class="tab" data-tab="problems">
+                                Problems
+                            </button>
+                        </div>
+                        <div class="panel-actions">
+                            <button
+                                class="action-btn"
+                                id="clearConsoleBtn"
+                                title="Clear Console"
+                            >
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <button
+                                class="action-btn"
+                                id="copyOutputBtn"
+                                title="Copy Output"
+                            >
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button
+                                class="action-btn"
+                                id="downloadOutputBtn"
+                                title="Download Output"
+                            >
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="console-output" id="consoleOutput">
+                        <div class="welcome-message">
+                            <h3><i class="fas fa-code"></i> C IDE Ready</h3>
+                            <p>
+                                Write your C code in the editor and press Run to
+                                compile and execute.
+                            </p>
+
+                            <div class="quick-start">
+                                <h4>Quick Start:</h4>
+                                <div class="code-snippet">
+                                    <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    printf("Hello, World!\\n");
+    return 0;
+}</pre
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="example-buttons">
+                                <p>Try these examples:</p>
+                                <div class="example-grid">
+                                    <button
+                                        class="example-btn"
+                                        data-example="hello"
+                                    >
+                                        <i class="fas fa-play-circle"></i> Hello
+                                        World
+                                    </button>
+                                    <button
+                                        class="example-btn"
+                                        data-example="variables"
+                                    >
+                                        <i class="fas fa-calculator"></i>
+                                        Variables
+                                    </button>
+                                    <button
+                                        class="example-btn"
+                                        data-example="conditions"
+                                    >
+                                        <i class="fas fa-code-branch"></i>
+                                        If-Else
+                                    </button>
+                                    <button
+                                        class="example-btn"
+                                        data-example="loops"
+                                    >
+                                        <i class="fas fa-redo"></i> Loops
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="console-input">
+                            <div class="input-prefix">
+                                <i class="fas fa-terminal"></i>
+                                <span>$</span>
+                            </div>
+                            <input
+                                type="text"
+                                id="consoleInput"
+                                placeholder="Type commands here..."
+                            />
+                            <button id="sendInputBtn" class="input-send">
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Panel: Examples and Tools -->
+            <div class="ide-bottom">
+                <div class="panel-header">
+                    <div class="panel-tabs">
+                        <button class="tab active" data-tab="examples">
+                            Examples
+                        </button>
+                        <button class="tab" data-tab="snippets">
+                            Snippets
+                        </button>
+                        <button class="tab" data-tab="explorer">
+                            Explorer
+                        </button>
+                        <button class="tab" data-tab="settings">
+                            Settings
+                        </button>
+                    </div>
+                    <div class="panel-search">
+                        <input
+                            type="text"
+                            placeholder="Search examples..."
+                            id="exampleSearch"
+                        />
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+                <div class="examples-container" id="examplesContainer">
+                    <!-- Examples loaded dynamically -->
+                </div>
+            </div>
+
+            <!-- Resizer for Bottom Panel -->
+            <div
+                class="panel-resizer horizontal-resizer"
+                id="horizontalResizer"
+            ></div>
+        </div>
+
+        <!-- Modals -->
+        <div class="modal-overlay" id="exampleModal">
+            <div class="modal modal-lg">
+                <div class="modal-header">
+                    <h3>Load Example Code</h3>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="example-preview" id="examplePreview">
+                        <div class="preview-header">
+                            <div class="preview-title">
+                                <i class="fab fa-c"></i>
+                                <h4 id="exampleTitle">Example Title</h4>
+                            </div>
+                            <div class="preview-actions">
+                                <button class="btn btn-sm" id="copyExampleBtn">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+                        <div class="preview-content">
+                            <pre id="exampleCode"></pre>
+                        </div>
+                        <div class="preview-description">
+                            <p id="exampleDescription">
+                                Example description...
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" id="cancelLoad">
+                        Cancel
+                    </button>
+                    <button class="btn btn-primary" id="confirmLoad">
+                        Load into Editor
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- New File Modal -->
+        <div class="modal-overlay" id="newFileModal">
+            <div class="modal">
+                <div class="modal-header">
+                    <h3>Create New File</h3>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="fileName">File Name</label>
+                        <input
+                            type="text"
+                            id="fileName"
+                            placeholder="e.g., program.c"
+                            value="main.c"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="fileTemplate">Template</label>
+                        <select id="fileTemplate">
+                            <option value="empty">Empty File</option>
+                            <option value="hello">Hello World</option>
+                            <option value="basic">Basic Structure</option>
+                            <option value="advanced">Advanced Template</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="fileLocation">Save Location</label>
+                        <select id="fileLocation">
+                            <option value="browser">Browser Storage</option>
+                            <option value="download">
+                                Download to Computer
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" id="cancelNewFile">
+                        Cancel
+                    </button>
+                    <button class="btn btn-primary" id="createFile">
+                        Create File
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Save File Modal -->
+        <div class="modal-overlay" id="saveFileModal">
+            <div class="modal">
+                <div class="modal-header">
+                    <h3>Save File</h3>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="saveFileName">File Name</label>
+                        <input
+                            type="text"
+                            id="saveFileName"
+                            placeholder="program.c"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="saveLocation">Save Location</label>
+                        <select id="saveLocation">
+                            <option value="browser">Browser Storage</option>
+                            <option value="computer">Computer</option>
+                        </select>
+                    </div>
+                    <div class="save-preview">
+                        <h4>Preview:</h4>
+                        <div class="preview-code" id="savePreview"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" id="cancelSave">
+                        Cancel
+                    </button>
+                    <button class="btn btn-primary" id="confirmSave">
+                        Save File
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upload Images from Internet -->
+        <div class="image-gallery" style="display: none">
+            <img
+                src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                alt="Code Background"
+            />
+            <img
+                src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                alt="Programming"
+            />
+            <img
+                src="https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                alt="Developer"
+            />
+        </div>
+
+        <!-- JavaScript Files -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/clike/clike.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/edit/closebrackets.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/edit/matchbrackets.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/display/fullscreen.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/fold/foldcode.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/fold/foldgutter.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/fold/brace-fold.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/comment/comment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/selection/active-line.min.js"></script>
+
+        <!-- Our Scripts -->
+        <script src="../../../scripts/resizable.js"></script>
+        <script src="../../../scripts/compiler-api.js"></script>
+        <script src="../../../scripts/debugger.js"></script>
+        <script src="script.js"></script>
+    </body>
+</html>
