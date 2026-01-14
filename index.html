@@ -21,6 +21,16 @@
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "urfxd6l6j5");
 </script>
+  <!-- Existing code -->
+
+  <!-- PWA tags -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#000000">
+  
+  <!-- iOS support -->
+  <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-capable" content="yes">
   <title>Ariq Azmain - Home</title>
 </head>
 <body>
@@ -267,8 +277,7 @@
           <img
           src="img/chi.png"
           alt="Chemistry">
-          <h3>          Chemistry</h3>
-          Chemistry</h3>
+          <h3>Chemistry</h3>
           <p>How
           modern
           chemistry
@@ -289,7 +298,7 @@
 
       </div>
     </div>
-    <h1>
+    <h1 style="text-aling:center">
       <a href="/blog.html">Browse More</a></h1>
   </div>
 </main>
@@ -303,5 +312,161 @@
 
 </div>
     <script src="Script.js"></script>
+    <script>
+  // ১. ইনস্টল প্রম্পট হ্যান্ডেল করার ভেরিয়েবল
+  let deferredPrompt;
+  
+  // ২. ইনস্টল বাটন তৈরি করুন (ডায়নামিক্যালি)
+  // প্রথমে একটি বাটন তৈরি করুন আপনার HTML-এ
+  // অথবা JavaScript দিয়ে তৈরি করুন
+  function createInstallButton() {
+    const button = document.createElement('button');
+    button.id = 'installButton';
+    button.innerHTML = '📲 Install App';
+    button.style.cssText = `
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      z-index: 1000;
+      display: none;
+      transition: all 0.3s ease;
+    `;
+    
+    // হোভার ইফেক্ট
+    button.onmouseover = () => {
+      button.style.transform = 'translateY(-2px)';
+      button.style.boxShadow = '0 6px 20px rgba(0,0,0,0.3)';
+    };
+    button.onmouseout = () => {
+      button.style.transform = 'translateY(0)';
+      button.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
+    };
+    
+    document.body.appendChild(button);
+    return button;
+  }
+  
+  // ৩. বাটন রেফারেন্স
+  const installButton = document.getElementById('installButton') || createInstallButton();
+  
+  // ৪. যখন ব্রাউজার ইনস্টল প্রম্পট দিতে চায়
+  window.addEventListener('beforeinstallprompt', (e) => {
+    // Prevent Chrome 67 and earlier from automatically showing the prompt
+    e.preventDefault();
+    
+    // Stash the event so it can be triggered later
+    deferredPrompt = e;
+    
+    // Show the install button
+    installButton.style.display = 'block';
+    
+    // Optionally, show a custom message
+    console.log('PWA can be installed! Showing install button.');
+  });
+  
+  // ৫. বাটনে ক্লিক করলে
+  installButton.addEventListener('click', () => {
+    if (deferredPrompt) {
+      // Show the install prompt
+      deferredPrompt.prompt();
+      
+      // Wait for the user to respond to the prompt
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted the install prompt');
+          // Hide the button after installation
+          installButton.style.display = 'none';
+          
+          // Optional: Show thank you message
+          showNotification('App installed successfully! Check your home screen.');
+        } else {
+          console.log('User dismissed the install prompt');
+        }
+        // Clear the deferredPrompt variable
+        deferredPrompt = null;
+      });
+    }
+  });
+  
+  // ৬. অ্যাপ ইতিমধ্যে ইনস্টল থাকলে
+  window.addEventListener('appinstalled', (evt) => {
+    console.log('App was successfully installed via the browser prompt');
+    installButton.style.display = 'none';
+  });
+  
+  // ৭. পরীক্ষা করুন অ্যাপটি ইতিমধ্যে ইনস্টল কিনা
+  // PWA already installed এর জন্য
+  window.addEventListener('load', () => {
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      console.log('App is running in standalone mode');
+      installButton.style.display = 'none';
+    }
+    
+    // Check if app can be installed (for older browsers)
+    if (!deferredPrompt && window.matchMedia('(display-mode: browser)').matches) {
+      // You can show a different message or button
+      console.log('App not yet installed, but no install prompt available');
+    }
+  });
+  
+  // ৮. নোটিফিকেশন দেখানোর ফাংশন (ঐচ্ছিক)
+  function showNotification(message) {
+    // Check if browser supports notifications
+    if (!("Notification" in window)) return;
+    
+    if (Notification.permission === "granted") {
+      new Notification(message);
+    } else if (Notification.permission !== "denied") {
+      Notification.requestPermission().then(permission => {
+        if (permission === "granted") {
+          new Notification(message);
+        }
+      });
+    }
+    
+    // Alternatively, show a toast message
+    const toast = document.createElement('div');
+    toast.textContent = message;
+    toast.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #4CAF50;
+      color: white;
+      padding: 15px;
+      border-radius: 5px;
+      z-index: 1001;
+      animation: slideIn 0.3s ease;
+    `;
+    document.body.appendChild(toast);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+      toast.remove();
+    }, 3000);
+  }
+  
+  // ৯. Service Worker রেজিস্ট্রেশন (অবশ্যই দরকার)
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then(registration => {
+          console.log('ServiceWorker registration successful:', registration);
+        })
+        .catch(error => {
+          console.log('ServiceWorker registration failed:', error);
+        });
+    });
+  }
+</script>
 </body>
 </html>
