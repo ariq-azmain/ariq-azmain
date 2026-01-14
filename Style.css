@@ -516,10 +516,11 @@ main{
 }
 .vl h1{
   padding: 0;
-  background-clip: padding-box;
+  background-clip: text;
+  background: linear-gradient(to left, #8667c6,#ac67c6,#c667c0);
   font-size: 200%;
   text-align: center;
-  color: #00ef71;
+  color: transparent;
 }
 .vl h3{
   text-align: center;

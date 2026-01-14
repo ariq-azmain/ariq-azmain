@@ -1,0 +1,69 @@
+PRODUCT DOCUMENTATION: PERSONAL PORTFOLIO & BLOG TEMPLATE
+Developed by: Ariq Azmain
+
+This is a professional, modern, and fully responsive personal portfolio and blogging template built with HTML5, CSS3, and Bootstrap 5.
+
+---
+
+1. LIVE DEMO
+You can check the live preview of the website here:
+https://ariq-azmain-xi.vercel.app/
+
+---
+
+2. PACKAGE CONTENTS
+Inside the ZIP file, you will find:
+- index.html: The main structure of the website.
+- style.css: Custom styles and design configurations.
+- script.js: Interactivity and typing animations.
+- img/: Folder for your profile picture and project screenshots.
+- README.txt: This documentation file.
+
+---
+
+3. CUSTOMIZATION GUIDE
+
+A. Change Name and Bio:
+Open index.html and search for "Ariq Azmain". Replace it with your own name.
+Example: <h1>Hi, I am [Your Name]</h1>
+
+B. Update Profile Picture:
+Place your photo inside the "img" folder. In index.html, update the image source:
+Example: <img src="img/your-photo.jpg" alt="Profile Picture">
+
+C. Adding New Projects:
+To add a new project, copy the following block inside the projects section of index.html:
+
+<div class="col-md-4">
+    <div class="card">
+        <img src="img/project-thumbnail.jpg" class="card-img-top" alt="Project Name">
+        <div class="card-body">
+            <h5 class="card-title">Project Title</h5>
+            <p class="card-text">Short description of your work.</p>
+            <a href="#" class="btn btn-primary">View Project</a>
+        </div>
+    </div>
+</div>
+
+---
+
+4. HOW TO DEPLOY (GO LIVE)
+You can host this website for free:
+- Vercel or Netlify: Simply drag and drop the entire project folder into their dashboard.
+- GitHub Pages: Upload your files to a GitHub repository and enable "Pages" in the settings.
+
+---
+
+5. TECHNOLOGIES USED
+- HTML5 & CSS3
+- Bootstrap 5
+- Vanilla JavaScript
+- Google Fonts
+
+---
+
+6. LICENSE & SUPPORT
+This template is for personal and commercial use. Reselling this template as a standalone product is prohibited. For any queries, please contact me through my Gumroad profile.
+
+Thank you for your purchase!
+- Ariq Azmain
