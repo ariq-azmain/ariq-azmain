@@ -838,39 +838,53 @@ Ready for step-by-step execution</pre>
     output.scrollTop = output.scrollHeight;
 }
 
-// Toggle layout
+// Toggle layout - Fixed version
 function toggleLayout() {
-    const ideMain = document.getElementById("ideMain");
-    const currentLayout = ideMain.dataset.layout || "horizontal";
-    const layoutBtn = document.getElementById("layoutBtn");
-
-    if (currentLayout === "horizontal") {
+    const ideMain = document.getElementById('ideMain');
+    const currentLayout = ideMain.dataset.layout || 'horizontal';
+    const layoutBtn = document.getElementById('layoutBtn');
+    
+    if (currentLayout === 'horizontal') {
         // Switch to vertical
-        ideMain.style.flexDirection = "column";
-        ideMain.dataset.layout = "vertical";
-
+        ideMain.style.flexDirection = 'column';
+        ideMain.dataset.layout = 'vertical';
+        
         // Update resizer
-        const verticalResizer = document.getElementById("verticalResizer");
-        verticalResizer.style.width = "100%";
-        verticalResizer.style.height = "8px";
-        verticalResizer.style.cursor = "row-resize";
-
+        const verticalResizer = document.getElementById('verticalResizer');
+        verticalResizer.style.width = '100%';
+        verticalResizer.style.height = '8px';
+        verticalResizer.style.cursor = 'row-resize';
+        
+        // Adjust panel sizes
+        document.getElementById('editorPanel').style.flex = '1 1 auto';
+        document.getElementById('consolePanel').style.flex = '1 1 auto';
+        
         layoutBtn.innerHTML = '<i class="fas fa-columns"></i> Horizontal';
-        showNotification("Switched to vertical layout", "info");
+        showNotification('Switched to vertical layout', 'info');
+        
     } else {
         // Switch to horizontal
-        ideMain.style.flexDirection = "row";
-        ideMain.dataset.layout = "horizontal";
-
+        ideMain.style.flexDirection = 'row';
+        ideMain.dataset.layout = 'horizontal';
+        
         // Update resizer
-        const verticalResizer = document.getElementById("verticalResizer");
-        verticalResizer.style.width = "8px";
-        verticalResizer.style.height = "100%";
-        verticalResizer.style.cursor = "col-resize";
-
+        const verticalResizer = document.getElementById('verticalResizer');
+        verticalResizer.style.width = '8px';
+        verticalResizer.style.height = '100%';
+        verticalResizer.style.cursor = 'col-resize';
+        
+        // Adjust panel sizes
+        document.getElementById('editorPanel').style.flex = '0 0 60%';
+        document.getElementById('consolePanel').style.flex = '0 0 40%';
+        
         layoutBtn.innerHTML = '<i class="fas fa-exchange-alt"></i> Vertical';
-        showNotification("Switched to horizontal layout", "info");
+        showNotification('Switched to horizontal layout', 'info');
     }
+    
+    // Force a reflow to ensure panels render correctly
+    setTimeout(() => {
+        window.dispatchEvent(new Event('resize'));
+    }, 100);
 }
 
 // Clear console
