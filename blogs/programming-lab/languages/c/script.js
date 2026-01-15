@@ -54,6 +54,9 @@ int main() {
     
     // Update file size
     updateFileSize();
+    
+    // Show welcome message
+    console.log('C IDE Initialized Successfully');
 });
 
 // Initialize UI components
@@ -176,243 +179,6 @@ int main() {
     } else {
         printf("%d is odd\\n", number);
     }
-    
-    return 0;
-}`
-        },
-        'loops': {
-            name: 'Loops (for, while, do-while)',
-            description: 'Demonstrates different types of loops in C',
-            category: 'basic',
-            code: `#include <stdio.h>
-
-int main() {
-    int i;
-    
-    printf("For loop (1 to 5):\\n");
-    for (i = 1; i <= 5; i++) {
-        printf("%d ", i);
-    }
-    printf("\\n\\n");
-    
-    printf("While loop (5 to 1):\\n");
-    i = 5;
-    while (i >= 1) {
-        printf("%d ", i);
-        i--;
-    }
-    printf("\\n\\n");
-    
-    printf("Do-while loop (1 to 3):\\n");
-    i = 1;
-    do {
-        printf("%d ", i);
-        i++;
-    } while (i <= 3);
-    printf("\\n");
-    
-    // Nested loops for multiplication table
-    printf("\\nMultiplication Table (1-3):\\n");
-    for (int row = 1; row <= 3; row++) {
-        for (int col = 1; col <= 3; col++) {
-            printf("%d\t", row * col);
-        }
-        printf("\\n");
-    }
-    
-    return 0;
-}`
-        },
-        'arrays': {
-            name: 'Arrays',
-            description: 'Working with arrays in C programming',
-            category: 'intermediate',
-            code: `#include <stdio.h>
-
-int main() {
-    // Integer array
-    int numbers[5] = {10, 20, 30, 40, 50};
-    
-    // Character array (string)
-    char name[] = "C Programming";
-    
-    // 2D array
-    int matrix[2][3] = {
-        {1, 2, 3},
-        {4, 5, 6}
-    };
-    
-    printf("Array elements:\\n");
-    for (int i = 0; i < 5; i++) {
-        printf("numbers[%d] = %d\\n", i, numbers[i]);
-    }
-    
-    printf("\\nString: %s\\n", name);
-    printf("Length of string: %d\\n", sizeof(name) - 1);
-    
-    printf("\\n2D Array:\\n");
-    for (int i = 0; i < 2; i++) {
-        for (int j = 0; j < 3; j++) {
-            printf("%d ", matrix[i][j]);
-        }
-        printf("\\n");
-    }
-    
-    // Array operations
-    int sum = 0;
-    for (int i = 0; i < 5; i++) {
-        sum += numbers[i];
-    }
-    printf("\\nSum of array elements: %d\\n", sum);
-    printf("Average: %.2f\\n", sum / 5.0);
-    
-    return 0;
-}`
-        },
-        'functions': {
-            name: 'Functions',
-            description: 'Creating and using functions in C',
-            category: 'intermediate',
-            code: `#include <stdio.h>
-
-// Function declarations
-int add(int a, int b);
-void printMessage();
-int factorial(int n);
-void swap(int *a, int *b);
-
-int main() {
-    printMessage();
-    
-    int x = 10, y = 20;
-    int sum = add(x, y);
-    printf("Sum of %d and %d is %d\\n", x, y, sum);
-    
-    int num = 5;
-    printf("Factorial of %d is %d\\n", num, factorial(num));
-    
-    printf("\\nBefore swap: x = %d, y = %d\\n", x, y);
-    swap(&x, &y);
-    printf("After swap: x = %d, y = %d\\n", x, y);
-    
-    return 0;
-}
-
-// Function definitions
-int add(int a, int b) {
-    return a + b;
-}
-
-void printMessage() {
-    printf("Welcome to C Functions!\\n");
-}
-
-int factorial(int n) {
-    if (n <= 1) return 1;
-    return n * factorial(n - 1);
-}
-
-void swap(int *a, int *b) {
-    int temp = *a;
-    *a = *b;
-    *b = temp;
-}`
-        },
-        'pointers': {
-            name: 'Pointers',
-            description: 'Understanding pointers in C programming',
-            category: 'intermediate',
-            code: `#include <stdio.h>
-
-int main() {
-    int number = 42;
-    int *ptr = &number;
-    
-    printf("Variable 'number':\\n");
-    printf("Value: %d\\n", number);
-    printf("Address: %p\\n", (void*)&number);
-    
-    printf("\\nPointer 'ptr':\\n");
-    printf("Value (address stored): %p\\n", (void*)ptr);
-    printf("Dereferenced value: %d\\n", *ptr);
-    printf("Address of pointer: %p\\n", (void*)&ptr);
-    
-    // Pointer arithmetic
-    int arr[] = {10, 20, 30, 40, 50};
-    int *arrPtr = arr;
-    
-    printf("\\nArray using pointers:\\n");
-    for (int i = 0; i < 5; i++) {
-        printf("arr[%d] = %d (using pointer: %d)\\n", 
-               i, arr[i], *(arrPtr + i));
-    }
-    
-    // Pointer to pointer
-    int **ptrToPtr = &ptr;
-    printf("\\nPointer to pointer:\\n");
-    printf("Value: %p\\n", (void*)ptrToPtr);
-    printf("Dereferenced once: %p\\n", (void*)*ptrToPtr);
-    printf("Dereferenced twice: %d\\n", **ptrToPtr);
-    
-    return 0;
-}`
-        },
-        'structures': {
-            name: 'Structures',
-            description: 'Working with structures in C',
-            category: 'intermediate',
-            code: `#include <stdio.h>
-#include <string.h>
-
-// Structure definition
-struct Student {
-    char name[50];
-    int age;
-    float gpa;
-    int id;
-};
-
-// Function to print student details
-void printStudent(struct Student s) {
-    printf("Name: %s\\n", s.name);
-    printf("Age: %d\\n", s.age);
-    printf("GPA: %.2f\\n", s.gpa);
-    printf("ID: %d\\n\\n", s.id);
-}
-
-int main() {
-    // Structure initialization
-    struct Student student1 = {"Alice Johnson", 20, 3.8, 1001};
-    struct Student student2;
-    
-    // Assign values to structure members
-    strcpy(student2.name, "Bob Smith");
-    student2.age = 21;
-    student2.gpa = 3.6;
-    student2.id = 1002;
-    
-    // Array of structures
-    struct Student students[3] = {
-        {"Charlie Brown", 22, 3.9, 1003},
-        {"Diana Prince", 19, 3.7, 1004},
-        {"Edward Stark", 20, 3.5, 1005}
-    };
-    
-    printf("Individual Students:\\n");
-    printStudent(student1);
-    printStudent(student2);
-    
-    printf("Array of Students:\\n");
-    for (int i = 0; i < 3; i++) {
-        printf("Student %d:\\n", i + 1);
-        printStudent(students[i]);
-    }
-    
-    // Structure pointer
-    struct Student *ptr = &student1;
-    printf("Using structure pointer:\\n");
-    printf("Name via pointer: %s\\n", ptr->name);
-    printf("Age via pointer: %d\\n", ptr->age);
     
     return 0;
 }`
@@ -572,66 +338,6 @@ function initEventListeners() {
         closeTabBtn.addEventListener('click', closeCurrentTab);
     }
     
-    // Modal close buttons
-    document.querySelectorAll('.close-modal').forEach(button => {
-        button.addEventListener('click', function() {
-            this.closest('.modal-overlay').style.display = 'none';
-        });
-    });
-    
-    // Modal overlays
-    document.querySelectorAll('.modal-overlay').forEach(overlay => {
-        overlay.addEventListener('click', function(e) {
-            if (e.target === this) {
-                this.style.display = 'none';
-            }
-        });
-    });
-    
-    // New file modal
-    const cancelNewFile = document.getElementById('cancelNewFile');
-    if (cancelNewFile) {
-        cancelNewFile.addEventListener('click', function() {
-            document.getElementById('newFileModal').style.display = 'none';
-        });
-    }
-    
-    const createFile = document.getElementById('createFile');
-    if (createFile) {
-        createFile.addEventListener('click', createNewFile);
-    }
-    
-    // Save file modal
-    const cancelSave = document.getElementById('cancelSave');
-    if (cancelSave) {
-        cancelSave.addEventListener('click', function() {
-            document.getElementById('saveFileModal').style.display = 'none';
-        });
-    }
-    
-    const confirmSave = document.getElementById('confirmSave');
-    if (confirmSave) {
-        confirmSave.addEventListener('click', confirmSaveFile);
-    }
-    
-    // Example modal
-    const cancelLoad = document.getElementById('cancelLoad');
-    if (cancelLoad) {
-        cancelLoad.addEventListener('click', function() {
-            document.getElementById('exampleModal').style.display = 'none';
-        });
-    }
-    
-    const confirmLoad = document.getElementById('confirmLoad');
-    if (confirmLoad) {
-        confirmLoad.addEventListener('click', loadSelectedExample);
-    }
-    
-    const copyExampleBtn = document.getElementById('copyExampleBtn');
-    if (copyExampleBtn) {
-        copyExampleBtn.addEventListener('click', copyExampleCode);
-    }
-    
     // Tab switching
     document.querySelectorAll('.tab[data-tab]').forEach(tab => {
         tab.addEventListener('click', function() {
@@ -689,7 +395,7 @@ function initResizable() {
     }
 }
 
-// Run code
+// Run code - FIXED VERSION
 async function runCode() {
     const code = window.codeEditor.getValue();
     const input = document.getElementById('consoleInput')?.value || '';
@@ -701,7 +407,7 @@ async function runCode() {
     const output = document.getElementById('consoleOutput');
     const status = document.createElement('div');
     status.className = 'console-status loading';
-    status.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Compiling and running C code...';
+    status.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Compiling C code...';
     output.appendChild(status);
     
     // Update editor status
@@ -714,16 +420,69 @@ async function runCode() {
     
     // Disable run button
     const runBtn = document.getElementById('runBtn');
-    const originalText = runBtn.innerHTML;
-    runBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Running...';
-    runBtn.disabled = true;
+    if (runBtn) {
+        runBtn.disabled = true;
+        runBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Running...';
+    }
     
     try {
-        // Use compiler API
-        const result = await window.compilerAPI.execute('c', code, input);
+        // Check if compilerAPI is available
+        if (!window.compilerAPI) {
+            // Fallback to local compiler
+            console.log('Using local C compiler');
+            const result = await window.cCompiler.execute(code, input);
+            displayResult(result);
+        } else {
+            // Use compiler API
+            console.log('Using compiler API');
+            const result = await window.compilerAPI.execute('c', code, input);
+            displayResult(result);
+        }
+    } catch (error) {
+        console.error('Execution error:', error);
         
         // Remove status
-        status.remove();
+        if (status.parentNode) {
+            status.remove();
+        }
+        
+        // Display error
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'console-result error';
+        errorDiv.innerHTML = `
+            <div class="result-header">
+                <i class="fas fa-exclamation-triangle error"></i>
+                <span>Execution Error</span>
+            </div>
+            <pre class="error-content">${escapeHtml(error.message)}</pre>
+            <div class="error-help">
+                <p><i class="fas fa-lightbulb"></i> Try using the Format Code button to fix syntax errors</p>
+            </div>
+        `;
+        
+        output.appendChild(errorDiv);
+        output.scrollTop = output.scrollHeight;
+        
+        // Update editor status
+        if (editorStatus && statusIcon) {
+            editorStatus.textContent = 'Error';
+            statusIcon.style.color = '#ef4444';
+        }
+        
+        showNotification('Error: ' + error.message, 'error');
+    } finally {
+        // Re-enable run button
+        if (runBtn) {
+            runBtn.disabled = false;
+            runBtn.innerHTML = '<i class="fas fa-play"></i> Run (Ctrl+Enter)';
+        }
+    }
+    
+    function displayResult(result) {
+        // Remove status
+        if (status.parentNode) {
+            status.remove();
+        }
         
         // Display result
         const resultDiv = document.createElement('div');
@@ -735,8 +494,10 @@ async function runCode() {
                     <i class="fas fa-check-circle success"></i>
                     <span>Execution Successful</span>
                     ${result.executionTime ? `<span class="execution-time">${result.executionTime}</span>` : ''}
+                    ${result.simulated ? `<span class="simulated-badge">Simulated</span>` : ''}
                 </div>
                 <pre class="output-content">${escapeHtml(result.output)}</pre>
+                ${result.memory ? `<div class="result-footer">Memory used: ${result.memory}</div>` : ''}
             `;
         } else {
             resultDiv.innerHTML = `
@@ -759,37 +520,6 @@ async function runCode() {
         
         showNotification(result.success ? 'Code executed successfully!' : 'Execution failed!', 
                         result.success ? 'success' : 'error');
-        
-    } catch (error) {
-        status.remove();
-        
-        const errorDiv = document.createElement('div');
-        errorDiv.className = 'console-result error';
-        errorDiv.innerHTML = `
-            <div class="result-header">
-                <i class="fas fa-exclamation-triangle error"></i>
-                <span>API Error</span>
-            </div>
-            <pre class="error-content">${escapeHtml(error.message)}</pre>
-        `;
-        
-        output.appendChild(errorDiv);
-        output.scrollTop = output.scrollHeight;
-        
-        // Update editor status
-        const editorStatus = document.querySelector('.editor-status span');
-        const statusIcon = document.querySelector('.status-ready');
-        if (editorStatus && statusIcon) {
-            editorStatus.textContent = 'Error';
-            statusIcon.style.color = '#ef4444';
-        }
-        
-        showNotification('API Error: ' + error.message, 'error');
-        
-    } finally {
-        // Re-enable run button
-        runBtn.innerHTML = originalText;
-        runBtn.disabled = false;
     }
 }
 
@@ -890,11 +620,17 @@ function downloadOutput() {
 function formatCode() {
     const code = window.codeEditor.getValue();
     
-    // Simple formatting for C code
-    const formatted = formatCCode(code);
-    window.codeEditor.setValue(formatted);
-    
-    showNotification('Code formatted!', 'success');
+    // Check if cCompiler is available for formatting
+    if (window.cCompiler && window.cCompiler.formatCode) {
+        const formatted = window.cCompiler.formatCode(code);
+        window.codeEditor.setValue(formatted);
+        showNotification('Code formatted!', 'success');
+    } else {
+        // Fallback formatting
+        const formatted = formatCCode(code);
+        window.codeEditor.setValue(formatted);
+        showNotification('Code formatted!', 'success');
+    }
 }
 
 function formatCCode(code) {
@@ -904,20 +640,23 @@ function formatCCode(code) {
         .replace(/\s*}\s*/g, '\n}\n')
         .replace(/;\s*/g, ';\n')
         .replace(/\n\s*\n/g, '\n')
-        .replace(/^\s+/gm, ''); // Remove leading whitespace
+        .replace(/^\s+/gm, '');
     
     // Add proper indentation
     let indentLevel = 0;
     const lines = formatted.split('\n');
     formatted = lines.map(line => {
         line = line.trim();
-        if (line.startsWith('}') || line.startsWith('} else') || line.endsWith('}')) {
-            indentLevel--;
+        
+        // Decrease indent for closing braces
+        if (line.startsWith('}') || line === '};') {
+            indentLevel = Math.max(0, indentLevel - 1);
         }
         
-        const indentedLine = '    '.repeat(Math.max(0, indentLevel)) + line;
+        const indentedLine = '    '.repeat(indentLevel) + line;
         
-        if (line.endsWith('{') || line.startsWith('{')) {
+        // Increase indent for opening braces
+        if (line.endsWith('{') || line === '{') {
             indentLevel++;
         }
         
@@ -943,7 +682,7 @@ function sendInput() {
         // Clear input
         input.value = '';
         
-        // Process command if it's a console command
+        // Process command
         processConsoleCommand(value);
     }
 }
@@ -966,8 +705,9 @@ function processConsoleCommand(command) {
                 <pre>clear    - Clear console
 help     - Show this help
 version  - Show IDE version
-date     - Show current date
-time     - Show current time</pre>
+examples - List available examples
+run      - Run current code
+format   - Format current code</pre>
             `;
             output.appendChild(helpDiv);
             output.scrollTop = output.scrollHeight;
@@ -975,24 +715,42 @@ time     - Show current time</pre>
         case 'version':
             const versionDiv = document.createElement('div');
             versionDiv.className = 'console-info';
-            versionDiv.textContent = 'C IDE v1.0.0';
+            versionDiv.textContent = 'C IDE v1.0.0 | Built with CodeMirror | By Ariq Azmain';
             output.appendChild(versionDiv);
             output.scrollTop = output.scrollHeight;
             break;
-        case 'date':
-            const dateDiv = document.createElement('div');
-            dateDiv.className = 'console-info';
-            dateDiv.textContent = new Date().toLocaleDateString();
-            output.appendChild(dateDiv);
+        case 'examples':
+            const examplesDiv = document.createElement('div');
+            examplesDiv.className = 'console-info';
+            examplesDiv.innerHTML = `
+                <div class="result-header">
+                    <i class="fas fa-code"></i>
+                    <span>Available C Examples</span>
+                </div>
+                <pre>• hello     - Hello World program
+• variables - Variables and data types
+• conditions - If-else conditions
+• loops     - For, while, do-while loops
+• functions - Function examples
+• arrays    - Array examples
+• pointers  - Pointer examples</pre>
+            `;
+            output.appendChild(examplesDiv);
             output.scrollTop = output.scrollHeight;
             break;
-        case 'time':
-            const timeDiv = document.createElement('div');
-            timeDiv.className = 'console-info';
-            timeDiv.textContent = new Date().toLocaleTimeString();
-            output.appendChild(timeDiv);
-            output.scrollTop = output.scrollHeight;
+        case 'run':
+            runCode();
             break;
+        case 'format':
+            formatCode();
+            break;
+        default:
+            // Try to evaluate as C expression
+            const exprDiv = document.createElement('div');
+            exprDiv.className = 'console-info';
+            exprDiv.textContent = `Command: ${command}`;
+            output.appendChild(exprDiv);
+            output.scrollTop = output.scrollHeight;
     }
 }
 
@@ -1007,8 +765,6 @@ function switchTab(tabName) {
         }
     });
     
-    // Show corresponding content
-    // In a real IDE, this would show different panels
     showNotification(`Switched to ${tabName} tab`, 'info');
 }
 
@@ -1053,15 +809,65 @@ function closeCurrentTab() {
 
 // Show new file modal
 function showNewFileModal() {
-    const modal = document.getElementById('newFileModal');
-    modal.style.display = 'flex';
+    const modalHTML = `
+        <div class="modal-overlay" id="newFileModal">
+            <div class="modal">
+                <div class="modal-header">
+                    <h3>Create New C File</h3>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="fileName">File Name</label>
+                        <input type="text" id="fileName" placeholder="program.c" value="main.c">
+                    </div>
+                    <div class="form-group">
+                        <label for="fileTemplate">Template</label>
+                        <select id="fileTemplate">
+                            <option value="empty">Empty File</option>
+                            <option value="hello">Hello World</option>
+                            <option value="basic">Basic Structure</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" id="cancelNewFile">Cancel</button>
+                    <button class="btn btn-primary" id="createFile">Create File</button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Remove existing modal
+    const existingModal = document.getElementById('newFileModal');
+    if (existingModal) existingModal.remove();
+    
+    // Add new modal
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    
+    // Add event listeners
+    document.getElementById('cancelNewFile').addEventListener('click', () => {
+        document.getElementById('newFileModal').remove();
+    });
+    
+    document.querySelector('#newFileModal .close-modal').addEventListener('click', () => {
+        document.getElementById('newFileModal').remove();
+    });
+    
+    document.getElementById('createFile').addEventListener('click', createNewFile);
+    
+    // Close on overlay click
+    document.getElementById('newFileModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            this.remove();
+        }
+    });
 }
 
 // Create new file
 function createNewFile() {
     const fileName = document.getElementById('fileName').value || 'program.c';
     const template = document.getElementById('fileTemplate').value;
-    const location = document.getElementById('fileLocation').value;
     
     let newCode = '';
     
@@ -1076,108 +882,10 @@ int main() {
             break;
         case 'basic':
             newCode = `#include <stdio.h>
-#include <stdlib.h>
-
-// Function prototypes
-void displayMenu();
-int processChoice(int choice);
 
 int main() {
-    printf("Program: ${fileName}\\n");
-    
-    int choice;
-    do {
-        displayMenu();
-        printf("Enter your choice: ");
-        scanf("%d", &choice);
-        processChoice(choice);
-    } while (choice != 0);
-    
+    // Your code here
     return 0;
-}
-
-void displayMenu() {
-    printf("\\n=== MENU ===\\n");
-    printf("1. Option 1\\n");
-    printf("2. Option 2\\n");
-    printf("0. Exit\\n");
-    printf("=============\\n");
-}
-
-int processChoice(int choice) {
-    switch(choice) {
-        case 1:
-            printf("Option 1 selected\\n");
-            break;
-        case 2:
-            printf("Option 2 selected\\n");
-            break;
-        case 0:
-            printf("Exiting...\\n");
-            break;
-        default:
-            printf("Invalid choice\\n");
-    }
-    return 0;
-}`;
-            break;
-        case 'advanced':
-            newCode = `#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-// Structure definitions
-typedef struct {
-    int id;
-    char name[50];
-    float score;
-} Student;
-
-// Function prototypes
-void addStudent(Student *s);
-void displayStudent(Student s);
-float calculateAverage(Student students[], int count);
-
-int main(int argc, char *argv[]) {
-    printf("Advanced C Program\\n");
-    printf("==================\\n");
-    
-    // Dynamic memory allocation
-    int *numbers = (int*)malloc(5 * sizeof(int));
-    if (numbers == NULL) {
-        printf("Memory allocation failed!\\n");
-        return 1;
-    }
-    
-    // Initialize array
-    for (int i = 0; i < 5; i++) {
-        numbers[i] = i * 10;
-    }
-    
-    // Display array
-    printf("Array elements: ");
-    for (int i = 0; i < 5; i++) {
-        printf("%d ", numbers[i]);
-    }
-    printf("\\n");
-    
-    // Free memory
-    free(numbers);
-    
-    return 0;
-}
-
-void addStudent(Student *s) {
-    // Implementation here
-}
-
-void displayStudent(Student s) {
-    // Implementation here
-}
-
-float calculateAverage(Student students[], int count) {
-    // Implementation here
-    return 0.0;
 }`;
             break;
         default:
@@ -1194,21 +902,8 @@ float calculateAverage(Student students[], int count) {
         activeTab.dataset.tab = fileName;
     }
     
-    // Handle save location
-    if (location === 'download') {
-        saveFileWithName(fileName);
-    } else {
-        // Save to browser storage
-        try {
-            localStorage.setItem(`c_file_${fileName}`, newCode);
-            showNotification(`File '${fileName}' saved to browser storage`, 'success');
-        } catch (e) {
-            showNotification('Failed to save to browser storage', 'error');
-        }
-    }
-    
     // Close modal
-    document.getElementById('newFileModal').style.display = 'none';
+    document.getElementById('newFileModal').remove();
     showNotification(`Created new file: ${fileName}`, 'success');
 }
 
@@ -1216,50 +911,8 @@ float calculateAverage(Student students[], int count) {
 function saveFile() {
     const currentTab = document.querySelector('.tab.active');
     const fileName = currentTab ? currentTab.dataset.tab : 'program.c';
-    
-    // Show save modal
-    const modal = document.getElementById('saveFileModal');
-    const fileNameInput = document.getElementById('saveFileName');
-    const preview = document.getElementById('savePreview');
-    
-    fileNameInput.value = fileName;
-    preview.textContent = window.codeEditor.getValue().substring(0, 200) + '...';
-    
-    modal.style.display = 'flex';
-}
-
-// Confirm save file
-function confirmSaveFile() {
-    const fileName = document.getElementById('saveFileName').value || 'program.c';
-    const location = document.getElementById('saveLocation').value;
-    
-    if (location === 'computer') {
-        saveFileWithName(fileName);
-    } else {
-        // Save to browser storage
-        try {
-            const code = window.codeEditor.getValue();
-            localStorage.setItem(`c_file_${fileName}`, code);
-            showNotification(`File '${fileName}' saved to browser storage`, 'success');
-        } catch (e) {
-            showNotification('Failed to save to browser storage: ' + e.message, 'error');
-        }
-    }
-    
-    // Update tab name
-    const activeTab = document.querySelector('.tab.active');
-    if (activeTab) {
-        activeTab.textContent = fileName;
-        activeTab.dataset.tab = fileName;
-    }
-    
-    // Close modal
-    document.getElementById('saveFileModal').style.display = 'none';
-}
-
-// Save file with name
-function saveFileWithName(fileName) {
     const code = window.codeEditor.getValue();
+    
     const blob = new Blob([code], { type: 'text/x-c' });
     const url = URL.createObjectURL(blob);
     
@@ -1271,14 +924,26 @@ function saveFileWithName(fileName) {
     document.body.removeChild(a);
     
     URL.revokeObjectURL(url);
-    showNotification(`File downloaded as ${fileName}`, 'success');
+    showNotification(`File saved as ${fileName}`, 'success');
 }
 
 // Save file as
 function saveFileAs() {
     const fileName = prompt('Enter file name:', 'program.c');
     if (fileName) {
-        saveFileWithName(fileName);
+        const code = window.codeEditor.getValue();
+        const blob = new Blob([code], { type: 'text/x-c' });
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        
+        URL.revokeObjectURL(url);
+        showNotification(`File saved as ${fileName}`, 'success');
         
         // Update tab name
         const activeTab = document.querySelector('.tab.active');
@@ -1341,44 +1006,78 @@ function showExampleModal(exampleKey) {
     const example = window.cExamples[exampleKey];
     if (!example) return;
     
-    const modal = document.getElementById('exampleModal');
-    const title = document.getElementById('exampleTitle');
-    const code = document.getElementById('exampleCode');
-    const description = document.getElementById('exampleDescription');
+    const modalHTML = `
+        <div class="modal-overlay" id="exampleModal">
+            <div class="modal modal-lg">
+                <div class="modal-header">
+                    <h3>Load Example Code</h3>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="example-preview">
+                        <div class="preview-header">
+                            <div class="preview-title">
+                                <i class="fab fa-c"></i>
+                                <h4>${escapeHtml(example.name)}</h4>
+                            </div>
+                            <div class="preview-actions">
+                                <button class="btn btn-sm" id="copyExampleBtn">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+                        <div class="preview-content">
+                            <pre id="exampleCode">${escapeHtml(example.code)}</pre>
+                        </div>
+                        <div class="preview-description">
+                            <p>${escapeHtml(example.description)}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" id="cancelLoad">Cancel</button>
+                    <button class="btn btn-primary" id="confirmLoad">Load into Editor</button>
+                </div>
+            </div>
+        </div>
+    `;
     
-    title.textContent = example.name;
-    code.textContent = example.code;
-    description.textContent = example.description;
-    modal.dataset.exampleKey = exampleKey;
-    modal.style.display = 'flex';
-}
-
-// Load selected example
-function loadSelectedExample() {
-    const modal = document.getElementById('exampleModal');
-    const exampleKey = modal.dataset.exampleKey;
+    // Remove existing modal
+    const existingModal = document.getElementById('exampleModal');
+    if (existingModal) existingModal.remove();
     
-    loadExample(exampleKey);
-    modal.style.display = 'none';
-}
-
-// Load example
-function loadExample(exampleKey) {
-    const example = window.cExamples[exampleKey];
-    if (example) {
+    // Add new modal
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    
+    // Add event listeners
+    document.getElementById('cancelLoad').addEventListener('click', () => {
+        document.getElementById('exampleModal').remove();
+    });
+    
+    document.querySelector('#exampleModal .close-modal').addEventListener('click', () => {
+        document.getElementById('exampleModal').remove();
+    });
+    
+    document.getElementById('copyExampleBtn').addEventListener('click', () => {
+        const code = example.code;
+        navigator.clipboard.writeText(code).then(() => {
+            showNotification('Example code copied to clipboard!', 'success');
+        }).catch(err => {
+            showNotification('Failed to copy code: ' + err.message, 'error');
+        });
+    });
+    
+    document.getElementById('confirmLoad').addEventListener('click', () => {
         window.codeEditor.setValue(example.code);
+        document.getElementById('exampleModal').remove();
         showNotification(`Loaded example: ${example.name}`, 'success');
-    }
-}
-
-// Copy example code
-function copyExampleCode() {
-    const code = document.getElementById('exampleCode').textContent;
+    });
     
-    navigator.clipboard.writeText(code).then(() => {
-        showNotification('Example code copied to clipboard!', 'success');
-    }).catch(err => {
-        showNotification('Failed to copy code: ' + err.message, 'error');
+    // Close on overlay click
+    document.getElementById('exampleModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            this.remove();
+        }
     });
 }
 
@@ -1387,13 +1086,17 @@ function showNotification(message, type = 'success') {
     // Remove existing notifications
     document.querySelectorAll('.notification').forEach(n => n.remove());
     
+    const icons = {
+        success: 'check-circle',
+        error: 'exclamation-circle',
+        warning: 'exclamation-triangle',
+        info: 'info-circle'
+    };
+    
     const notification = document.createElement('div');
     notification.className = `notification ${type}`;
     notification.innerHTML = `
-        <i class="fas fa-${type === 'success' ? 'check-circle' : 
-                          type === 'error' ? 'exclamation-circle' : 
-                          type === 'warning' ? 'exclamation-triangle' : 
-                          'info-circle'}"></i>
+        <i class="fas fa-${icons[type] || 'info-circle'}"></i>
         <span>${message}</span>
     `;
     
@@ -1415,9 +1118,61 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-// Add animation for notification removal
+// Add CSS for notifications and console output
 const style = document.createElement('style');
 style.textContent = `
+    .notification {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 1rem 1.5rem;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        z-index: 10000;
+        animation: slideInRight 0.3s ease;
+        backdrop-filter: blur(10px);
+        max-width: 350px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .notification.success {
+        background: rgba(16, 185, 129, 0.9);
+        color: white;
+        border-left: 4px solid #059669;
+    }
+    
+    .notification.error {
+        background: rgba(239, 68, 68, 0.9);
+        color: white;
+        border-left: 4px solid #dc2626;
+    }
+    
+    .notification.warning {
+        background: rgba(245, 158, 11, 0.9);
+        color: white;
+        border-left: 4px solid #d97706;
+    }
+    
+    .notification.info {
+        background: rgba(59, 130, 246, 0.9);
+        color: white;
+        border-left: 4px solid #2563eb;
+    }
+    
+    @keyframes slideInRight {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    
     @keyframes slideOutRight {
         from {
             transform: translateX(0);
@@ -1438,34 +1193,37 @@ style.textContent = `
         display: flex;
         align-items: center;
         gap: 10px;
+        border-left: 4px solid #3b82f6;
     }
     
     .console-result {
-        padding: 1rem;
-        border-radius: 8px;
+        padding: 1.5rem;
+        border-radius: 10px;
         margin-bottom: 1rem;
         font-family: 'JetBrains Mono', monospace;
-        font-size: 12px;
-        line-height: 1.5;
+        font-size: 13px;
+        line-height: 1.6;
+        border: 1px solid rgba(148, 163, 184, 0.1);
     }
     
     .console-result.success {
-        background: rgba(16, 185, 129, 0.1);
-        border: 1px solid rgba(16, 185, 129, 0.2);
+        background: rgba(16, 185, 129, 0.05);
+        border-left: 4px solid #10b981;
     }
     
     .console-result.error {
-        background: rgba(239, 68, 68, 0.1);
-        border: 1px solid rgba(239, 68, 68, 0.2);
+        background: rgba(239, 68, 68, 0.05);
+        border-left: 4px solid #ef4444;
     }
     
     .result-header {
         display: flex;
         align-items: center;
         gap: 10px;
-        margin-bottom: 0.75rem;
+        margin-bottom: 1rem;
         color: inherit;
         font-weight: 500;
+        font-size: 0.9rem;
     }
     
     .execution-time {
@@ -1477,12 +1235,34 @@ style.textContent = `
         border-radius: 4px;
     }
     
+    .simulated-badge {
+        background: rgba(245, 158, 11, 0.2);
+        color: #f59e0b;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        margin-left: 0.5rem;
+    }
+    
     .output-content,
     .error-content {
         margin: 0;
         white-space: pre-wrap;
         word-break: break-word;
         color: inherit;
+        background: rgba(0, 0, 0, 0.1);
+        padding: 1rem;
+        border-radius: 6px;
+        font-size: 12px;
+        line-height: 1.5;
+    }
+    
+    .result-footer {
+        margin-top: 1rem;
+        padding-top: 0.5rem;
+        border-top: 1px solid rgba(148, 163, 184, 0.1);
+        font-size: 0.8rem;
+        color: #94a3b8;
     }
     
     .console-input-line {
@@ -1507,11 +1287,39 @@ style.textContent = `
         font-family: 'JetBrains Mono', monospace;
         font-size: 12px;
         color: #94a3b8;
+        border-left: 4px solid #3b82f6;
     }
     
-    .console-help pre {
+    .console-help pre,
+    .console-info pre {
         margin: 0.5rem 0 0 0;
         color: #cbd5e1;
+        background: rgba(0, 0, 0, 0.1);
+        padding: 0.75rem;
+        border-radius: 4px;
+        font-size: 11px;
+    }
+    
+    .error-help {
+        margin-top: 1rem;
+        padding: 0.75rem;
+        background: rgba(245, 158, 11, 0.1);
+        border-radius: 6px;
+        border-left: 3px solid #f59e0b;
+        font-size: 0.85rem;
+        color: #f59e0b;
+    }
+    
+    .error-help i {
+        margin-right: 5px;
+    }
+    
+    .fa-spinner {
+        animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+        to { transform: rotate(360deg); }
     }
 `;
 document.head.appendChild(style);
