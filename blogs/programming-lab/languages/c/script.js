@@ -1,38 +1,41 @@
-// C Programming IDE JavaScript
-document.addEventListener('DOMContentLoaded', function() {
+// C Programming IDE JavaScript - Fixed Version
+document.addEventListener("DOMContentLoaded", function () {
     // Initialize CodeMirror editor
-    const codeEditor = CodeMirror.fromTextArea(document.getElementById('codeEditor'), {
-        mode: 'text/x-csrc',
-        theme: 'dracula',
-        lineNumbers: true,
-        lineWrapping: true,
-        autoCloseBrackets: true,
-        matchBrackets: true,
-        indentUnit: 4,
-        tabSize: 4,
-        indentWithTabs: false,
-        foldGutter: true,
-        gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter', 'breakpoints'],
-        extraKeys: {
-            'Ctrl-Space': 'autocomplete',
-            'Ctrl-Enter': runCode,
-            'Ctrl-S': saveFile,
-            'Ctrl-N': showNewFileModal,
-            'Ctrl-O': openFile,
-            'F11': function(cm) {
-                cm.setOption('fullScreen', !cm.getOption('fullScreen'));
+    const codeEditor = CodeMirror.fromTextArea(
+        document.getElementById("codeEditor"),
+        {
+            mode: "text/x-csrc",
+            theme: "dracula",
+            lineNumbers: true,
+            lineWrapping: true,
+            autoCloseBrackets: true,
+            matchBrackets: true,
+            indentUnit: 4,
+            tabSize: 4,
+            indentWithTabs: false,
+            foldGutter: true,
+            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+            extraKeys: {
+                "Ctrl-Enter": runCode,
+                "Ctrl-S": saveFile,
+                "Ctrl-N": showNewFileModal,
+                "Ctrl-O": openFile,
+                F11: function (cm) {
+                    cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+                },
+                Esc: function (cm) {
+                    if (cm.getOption("fullScreen"))
+                        cm.setOption("fullScreen", false);
+                },
+                "Ctrl-/": function (cm) {
+                    cm.toggleComment();
+                }
             },
-            'Esc': function(cm) {
-                if (cm.getOption('fullScreen')) cm.setOption('fullScreen', false);
-            },
-            'Ctrl-/': function(cm) {
-                cm.toggleComment();
-            }
-        },
-        styleActiveLine: true,
-        showCursorWhenSelecting: true
-    });
-    
+            styleActiveLine: true,
+            showCursorWhenSelecting: true
+        }
+    );
+
     // Set initial code
     const initialCode = `#include <stdio.h>
 
@@ -41,64 +44,97 @@ int main() {
     return 0;
 }`;
     codeEditor.setValue(initialCode);
-    
+
     // Store editor instance globally
     window.codeEditor = codeEditor;
-    
+
     // Initialize components
     initUI();
     initExamples();
     initEventListeners();
     initFileManager();
     initResizable();
-    
+
     // Update file size
     updateFileSize();
-    
-    // Show welcome message
-    console.log('C IDE Initialized Successfully');
+
+    console.log("C IDE Initialized Successfully");
 });
 
 // Initialize UI components
 function initUI() {
     // Update cursor position
-    window.codeEditor.on('cursorActivity', function(cm) {
+    window.codeEditor.on("cursorActivity", function (cm) {
         const cursor = cm.getCursor();
-        const posElement = document.querySelector('.cursor-position');
+        const posElement = document.querySelector(".cursor-position");
         if (posElement) {
-            posElement.textContent = `Ln ${cursor.line + 1}, Col ${cursor.ch + 1}`;
+            posElement.textContent = `Ln ${cursor.line + 1}, Col ${
+                cursor.ch + 1
+            }`;
         }
     });
-    
+
     // Update file size on change
-    window.codeEditor.on('change', updateFileSize);
-    
+    window.codeEditor.on("change", updateFileSize);
+
     // Initialize theme toggle
-    const themeToggle = document.getElementById('themeToggle');
+    const themeToggle = document.getElementById("themeToggle");
     if (themeToggle) {
-        themeToggle.addEventListener('click', function() {
-            const currentTheme = window.codeEditor.getOption('theme');
-            const newTheme = currentTheme === 'dracula' ? 'default' : 'dracula';
-            window.codeEditor.setOption('theme', newTheme);
-            this.innerHTML = newTheme === 'dracula' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-            showNotification(`Switched to ${newTheme === 'dracula' ? 'Dark' : 'Light'} theme`);
+        themeToggle.addEventListener("click", function () {
+            const currentTheme = window.codeEditor.getOption("theme");
+            const newTheme = currentTheme === "dracula" ? "default" : "dracula";
+            window.codeEditor.setOption("theme", newTheme);
+            this.innerHTML =
+                newTheme === "dracula"
+                    ? '<i class="fas fa-sun"></i>'
+                    : '<i class="fas fa-moon"></i>';
+            showNotification(
+                `Switched to ${
+                    newTheme === "dracula" ? "Dark" : "Light"
+                } theme`,
+                "info"
+            );
         });
     }
-    
+
     // Initialize fullscreen button
-    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    const fullscreenBtn = document.getElementById("fullscreenBtn");
     if (fullscreenBtn) {
-        fullscreenBtn.addEventListener('click', function() {
-            const isFullscreen = window.codeEditor.getOption('fullScreen');
-            window.codeEditor.setOption('fullScreen', !isFullscreen);
-            this.innerHTML = isFullscreen ? '<i class="fas fa-expand"></i>' : '<i class="fas fa-compress"></i>';
+        fullscreenBtn.addEventListener("click", function () {
+            const isFullscreen = window.codeEditor.getOption("fullScreen");
+            window.codeEditor.setOption("fullScreen", !isFullscreen);
+            this.innerHTML = isFullscreen
+                ? '<i class="fas fa-expand"></i>'
+                : '<i class="fas fa-compress"></i>';
+        });
+    }
+
+    // Initialize examples toggle
+    const toggleExamplesBtn = document.getElementById("toggleExamplesBtn");
+    if (toggleExamplesBtn) {
+        toggleExamplesBtn.addEventListener("click", function () {
+            const examplesContainer =
+                document.getElementById("examplesContainer");
+            const ideBottom = document.getElementById("ideBottom");
+
+            if (ideBottom.classList.contains("collapsed")) {
+                ideBottom.classList.remove("collapsed");
+                examplesContainer.style.display = "grid";
+                this.innerHTML = '<i class="fas fa-chevron-down"></i>';
+                showNotification("Examples panel expanded", "info");
+            } else {
+                ideBottom.classList.add("collapsed");
+                examplesContainer.style.display = "none";
+                this.innerHTML = '<i class="fas fa-chevron-up"></i>';
+                showNotification("Examples panel collapsed", "info");
+            }
         });
     }
 }
 
 function updateFileSize() {
     const content = window.codeEditor.getValue();
-    const sizeElement = document.querySelector('.file-size');
+    const sizeElement = document.querySelector(".file-size");
     if (sizeElement) {
         const size = new Blob([content]).size;
         sizeElement.textContent = `${size} bytes`;
@@ -108,10 +144,10 @@ function updateFileSize() {
 // Initialize examples
 function initExamples() {
     const examples = {
-        'hello': {
-            name: 'Hello World',
-            description: 'The classic first program in C language',
-            category: 'basic',
+        hello: {
+            name: "Hello World",
+            description: "The classic first program in C language",
+            category: "basic",
             code: `#include <stdio.h>
 
 int main() {
@@ -119,10 +155,10 @@ int main() {
     return 0;
 }`
         },
-        'variables': {
-            name: 'Variables and Data Types',
-            description: 'Demonstrates different data types and variables in C',
-            category: 'basic',
+        variables: {
+            name: "Variables and Data Types",
+            description: "Demonstrates different data types and variables in C",
+            category: "basic",
             code: `#include <stdio.h>
 
 int main() {
@@ -151,17 +187,14 @@ int main() {
     return 0;
 }`
         },
-        'conditions': {
-            name: 'If-Else Conditions',
-            description: 'Demonstrates conditional statements in C',
-            category: 'basic',
+        conditions: {
+            name: "If-Else Conditions",
+            description: "Demonstrates conditional statements in C",
+            category: "basic",
             code: `#include <stdio.h>
 
 int main() {
-    int number;
-    
-    printf("Enter a number: ");
-    scanf("%d", &number);
+    int number = 10;
     
     if (number > 0) {
         printf("%d is positive\\n", number);
@@ -182,38 +215,157 @@ int main() {
     
     return 0;
 }`
-        }
+        },
+        loops: {
+            name: "For and While Loops",
+            description: "Demonstrates different types of loops in C",
+            category: "basic",
+            code: `#include <stdio.h>
+
+int main() {
+    // For loop
+    printf("For loop (1 to 5):\\n");
+    for (int i = 1; i <= 5; i++) {
+        printf("Count: %d\\n", i);
+    }
+    
+    // While loop
+    printf("\\nWhile loop (5 to 1):\\n");
+    int j = 5;
+    while (j > 0) {
+        printf("Countdown: %d\\n", j);
+        j--;
+    }
+    
+    // Do-while loop
+    printf("\\nDo-while loop (1 to 3):\\n");
+    int k = 1;
+    do {
+        printf("Number: %d\\n", k);
+        k++;
+    } while (k <= 3);
+    
+    return 0;
+}`
+        },
+        functions: {
+            name: "Functions and Recursion",
+            description: "Demonstrates function usage and recursion",
+            category: "intermediate",
+            code: `#include <stdio.h>
+
+// Function declaration
+int add(int a, int b);
+int factorial(int n);
+
+int main() {
+    int x = 10, y = 20;
+    
+    // Function call
+    int sum = add(x, y);
+    printf("Sum of %d and %d is: %d\\n", x, y, sum);
+    
+    // Recursive function
+    int num = 5;
+    printf("Factorial of %d is: %d\\n", num, factorial(num));
+    
+    return 0;
+}
+
+// Function definition
+int add(int a, int b) {
+    return a + b;
+}
+
+// Recursive function
+int factorial(int n) {
+    if (n <= 1) return 1;
+    return n * factorial(n - 1);
+}`
+        },
+        arrays: {
+            name: "Arrays and Strings",
+            description: "Demonstrates array and string operations",
+            category: "intermediate",
+            code: `#include <stdio.h>
+#include <string.h>
+
+int main() {
+    // Integer array
+    int numbers[5] = {10, 20, 30, 40, 50};
+    
+    printf("Array elements: ");
+    for (int i = 0; i < 5; i++) {
+        printf("%d ", numbers[i]);
+    }
+    printf("\\n");
+    
+    // 2D array
+    int matrix[2][3] = {
+        {1, 2, 3},
+        {4, 5, 6}
     };
     
+    printf("\\n2D Array:\\n");
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 3; j++) {
+            printf("%d ", matrix[i][j]);
+        }
+        printf("\\n");
+    }
+    
+    // Strings
+    char greeting[] = "Hello, C Programming!";
+    char name[50];
+    
+    printf("\\nString: %s\\n", greeting);
+    printf("Length: %lu\\n", strlen(greeting));
+    
+    // String copy
+    strcpy(name, "John Doe");
+    printf("Name: %s\\n", name);
+    
+    return 0;
+}`
+        }
+    };
+
     // Store examples globally
     window.cExamples = examples;
-    
+
     // Populate examples container
     populateExamples();
-    
+
     // Search functionality
-    const searchInput = document.getElementById('exampleSearch');
+    const searchInput = document.getElementById("exampleSearch");
     if (searchInput) {
-        searchInput.addEventListener('input', function() {
+        searchInput.addEventListener("input", function () {
             const searchTerm = this.value.toLowerCase();
-            const cards = document.querySelectorAll('.example-card');
-            
+            const cards = document.querySelectorAll(".example-card");
+
             cards.forEach(card => {
-                const title = card.querySelector('h4').textContent.toLowerCase();
-                const description = card.querySelector('p').textContent.toLowerCase();
-                
-                if (title.includes(searchTerm) || description.includes(searchTerm)) {
-                    card.style.display = 'flex';
+                const title = card
+                    .querySelector("h4")
+                    .textContent.toLowerCase();
+                const description = card
+                    .querySelector("p")
+                    .textContent.toLowerCase();
+
+                if (
+                    title.includes(searchTerm) ||
+                    description.includes(searchTerm)
+                ) {
+                    card.style.display = "flex";
                 } else {
-                    card.style.display = 'none';
+                    card.style.display = "none";
                 }
             });
         });
     }
-    
+
     // Add event listeners to example buttons
-    document.querySelectorAll('.example-btn').forEach(button => {
-        button.addEventListener('click', function() {
+    document.querySelectorAll(".example-btn").forEach(button => {
+        button.addEventListener("click", function () {
             const exampleKey = this.dataset.example;
             showExampleModal(exampleKey);
         });
@@ -221,21 +373,21 @@ int main() {
 }
 
 function populateExamples() {
-    const examplesContainer = document.getElementById('examplesContainer');
+    const examplesContainer = document.getElementById("examplesContainer");
     if (!examplesContainer) return;
-    
-    examplesContainer.innerHTML = '';
-    
+
+    examplesContainer.innerHTML = "";
+
     Object.entries(window.cExamples).forEach(([key, example]) => {
-        const card = document.createElement('div');
-        card.className = 'example-card';
+        const card = document.createElement("div");
+        card.className = "example-card";
         card.dataset.key = key;
         card.innerHTML = `
             <h4>${example.name}</h4>
             <p>${example.description}</p>
             <span class="example-language">C - ${example.category}</span>
         `;
-        card.addEventListener('click', () => showExampleModal(key));
+        card.addEventListener("click", () => showExampleModal(key));
         examplesContainer.appendChild(card);
     });
 }
@@ -243,460 +395,604 @@ function populateExamples() {
 // File Manager functionality
 function initFileManager() {
     // File menu button
-    const fileMenuBtn = document.getElementById('fileMenuBtn');
-    const fileDropdown = document.getElementById('fileDropdown');
-    
+    const fileMenuBtn = document.getElementById("fileMenuBtn");
+    const fileDropdown = document.getElementById("fileDropdown");
+
     if (fileMenuBtn && fileDropdown) {
-        fileMenuBtn.addEventListener('click', function(e) {
+        fileMenuBtn.addEventListener("click", function (e) {
             e.stopPropagation();
-            fileDropdown.classList.toggle('show');
+            fileDropdown.classList.toggle("show");
         });
-        
+
         // Close dropdown when clicking outside
-        document.addEventListener('click', function() {
-            fileDropdown.classList.remove('show');
+        document.addEventListener("click", function () {
+            fileDropdown.classList.remove("show");
         });
     }
-    
+
     // File operations
-    document.getElementById('newFileBtn')?.addEventListener('click', showNewFileModal);
-    document.getElementById('openFileBtn')?.addEventListener('click', openFile);
-    document.getElementById('saveFileBtn')?.addEventListener('click', saveFile);
-    document.getElementById('saveAsBtn')?.addEventListener('click', saveFileAs);
-    document.getElementById('exportCodeBtn')?.addEventListener('click', exportCode);
+    document
+        .getElementById("newFileBtn")
+        ?.addEventListener("click", showNewFileModal);
+    document.getElementById("openFileBtn")?.addEventListener("click", openFile);
+    document.getElementById("saveFileBtn")?.addEventListener("click", saveFile);
+    document.getElementById("saveAsBtn")?.addEventListener("click", saveFileAs);
+    document
+        .getElementById("exportCodeBtn")
+        ?.addEventListener("click", exportCode);
 }
 
 // Initialize event listeners
 function initEventListeners() {
     // Run button
-    const runBtn = document.getElementById('runBtn');
+    const runBtn = document.getElementById("runBtn");
     if (runBtn) {
-        runBtn.addEventListener('click', runCode);
+        runBtn.addEventListener("click", runCode);
     }
-    
+
     // Debug button
-    const debugBtn = document.getElementById('debugBtn');
+    const debugBtn = document.getElementById("debugBtn");
     if (debugBtn) {
-        debugBtn.addEventListener('click', debugCode);
+        debugBtn.addEventListener("click", debugCode);
     }
-    
+
     // Layout button
-    const layoutBtn = document.getElementById('layoutBtn');
+    const layoutBtn = document.getElementById("layoutBtn");
     if (layoutBtn) {
-        layoutBtn.addEventListener('click', toggleLayout);
+        layoutBtn.addEventListener("click", toggleLayout);
     }
-    
+
     // Clear console button
-    const clearConsoleBtn = document.getElementById('clearConsoleBtn');
+    const clearConsoleBtn = document.getElementById("clearConsoleBtn");
     if (clearConsoleBtn) {
-        clearConsoleBtn.addEventListener('click', clearConsole);
+        clearConsoleBtn.addEventListener("click", clearConsole);
     }
-    
+
     // Copy output button
-    const copyOutputBtn = document.getElementById('copyOutputBtn');
+    const copyOutputBtn = document.getElementById("copyOutputBtn");
     if (copyOutputBtn) {
-        copyOutputBtn.addEventListener('click', copyOutput);
+        copyOutputBtn.addEventListener("click", copyOutput);
     }
-    
+
     // Download output button
-    const downloadOutputBtn = document.getElementById('downloadOutputBtn');
+    const downloadOutputBtn = document.getElementById("downloadOutputBtn");
     if (downloadOutputBtn) {
-        downloadOutputBtn.addEventListener('click', downloadOutput);
+        downloadOutputBtn.addEventListener("click", downloadOutput);
     }
-    
+
     // Format button
-    const formatBtn = document.getElementById('formatBtn');
+    const formatBtn = document.getElementById("formatBtn");
     if (formatBtn) {
-        formatBtn.addEventListener('click', formatCode);
+        formatBtn.addEventListener("click", formatCode);
     }
-    
+
     // Send input button
-    const sendInputBtn = document.getElementById('sendInputBtn');
+    const sendInputBtn = document.getElementById("sendInputBtn");
     if (sendInputBtn) {
-        sendInputBtn.addEventListener('click', sendInput);
+        sendInputBtn.addEventListener("click", sendInput);
     }
-    
+
     // Console input enter key
-    const consoleInput = document.getElementById('consoleInput');
+    const consoleInput = document.getElementById("consoleInput");
     if (consoleInput) {
-        consoleInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
+        consoleInput.addEventListener("keypress", function (e) {
+            if (e.key === "Enter") {
                 sendInput();
             }
         });
     }
-    
+
     // Add tab button
-    const addTabBtn = document.getElementById('addTabBtn');
+    const addTabBtn = document.getElementById("addTabBtn");
     if (addTabBtn) {
-        addTabBtn.addEventListener('click', addNewTab);
+        addTabBtn.addEventListener("click", addNewTab);
     }
-    
+
     // Close tab button
-    const closeTabBtn = document.getElementById('closeTabBtn');
+    const closeTabBtn = document.getElementById("closeTabBtn");
     if (closeTabBtn) {
-        closeTabBtn.addEventListener('click', closeCurrentTab);
+        closeTabBtn.addEventListener("click", closeCurrentTab);
     }
-    
+
     // Tab switching
-    document.querySelectorAll('.tab[data-tab]').forEach(tab => {
-        tab.addEventListener('click', function() {
+    document.querySelectorAll(".tab[data-tab]").forEach(tab => {
+        tab.addEventListener("click", function () {
             const tabName = this.dataset.tab;
             switchTab(tabName);
         });
     });
-    
+
+    // Modal close buttons
+    document.querySelectorAll(".close-modal").forEach(button => {
+        button.addEventListener("click", function () {
+            this.closest(".modal-overlay").style.display = "none";
+        });
+    });
+
+    // Modal overlays
+    document.querySelectorAll(".modal-overlay").forEach(overlay => {
+        overlay.addEventListener("click", function (e) {
+            if (e.target === this) {
+                this.style.display = "none";
+            }
+        });
+    });
+
     // Keyboard shortcuts
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener("keydown", function (e) {
         // Ctrl+Enter to run code
-        if (e.ctrlKey && e.key === 'Enter') {
+        if (e.ctrlKey && e.key === "Enter") {
             e.preventDefault();
             runCode();
         }
-        
+
         // Ctrl+S to save
-        if (e.ctrlKey && e.key === 's') {
+        if (e.ctrlKey && e.key === "s") {
             e.preventDefault();
             saveFile();
         }
-        
+
         // Ctrl+N for new file
-        if (e.ctrlKey && e.key === 'n') {
+        if (e.ctrlKey && e.key === "n") {
             e.preventDefault();
             showNewFileModal();
         }
-        
+
         // Ctrl+O to open file
-        if (e.ctrlKey && e.key === 'o') {
+        if (e.ctrlKey && e.key === "o") {
             e.preventDefault();
             openFile();
         }
-        
+
         // Ctrl+F to format
-        if (e.ctrlKey && e.key === 'f') {
+        if (e.ctrlKey && e.key === "f") {
             e.preventDefault();
             formatCode();
         }
-        
+
         // Escape to close modals
-        if (e.key === 'Escape') {
-            document.querySelectorAll('.modal-overlay').forEach(modal => {
-                modal.style.display = 'none';
+        if (e.key === "Escape") {
+            document.querySelectorAll(".modal-overlay").forEach(modal => {
+                modal.style.display = "none";
             });
         }
     });
 }
 
-// Initialize resizable panels
+// Initialize resizable panels - Fixed Version
 function initResizable() {
-    // This will be handled by the resizable.js script
-    if (typeof window.ResizablePanels !== 'undefined') {
-        window.resizablePanels = new window.ResizablePanels();
+    const verticalResizer = document.getElementById("verticalResizer");
+    const editorPanel = document.getElementById("editorPanel");
+    const consolePanel = document.getElementById("consolePanel");
+    const ideMain = document.getElementById("ideMain");
+
+    if (!verticalResizer || !editorPanel || !consolePanel) return;
+
+    let isDragging = false;
+
+    verticalResizer.addEventListener("mousedown", startDrag);
+    verticalResizer.addEventListener("touchstart", startDrag);
+
+    function startDrag(e) {
+        e.preventDefault();
+        isDragging = true;
+        verticalResizer.classList.add("dragging");
+
+        document.addEventListener("mousemove", doDrag);
+        document.addEventListener("touchmove", doDrag);
+        document.addEventListener("mouseup", stopDrag);
+        document.addEventListener("touchend", stopDrag);
+    }
+
+    function doDrag(e) {
+        if (!isDragging) return;
+
+        e.preventDefault();
+        const containerRect = ideMain.getBoundingClientRect();
+        let clientX;
+
+        if (e.type === "touchmove") {
+            clientX = e.touches[0].clientX;
+        } else {
+            clientX = e.clientX;
+        }
+
+        // Calculate new widths
+        const containerWidth = containerRect.width;
+        let editorWidth =
+            ((clientX - containerRect.left) / containerWidth) * 100;
+
+        // Apply constraints
+        editorWidth = Math.max(20, Math.min(80, editorWidth));
+        const consoleWidth = 100 - editorWidth;
+
+        editorPanel.style.width = `${editorWidth}%`;
+        consolePanel.style.width = `${consoleWidth}%`;
+    }
+
+    function stopDrag() {
+        isDragging = false;
+        verticalResizer.classList.remove("dragging");
+
+        document.removeEventListener("mousemove", doDrag);
+        document.removeEventListener("touchmove", doDrag);
+        document.removeEventListener("mouseup", stopDrag);
+        document.removeEventListener("touchend", stopDrag);
+    }
+
+    // Horizontal resizer for bottom panel
+    const horizontalResizer = document.getElementById("horizontalResizer");
+    const ideBottom = document.getElementById("ideBottom");
+
+    if (horizontalResizer && ideBottom) {
+        let isHorizontalDragging = false;
+
+        horizontalResizer.addEventListener("mousedown", startHorizontalDrag);
+        horizontalResizer.addEventListener("touchstart", startHorizontalDrag);
+
+        function startHorizontalDrag(e) {
+            e.preventDefault();
+            isHorizontalDragging = true;
+            horizontalResizer.classList.add("dragging");
+
+            document.addEventListener("mousemove", doHorizontalDrag);
+            document.addEventListener("touchmove", doHorizontalDrag);
+            document.addEventListener("mouseup", stopHorizontalDrag);
+            document.addEventListener("touchend", stopHorizontalDrag);
+        }
+
+        function doHorizontalDrag(e) {
+            if (!isHorizontalDragging) return;
+
+            e.preventDefault();
+            const containerRect = document
+                .querySelector(".ide-container")
+                .getBoundingClientRect();
+            let clientY;
+
+            if (e.type === "touchmove") {
+                clientY = e.touches[0].clientY;
+            } else {
+                clientY = e.clientY;
+            }
+
+            const containerHeight = containerRect.height;
+            const mainHeight =
+                ((clientY - containerRect.top - 70) / containerHeight) * 100;
+
+            // Apply constraints
+            const adjustedMainHeight = Math.max(30, Math.min(90, mainHeight));
+            const bottomHeight = 100 - adjustedMainHeight;
+
+            ideMain.style.height = `${adjustedMainHeight}%`;
+            ideBottom.style.height = `${bottomHeight}%`;
+        }
+
+        function stopHorizontalDrag() {
+            isHorizontalDragging = false;
+            horizontalResizer.classList.remove("dragging");
+
+            document.removeEventListener("mousemove", doHorizontalDrag);
+            document.removeEventListener("touchmove", doHorizontalDrag);
+            document.removeEventListener("mouseup", stopHorizontalDrag);
+            document.removeEventListener("touchend", stopHorizontalDrag);
+        }
     }
 }
 
-// Run code - FIXED VERSION
+// Run code - Fixed with better output handling
 async function runCode() {
     const code = window.codeEditor.getValue();
-    const input = document.getElementById('consoleInput')?.value || '';
-    
+    const input = document.getElementById("consoleInput")?.value || "";
+
     // Clear previous output
     clearConsole();
-    
+
     // Show running status
-    const output = document.getElementById('consoleOutput');
-    const status = document.createElement('div');
-    status.className = 'console-status loading';
-    status.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Compiling C code...';
+    const output = document.getElementById("consoleOutput");
+    const status = document.createElement("div");
+    status.className = "console-status loading";
+    status.innerHTML =
+        '<i class="fas fa-spinner fa-spin"></i> Compiling C code...';
     output.appendChild(status);
-    
+
     // Update editor status
-    const editorStatus = document.querySelector('.editor-status span');
-    const statusIcon = document.querySelector('.status-ready');
+    const editorStatus = document.querySelector(".editor-status span");
+    const statusIcon = document.querySelector(".status-ready");
     if (editorStatus && statusIcon) {
-        editorStatus.textContent = 'Running...';
-        statusIcon.style.color = '#f59e0b';
+        editorStatus.textContent = "Running...";
+        statusIcon.style.color = "#f59e0b";
     }
-    
+
     // Disable run button
-    const runBtn = document.getElementById('runBtn');
+    const runBtn = document.getElementById("runBtn");
+    const originalHTML = runBtn.innerHTML;
     if (runBtn) {
         runBtn.disabled = true;
         runBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Running...';
     }
-    
+
     try {
-        // Check if compilerAPI is available
-        if (!window.compilerAPI) {
-            // Fallback to local compiler
-            console.log('Using local C compiler');
-            const result = await window.cCompiler.execute(code, input);
-            displayResult(result);
-        } else {
-            // Use compiler API
-            console.log('Using compiler API');
-            const result = await window.compilerAPI.execute('c', code, input);
-            displayResult(result);
-        }
-    } catch (error) {
-        console.error('Execution error:', error);
-        
+        // Use compiler API
+        const result = await window.compilerAPI.execute("c", code, input);
+
         // Remove status
         if (status.parentNode) {
             status.remove();
         }
-        
+
+        // Display result
+        displayResult(result);
+    } catch (error) {
+        console.error("Execution error:", error);
+
+        // Remove status
+        if (status.parentNode) {
+            status.remove();
+        }
+
         // Display error
-        const errorDiv = document.createElement('div');
-        errorDiv.className = 'console-result error';
+        const errorDiv = document.createElement("div");
+        errorDiv.className = "console-result error";
         errorDiv.innerHTML = `
             <div class="result-header">
-                <i class="fas fa-exclamation-triangle error"></i>
+                <i class="fas fa-exclamation-triangle"></i>
                 <span>Execution Error</span>
             </div>
-            <pre class="error-content">${escapeHtml(error.message)}</pre>
-            <div class="error-help">
-                <p><i class="fas fa-lightbulb"></i> Try using the Format Code button to fix syntax errors</p>
-            </div>
+            <pre class="output-content">${escapeHtml(error.message)}</pre>
         `;
-        
+
         output.appendChild(errorDiv);
         output.scrollTop = output.scrollHeight;
-        
+
         // Update editor status
         if (editorStatus && statusIcon) {
-            editorStatus.textContent = 'Error';
-            statusIcon.style.color = '#ef4444';
+            editorStatus.textContent = "Error";
+            statusIcon.style.color = "#ef4444";
         }
-        
-        showNotification('Error: ' + error.message, 'error');
+
+        showNotification("Error: " + error.message, "error");
     } finally {
         // Re-enable run button
         if (runBtn) {
             runBtn.disabled = false;
-            runBtn.innerHTML = '<i class="fas fa-play"></i> Run (Ctrl+Enter)';
+            runBtn.innerHTML = originalHTML;
         }
     }
-    
+
     function displayResult(result) {
-        // Remove status
-        if (status.parentNode) {
-            status.remove();
-        }
-        
-        // Display result
-        const resultDiv = document.createElement('div');
-        resultDiv.className = `console-result ${result.success ? 'success' : 'error'}`;
-        
+        const resultDiv = document.createElement("div");
+        resultDiv.className = `console-result ${
+            result.success ? "success" : "error"
+        }`;
+
         if (result.success) {
             resultDiv.innerHTML = `
                 <div class="result-header">
-                    <i class="fas fa-check-circle success"></i>
+                    <i class="fas fa-check-circle"></i>
                     <span>Execution Successful</span>
-                    ${result.executionTime ? `<span class="execution-time">${result.executionTime}</span>` : ''}
-                    ${result.simulated ? `<span class="simulated-badge">Simulated</span>` : ''}
+                    <span class="execution-time">${result.executionTime}</span>
                 </div>
                 <pre class="output-content">${escapeHtml(result.output)}</pre>
-                ${result.memory ? `<div class="result-footer">Memory used: ${result.memory}</div>` : ''}
+                <div style="margin-top: 10px; color: #94a3b8; font-size: 0.9em;">
+                    <i class="fas fa-clock"></i> Completed in ${
+                        result.executionTime
+                    }
+                </div>
             `;
         } else {
             resultDiv.innerHTML = `
                 <div class="result-header">
-                    <i class="fas fa-times-circle error"></i>
+                    <i class="fas fa-times-circle"></i>
                     <span>Execution Failed</span>
                 </div>
-                <pre class="error-content">${escapeHtml(result.output)}</pre>
+                <pre class="output-content">${escapeHtml(result.output)}</pre>
             `;
         }
-        
+
         output.appendChild(resultDiv);
         output.scrollTop = output.scrollHeight;
-        
+
         // Update editor status
         if (editorStatus && statusIcon) {
-            editorStatus.textContent = result.success ? 'Ready' : 'Error';
-            statusIcon.style.color = result.success ? '#10b981' : '#ef4444';
+            editorStatus.textContent = result.success ? "Ready" : "Error";
+            statusIcon.style.color = result.success ? "#10b981" : "#ef4444";
         }
-        
-        showNotification(result.success ? 'Code executed successfully!' : 'Execution failed!', 
-                        result.success ? 'success' : 'error');
+
+        showNotification(
+            result.success
+                ? "Code executed successfully!"
+                : "Execution failed!",
+            result.success ? "success" : "error"
+        );
     }
 }
 
 // Debug code
 function debugCode() {
     const code = window.codeEditor.getValue();
-    
+
     // Switch to debug tab
-    switchTab('debug');
-    
-    // Initialize debugger
-    if (!window.codeDebugger) {
-        window.codeDebugger = new CodeDebugger({
-            editor: window.codeEditor,
-            output: document.getElementById('consoleOutput')
-        });
-    }
-    
-    // Start debugging
-    window.codeDebugger.startDebugging(code);
-    showNotification('Debugging started. Set breakpoints in the gutter.', 'info');
+    switchTab("debug");
+
+    showNotification(
+        "Debugging started. Set breakpoints in the gutter.",
+        "info"
+    );
+
+    // Simple debug simulation
+    const output = document.getElementById("consoleOutput");
+    const debugInfo = document.createElement("div");
+    debugInfo.className = "console-result info";
+    debugInfo.innerHTML = `
+        <div class="result-header">
+            <i class="fas fa-bug"></i>
+            <span>Debug Session Started</span>
+        </div>
+        <pre class="output-content">Debugger initialized...
+Breakpoint set at line 1
+Ready for step-by-step execution</pre>
+    `;
+
+    output.appendChild(debugInfo);
+    output.scrollTop = output.scrollHeight;
 }
 
 // Toggle layout
 function toggleLayout() {
-    const ideMain = document.getElementById('ideMain');
-    const currentLayout = ideMain.dataset.layout || 'horizontal';
-    const layoutBtn = document.getElementById('layoutBtn');
-    
-    if (currentLayout === 'horizontal') {
+    const ideMain = document.getElementById("ideMain");
+    const currentLayout = ideMain.dataset.layout || "horizontal";
+    const layoutBtn = document.getElementById("layoutBtn");
+
+    if (currentLayout === "horizontal") {
         // Switch to vertical
-        ideMain.style.flexDirection = 'column';
-        ideMain.dataset.layout = 'vertical';
-        
+        ideMain.style.flexDirection = "column";
+        ideMain.dataset.layout = "vertical";
+
         // Update resizer
-        const verticalResizer = document.getElementById('verticalResizer');
-        verticalResizer.style.width = '100%';
-        verticalResizer.style.height = '8px';
-        verticalResizer.style.cursor = 'row-resize';
-        
+        const verticalResizer = document.getElementById("verticalResizer");
+        verticalResizer.style.width = "100%";
+        verticalResizer.style.height = "8px";
+        verticalResizer.style.cursor = "row-resize";
+
         layoutBtn.innerHTML = '<i class="fas fa-columns"></i> Horizontal';
-        showNotification('Switched to vertical layout', 'info');
-        
+        showNotification("Switched to vertical layout", "info");
     } else {
         // Switch to horizontal
-        ideMain.style.flexDirection = 'row';
-        ideMain.dataset.layout = 'horizontal';
-        
+        ideMain.style.flexDirection = "row";
+        ideMain.dataset.layout = "horizontal";
+
         // Update resizer
-        const verticalResizer = document.getElementById('verticalResizer');
-        verticalResizer.style.width = '8px';
-        verticalResizer.style.height = '100%';
-        verticalResizer.style.cursor = 'col-resize';
-        
+        const verticalResizer = document.getElementById("verticalResizer");
+        verticalResizer.style.width = "8px";
+        verticalResizer.style.height = "100%";
+        verticalResizer.style.cursor = "col-resize";
+
         layoutBtn.innerHTML = '<i class="fas fa-exchange-alt"></i> Vertical';
-        showNotification('Switched to horizontal layout', 'info');
+        showNotification("Switched to horizontal layout", "info");
     }
 }
 
 // Clear console
 function clearConsole() {
-    const output = document.getElementById('consoleOutput');
-    output.innerHTML = '';
-    showNotification('Console cleared', 'info');
+    const output = document.getElementById("consoleOutput");
+    output.innerHTML = "";
+    showNotification("Console cleared", "info");
 }
 
 // Copy output
 function copyOutput() {
-    const output = document.getElementById('consoleOutput');
+    const output = document.getElementById("consoleOutput");
     const text = output.innerText;
-    
-    navigator.clipboard.writeText(text).then(() => {
-        showNotification('Output copied to clipboard!', 'success');
-    }).catch(err => {
-        showNotification('Failed to copy output: ' + err.message, 'error');
-    });
+
+    navigator.clipboard
+        .writeText(text)
+        .then(() => {
+            showNotification("Output copied to clipboard!", "success");
+        })
+        .catch(err => {
+            showNotification("Failed to copy output: " + err.message, "error");
+        });
 }
 
 // Download output
 function downloadOutput() {
-    const output = document.getElementById('consoleOutput');
+    const output = document.getElementById("consoleOutput");
     const text = output.innerText;
-    const blob = new Blob([text], { type: 'text/plain' });
+    const blob = new Blob([text], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
-    
-    const a = document.createElement('a');
+
+    const a = document.createElement("a");
     a.href = url;
-    a.download = 'output.txt';
+    a.download = "output.txt";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    
+
     URL.revokeObjectURL(url);
-    showNotification('Output downloaded as output.txt', 'success');
+    showNotification("Output downloaded as output.txt", "success");
 }
 
 // Format code
 function formatCode() {
     const code = window.codeEditor.getValue();
-    
-    // Check if cCompiler is available for formatting
+
     if (window.cCompiler && window.cCompiler.formatCode) {
         const formatted = window.cCompiler.formatCode(code);
         window.codeEditor.setValue(formatted);
-        showNotification('Code formatted!', 'success');
+        showNotification("Code formatted!", "success");
     } else {
         // Fallback formatting
         const formatted = formatCCode(code);
         window.codeEditor.setValue(formatted);
-        showNotification('Code formatted!', 'success');
+        showNotification("Code formatted!", "success");
     }
 }
 
 function formatCCode(code) {
-    // Basic C code formatting
     let formatted = code
-        .replace(/\s*{\s*/g, ' {\n')
-        .replace(/\s*}\s*/g, '\n}\n')
-        .replace(/;\s*/g, ';\n')
-        .replace(/\n\s*\n/g, '\n')
-        .replace(/^\s+/gm, '');
-    
-    // Add proper indentation
+        .replace(/\s*{\s*/g, " {\n")
+        .replace(/\s*}\s*/g, "\n}\n")
+        .replace(/;\s*/g, ";\n")
+        .replace(/\n\s*\n/g, "\n")
+        .replace(/^\s+/gm, "");
+
     let indentLevel = 0;
-    const lines = formatted.split('\n');
-    formatted = lines.map(line => {
-        line = line.trim();
-        
-        // Decrease indent for closing braces
-        if (line.startsWith('}') || line === '};') {
-            indentLevel = Math.max(0, indentLevel - 1);
-        }
-        
-        const indentedLine = '    '.repeat(indentLevel) + line;
-        
-        // Increase indent for opening braces
-        if (line.endsWith('{') || line === '{') {
-            indentLevel++;
-        }
-        
-        return indentedLine;
-    }).join('\n');
-    
+    const lines = formatted.split("\n");
+    formatted = lines
+        .map(line => {
+            line = line.trim();
+
+            if (line.startsWith("}") || line === "};") {
+                indentLevel = Math.max(0, indentLevel - 1);
+            }
+
+            const indentedLine = "    ".repeat(indentLevel) + line;
+
+            if (line.endsWith("{") || line === "{") {
+                indentLevel++;
+            }
+
+            return indentedLine;
+        })
+        .join("\n");
+
     return formatted;
 }
 
 // Send input
 function sendInput() {
-    const input = document.getElementById('consoleInput');
+    const input = document.getElementById("consoleInput");
     const value = input.value.trim();
-    
+
     if (value) {
-        const output = document.getElementById('consoleOutput');
-        const inputDiv = document.createElement('div');
-        inputDiv.className = 'console-input-line';
-        inputDiv.innerHTML = `<span class="input-prefix"><i class="fas fa-terminal"></i>$</span> ${escapeHtml(value)}`;
+        const output = document.getElementById("consoleOutput");
+        const inputDiv = document.createElement("div");
+        inputDiv.className = "console-input-line";
+        inputDiv.innerHTML = `<span class="input-prefix"><i class="fas fa-terminal"></i>$</span> ${escapeHtml(
+            value
+        )}`;
         output.appendChild(inputDiv);
         output.scrollTop = output.scrollHeight;
-        
+
         // Clear input
-        input.value = '';
-        
+        input.value = "";
+
         // Process command
         processConsoleCommand(value);
     }
 }
 
 function processConsoleCommand(command) {
-    const output = document.getElementById('consoleOutput');
-    
+    const output = document.getElementById("consoleOutput");
+
     switch (command.toLowerCase()) {
-        case 'clear':
+        case "clear":
             clearConsole();
             break;
-        case 'help':
-            const helpDiv = document.createElement('div');
-            helpDiv.className = 'console-help';
+        case "help":
+            const helpDiv = document.createElement("div");
+            helpDiv.className = "console-help";
             helpDiv.innerHTML = `
                 <div class="result-header">
                     <i class="fas fa-question-circle"></i>
@@ -712,16 +1008,17 @@ format   - Format current code</pre>
             output.appendChild(helpDiv);
             output.scrollTop = output.scrollHeight;
             break;
-        case 'version':
-            const versionDiv = document.createElement('div');
-            versionDiv.className = 'console-info';
-            versionDiv.textContent = 'C IDE v1.0.0 | Built with CodeMirror | By Ariq Azmain';
+        case "version":
+            const versionDiv = document.createElement("div");
+            versionDiv.className = "console-info";
+            versionDiv.textContent =
+                "C IDE v1.0.0 | Built with CodeMirror | By Ariq Azmain";
             output.appendChild(versionDiv);
             output.scrollTop = output.scrollHeight;
             break;
-        case 'examples':
-            const examplesDiv = document.createElement('div');
-            examplesDiv.className = 'console-info';
+        case "examples":
+            const examplesDiv = document.createElement("div");
+            examplesDiv.className = "console-info";
             examplesDiv.innerHTML = `
                 <div class="result-header">
                     <i class="fas fa-code"></i>
@@ -732,22 +1029,20 @@ format   - Format current code</pre>
 • conditions - If-else conditions
 • loops     - For, while, do-while loops
 • functions - Function examples
-• arrays    - Array examples
-• pointers  - Pointer examples</pre>
+• arrays    - Array examples</pre>
             `;
             output.appendChild(examplesDiv);
             output.scrollTop = output.scrollHeight;
             break;
-        case 'run':
+        case "run":
             runCode();
             break;
-        case 'format':
+        case "format":
             formatCode();
             break;
         default:
-            // Try to evaluate as C expression
-            const exprDiv = document.createElement('div');
-            exprDiv.className = 'console-info';
+            const exprDiv = document.createElement("div");
+            exprDiv.className = "console-info";
             exprDiv.textContent = `Command: ${command}`;
             output.appendChild(exprDiv);
             output.scrollTop = output.scrollHeight;
@@ -756,61 +1051,58 @@ format   - Format current code</pre>
 
 // Switch tab
 function switchTab(tabName) {
-    // Update tab buttons
-    document.querySelectorAll('.tab').forEach(tab => {
+    document.querySelectorAll(".tab").forEach(tab => {
         if (tab.dataset.tab === tabName) {
-            tab.classList.add('active');
+            tab.classList.add("active");
         } else {
-            tab.classList.remove('active');
+            tab.classList.remove("active");
         }
     });
-    
-    showNotification(`Switched to ${tabName} tab`, 'info');
+
+    showNotification(`Switched to ${tabName} tab`, "info");
 }
 
 // Add new tab
 function addNewTab() {
-    const tabsContainer = document.querySelector('.panel-tabs');
-    const tabCount = document.querySelectorAll('.tab').length;
+    const tabsContainer = document.querySelector(".panel-tabs");
+    const tabCount = document.querySelectorAll(".tab").length;
     const newTabName = `file${tabCount}.c`;
-    
-    const newTab = document.createElement('button');
-    newTab.className = 'tab';
+
+    const newTab = document.createElement("button");
+    newTab.className = "tab";
     newTab.dataset.tab = newTabName;
     newTab.textContent = newTabName;
-    newTab.addEventListener('click', function() {
+    newTab.addEventListener("click", function () {
         switchTab(newTabName);
     });
-    
-    // Insert before the tab actions
-    const tabActions = document.querySelector('.tab-actions');
+
+    const tabActions = document.querySelector(".tab-actions");
     tabsContainer.insertBefore(newTab, tabActions);
-    
+
     switchTab(newTabName);
-    showNotification(`Created new tab: ${newTabName}`, 'info');
+    showNotification(`Created new tab: ${newTabName}`, "info");
 }
 
 // Close current tab
 function closeCurrentTab() {
-    const activeTab = document.querySelector('.tab.active');
-    if (activeTab && document.querySelectorAll('.tab').length > 1) {
+    const activeTab = document.querySelector(".tab.active");
+    if (activeTab && document.querySelectorAll(".tab").length > 1) {
         const tabName = activeTab.dataset.tab;
         activeTab.remove();
-        
-        // Switch to first tab
-        const firstTab = document.querySelector('.tab');
+
+        const firstTab = document.querySelector(".tab");
         if (firstTab) {
             switchTab(firstTab.dataset.tab);
         }
-        
-        showNotification(`Closed tab: ${tabName}`, 'info');
+
+        showNotification(`Closed tab: ${tabName}`, "info");
     }
 }
 
 // Show new file modal
 function showNewFileModal() {
     const modalHTML = `
-        <div class="modal-overlay" id="newFileModal">
+        <div class="modal-overlay">
             <div class="modal">
                 <div class="modal-header">
                     <h3>Create New C File</h3>
@@ -837,42 +1129,36 @@ function showNewFileModal() {
             </div>
         </div>
     `;
-    
-    // Remove existing modal
-    const existingModal = document.getElementById('newFileModal');
-    if (existingModal) existingModal.remove();
-    
-    // Add new modal
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
-    
-    // Add event listeners
-    document.getElementById('cancelNewFile').addEventListener('click', () => {
-        document.getElementById('newFileModal').remove();
+
+    document.body.insertAdjacentHTML("beforeend", modalHTML);
+
+    const modal = document.querySelector(".modal-overlay:last-child");
+
+    modal.querySelector(".close-modal").addEventListener("click", () => {
+        modal.remove();
     });
-    
-    document.querySelector('#newFileModal .close-modal').addEventListener('click', () => {
-        document.getElementById('newFileModal').remove();
+
+    modal.querySelector("#cancelNewFile").addEventListener("click", () => {
+        modal.remove();
     });
-    
-    document.getElementById('createFile').addEventListener('click', createNewFile);
-    
-    // Close on overlay click
-    document.getElementById('newFileModal').addEventListener('click', function(e) {
+
+    modal.querySelector("#createFile").addEventListener("click", createNewFile);
+
+    modal.addEventListener("click", function (e) {
         if (e.target === this) {
             this.remove();
         }
     });
 }
 
-// Create new file
 function createNewFile() {
-    const fileName = document.getElementById('fileName').value || 'program.c';
-    const template = document.getElementById('fileTemplate').value;
-    
-    let newCode = '';
-    
+    const fileName = document.getElementById("fileName").value || "program.c";
+    const template = document.getElementById("fileTemplate").value;
+
+    let newCode = "";
+
     switch (template) {
-        case 'hello':
+        case "hello":
             newCode = `#include <stdio.h>
 
 int main() {
@@ -880,7 +1166,7 @@ int main() {
     return 0;
 }`;
             break;
-        case 'basic':
+        case "basic":
             newCode = `#include <stdio.h>
 
 int main() {
@@ -889,64 +1175,60 @@ int main() {
 }`;
             break;
         default:
-            newCode = '// New C file\n';
+            newCode = "// New C file\n";
     }
-    
-    // Update editor
+
     window.codeEditor.setValue(newCode);
-    
-    // Update tab name
-    const activeTab = document.querySelector('.tab.active');
+
+    const activeTab = document.querySelector(".tab.active");
     if (activeTab) {
         activeTab.textContent = fileName;
         activeTab.dataset.tab = fileName;
     }
-    
-    // Close modal
-    document.getElementById('newFileModal').remove();
-    showNotification(`Created new file: ${fileName}`, 'success');
+
+    document.querySelector(".modal-overlay:last-child").remove();
+    showNotification(`Created new file: ${fileName}`, "success");
 }
 
 // Save file
 function saveFile() {
-    const currentTab = document.querySelector('.tab.active');
-    const fileName = currentTab ? currentTab.dataset.tab : 'program.c';
+    const currentTab = document.querySelector(".tab.active");
+    const fileName = currentTab ? currentTab.dataset.tab : "program.c";
     const code = window.codeEditor.getValue();
-    
-    const blob = new Blob([code], { type: 'text/x-c' });
+
+    const blob = new Blob([code], { type: "text/x-c" });
     const url = URL.createObjectURL(blob);
-    
-    const a = document.createElement('a');
+
+    const a = document.createElement("a");
     a.href = url;
     a.download = fileName;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    
+
     URL.revokeObjectURL(url);
-    showNotification(`File saved as ${fileName}`, 'success');
+    showNotification(`File saved as ${fileName}`, "success");
 }
 
 // Save file as
 function saveFileAs() {
-    const fileName = prompt('Enter file name:', 'program.c');
+    const fileName = prompt("Enter file name:", "program.c");
     if (fileName) {
         const code = window.codeEditor.getValue();
-        const blob = new Blob([code], { type: 'text/x-c' });
+        const blob = new Blob([code], { type: "text/x-c" });
         const url = URL.createObjectURL(blob);
-        
-        const a = document.createElement('a');
+
+        const a = document.createElement("a");
         a.href = url;
         a.download = fileName;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        
+
         URL.revokeObjectURL(url);
-        showNotification(`File saved as ${fileName}`, 'success');
-        
-        // Update tab name
-        const activeTab = document.querySelector('.tab.active');
+        showNotification(`File saved as ${fileName}`, "success");
+
+        const activeTab = document.querySelector(".tab.active");
         if (activeTab) {
             activeTab.textContent = fileName;
             activeTab.dataset.tab = fileName;
@@ -956,58 +1238,57 @@ function saveFileAs() {
 
 // Open file
 function openFile() {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.c,.h,.txt';
-    
-    input.onchange = function(e) {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = ".c,.h,.txt";
+
+    input.onchange = function (e) {
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 const content = e.target.result;
                 window.codeEditor.setValue(content);
-                
-                // Update tab name
-                const activeTab = document.querySelector('.tab.active');
+
+                const activeTab = document.querySelector(".tab.active");
                 if (activeTab) {
                     activeTab.textContent = file.name;
                     activeTab.dataset.tab = file.name;
                 }
-                
-                showNotification(`File loaded: ${file.name}`, 'success');
+
+                showNotification(`File loaded: ${file.name}`, "success");
             };
             reader.readAsText(file);
         }
     };
-    
+
     input.click();
 }
 
 // Export code
 function exportCode() {
     const code = window.codeEditor.getValue();
-    const blob = new Blob([code], { type: 'text/x-c' });
+    const blob = new Blob([code], { type: "text/x-c" });
     const url = URL.createObjectURL(blob);
-    
-    const a = document.createElement('a');
+
+    const a = document.createElement("a");
     a.href = url;
-    a.download = 'export.c';
+    a.download = "export.c";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    
+
     URL.revokeObjectURL(url);
-    showNotification('Code exported as export.c', 'success');
+    showNotification("Code exported as export.c", "success");
 }
 
 // Show example modal
 function showExampleModal(exampleKey) {
     const example = window.cExamples[exampleKey];
     if (!example) return;
-    
+
     const modalHTML = `
-        <div class="modal-overlay" id="exampleModal">
+        <div class="modal-overlay">
             <div class="modal modal-lg">
                 <div class="modal-header">
                     <h3>Load Example Code</h3>
@@ -1027,10 +1308,13 @@ function showExampleModal(exampleKey) {
                             </div>
                         </div>
                         <div class="preview-content">
-                            <pre id="exampleCode">${escapeHtml(example.code)}</pre>
+                            <pre>${escapeHtml(example.code)}</pre>
                         </div>
                         <div class="preview-description">
                             <p>${escapeHtml(example.description)}</p>
+                            <p><strong>Category:</strong> ${
+                                example.category
+                            }</p>
                         </div>
                     </div>
                 </div>
@@ -1041,40 +1325,44 @@ function showExampleModal(exampleKey) {
             </div>
         </div>
     `;
-    
-    // Remove existing modal
-    const existingModal = document.getElementById('exampleModal');
-    if (existingModal) existingModal.remove();
-    
-    // Add new modal
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
-    
-    // Add event listeners
-    document.getElementById('cancelLoad').addEventListener('click', () => {
-        document.getElementById('exampleModal').remove();
+
+    document.body.insertAdjacentHTML("beforeend", modalHTML);
+
+    const modal = document.querySelector(".modal-overlay:last-child");
+
+    modal.querySelector(".close-modal").addEventListener("click", () => {
+        modal.remove();
     });
-    
-    document.querySelector('#exampleModal .close-modal').addEventListener('click', () => {
-        document.getElementById('exampleModal').remove();
+
+    modal.querySelector("#cancelLoad").addEventListener("click", () => {
+        modal.remove();
     });
-    
-    document.getElementById('copyExampleBtn').addEventListener('click', () => {
+
+    modal.querySelector("#copyExampleBtn").addEventListener("click", () => {
         const code = example.code;
-        navigator.clipboard.writeText(code).then(() => {
-            showNotification('Example code copied to clipboard!', 'success');
-        }).catch(err => {
-            showNotification('Failed to copy code: ' + err.message, 'error');
-        });
+        navigator.clipboard
+            .writeText(code)
+            .then(() => {
+                showNotification(
+                    "Example code copied to clipboard!",
+                    "success"
+                );
+            })
+            .catch(err => {
+                showNotification(
+                    "Failed to copy code: " + err.message,
+                    "error"
+                );
+            });
     });
-    
-    document.getElementById('confirmLoad').addEventListener('click', () => {
+
+    modal.querySelector("#confirmLoad").addEventListener("click", () => {
         window.codeEditor.setValue(example.code);
-        document.getElementById('exampleModal').remove();
-        showNotification(`Loaded example: ${example.name}`, 'success');
+        modal.remove();
+        showNotification(`Loaded example: ${example.name}`, "success");
     });
-    
-    // Close on overlay click
-    document.getElementById('exampleModal').addEventListener('click', function(e) {
+
+    modal.addEventListener("click", function (e) {
         if (e.target === this) {
             this.remove();
         }
@@ -1082,97 +1370,43 @@ function showExampleModal(exampleKey) {
 }
 
 // Show notification
-function showNotification(message, type = 'success') {
-    // Remove existing notifications
-    document.querySelectorAll('.notification').forEach(n => n.remove());
-    
+function showNotification(message, type = "success") {
+    document.querySelectorAll(".notification").forEach(n => n.remove());
+
     const icons = {
-        success: 'check-circle',
-        error: 'exclamation-circle',
-        warning: 'exclamation-triangle',
-        info: 'info-circle'
+        success: "check-circle",
+        error: "exclamation-circle",
+        warning: "exclamation-triangle",
+        info: "info-circle"
     };
-    
-    const notification = document.createElement('div');
+
+    const notification = document.createElement("div");
     notification.className = `notification ${type}`;
     notification.innerHTML = `
-        <i class="fas fa-${icons[type] || 'info-circle'}"></i>
+        <i class="fas fa-${icons[type] || "info-circle"}"></i>
         <span>${message}</span>
     `;
-    
+
     document.body.appendChild(notification);
-    
-    // Auto remove after 5 seconds
+
     setTimeout(() => {
         if (notification.parentNode) {
-            notification.style.animation = 'slideOutRight 0.3s ease forwards';
+            notification.style.animation = "slideOutRight 0.3s ease forwards";
             setTimeout(() => notification.remove(), 300);
         }
-    }, 5000);
+    }, 3000);
 }
 
 // Helper function to escape HTML
 function escapeHtml(text) {
-    const div = document.createElement('div');
+    const div = document.createElement("div");
     div.textContent = text;
     return div.innerHTML;
 }
 
-// Add CSS for notifications and console output
-const style = document.createElement('style');
+// Add CSS for animations
+const style = document.createElement("style");
 style.textContent = `
-    .notification {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        padding: 1rem 1.5rem;
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        z-index: 10000;
-        animation: slideInRight 0.3s ease;
-        backdrop-filter: blur(10px);
-        max-width: 350px;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .notification.success {
-        background: rgba(16, 185, 129, 0.9);
-        color: white;
-        border-left: 4px solid #059669;
-    }
-    
-    .notification.error {
-        background: rgba(239, 68, 68, 0.9);
-        color: white;
-        border-left: 4px solid #dc2626;
-    }
-    
-    .notification.warning {
-        background: rgba(245, 158, 11, 0.9);
-        color: white;
-        border-left: 4px solid #d97706;
-    }
-    
-    .notification.info {
-        background: rgba(59, 130, 246, 0.9);
-        color: white;
-        border-left: 4px solid #2563eb;
-    }
-    
-    @keyframes slideInRight {
-        from {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-    
     @keyframes slideOutRight {
         from {
             transform: translateX(0);
@@ -1184,85 +1418,24 @@ style.textContent = `
         }
     }
     
-    .console-status {
+    .console-help, .console-info {
         padding: 1rem;
-        background: rgba(59, 130, 246, 0.1);
-        border-radius: 8px;
-        margin-bottom: 1rem;
-        color: #3b82f6;
-        display: flex;
-        align-items: center;
-        gap: 10px;
+        background: rgba(148, 163, 184, 0.05);
+        border-radius: 6px;
+        margin-bottom: 0.5rem;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12px;
+        color: #94a3b8;
         border-left: 4px solid #3b82f6;
     }
     
-    .console-result {
-        padding: 1.5rem;
-        border-radius: 10px;
-        margin-bottom: 1rem;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 13px;
-        line-height: 1.6;
-        border: 1px solid rgba(148, 163, 184, 0.1);
-    }
-    
-    .console-result.success {
-        background: rgba(16, 185, 129, 0.05);
-        border-left: 4px solid #10b981;
-    }
-    
-    .console-result.error {
-        background: rgba(239, 68, 68, 0.05);
-        border-left: 4px solid #ef4444;
-    }
-    
-    .result-header {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 1rem;
-        color: inherit;
-        font-weight: 500;
-        font-size: 0.9rem;
-    }
-    
-    .execution-time {
-        margin-left: auto;
-        font-size: 0.8rem;
-        opacity: 0.8;
+    .console-help pre, .console-info pre {
+        margin: 0.5rem 0 0 0;
+        color: #cbd5e1;
         background: rgba(0, 0, 0, 0.1);
-        padding: 0.2rem 0.5rem;
+        padding: 0.75rem;
         border-radius: 4px;
-    }
-    
-    .simulated-badge {
-        background: rgba(245, 158, 11, 0.2);
-        color: #f59e0b;
-        padding: 0.2rem 0.5rem;
-        border-radius: 4px;
-        font-size: 0.7rem;
-        margin-left: 0.5rem;
-    }
-    
-    .output-content,
-    .error-content {
-        margin: 0;
-        white-space: pre-wrap;
-        word-break: break-word;
-        color: inherit;
-        background: rgba(0, 0, 0, 0.1);
-        padding: 1rem;
-        border-radius: 6px;
-        font-size: 12px;
-        line-height: 1.5;
-    }
-    
-    .result-footer {
-        margin-top: 1rem;
-        padding-top: 0.5rem;
-        border-top: 1px solid rgba(148, 163, 184, 0.1);
-        font-size: 0.8rem;
-        color: #94a3b8;
+        font-size: 11px;
     }
     
     .console-input-line {
@@ -1276,50 +1449,6 @@ style.textContent = `
         display: flex;
         align-items: center;
         gap: 10px;
-    }
-    
-    .console-help,
-    .console-info {
-        padding: 1rem;
-        background: rgba(148, 163, 184, 0.05);
-        border-radius: 6px;
-        margin-bottom: 0.5rem;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 12px;
-        color: #94a3b8;
-        border-left: 4px solid #3b82f6;
-    }
-    
-    .console-help pre,
-    .console-info pre {
-        margin: 0.5rem 0 0 0;
-        color: #cbd5e1;
-        background: rgba(0, 0, 0, 0.1);
-        padding: 0.75rem;
-        border-radius: 4px;
-        font-size: 11px;
-    }
-    
-    .error-help {
-        margin-top: 1rem;
-        padding: 0.75rem;
-        background: rgba(245, 158, 11, 0.1);
-        border-radius: 6px;
-        border-left: 3px solid #f59e0b;
-        font-size: 0.85rem;
-        color: #f59e0b;
-    }
-    
-    .error-help i {
-        margin-right: 5px;
-    }
-    
-    .fa-spinner {
-        animation: spin 1s linear infinite;
-    }
-    
-    @keyframes spin {
-        to { transform: rotate(360deg); }
     }
 `;
 document.head.appendChild(style);

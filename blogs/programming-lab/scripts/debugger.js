@@ -1,515 +1,337 @@
-// Debugger functionality for IDE
+// debugger.js - Enhanced debugger with breakpoints and step execution
+
 class CodeDebugger {
     constructor(options = {}) {
-        this.options = {
-            editor: null,
-            output: null,
-            breakpoints: [],
-            currentLine: 0,
-            isRunning: false,
-            isPaused: false,
-            variables: {},
-            callStack: [],
-            ...options
-        };
-        
+        this.editor = options.editor;
+        this.output = options.output;
         this.breakpoints = new Set();
+        this.isDebugging = false;
+        this.currentLine = 0;
+        this.codeLines = [];
         this.variables = new Map();
         this.callStack = [];
-        this.watchExpressions = new Set();
         
         this.init();
     }
     
     init() {
-        // Initialize breakpoint gutter
-        this.initBreakpointGutter();
-        
-        // Initialize debug controls
-        this.initControls();
-        
-        // Initialize variable watcher
-        this.initVariableWatcher();
+        this.setupGutterClick();
+        this.setupDebugStyles();
     }
     
-    initBreakpointGutter() {
-        if (!this.options.editor) return;
+    setupGutterClick() {
+        if (!this.editor) return;
         
-        // Add breakpoint gutter to editor
-        this.options.editor.on('gutterClick', (cm, line, gutter, clickEvent) => {
-            if (gutter === 'CodeMirror-gutter-breakpoints') {
+        // Add gutter for breakpoints
+        this.editor.setOption('gutters', [
+            'CodeMirror-linenumbers',
+            'breakpoints',
+            'CodeMirror-foldgutter'
+        ]);
+        
+        // Handle gutter clicks
+        this.editor.on('gutterClick', (cm, line, gutter) => {
+            if (gutter === 'breakpoints') {
                 this.toggleBreakpoint(line);
             }
         });
     }
     
-    initControls() {
-        // Debug controls will be added to the UI
-        this.controls = {
-            stepOver: () => this.stepOver(),
-            stepInto: () => this.stepInto(),
-            stepOut: () => this.stepOut(),
-            continue: () => this.continue(),
-            pause: () => this.pause(),
-            stop: () => this.stop()
-        };
-    }
-    
-    initVariableWatcher() {
-        // Create variable watch panel
-        this.variableWatcher = document.createElement('div');
-        this.variableWatcher.className = 'variable-watcher';
-        this.variableWatcher.innerHTML = `
-            <h4>Variables</h4>
-            <div class="variables-list"></div>
-            <div class="add-watch">
-                <input type="text" placeholder="Add expression to watch...">
-                <button>Add</button>
-            </div>
+    setupDebugStyles() {
+        const style = document.createElement('style');
+        style.textContent = `
+            .CodeMirror-gutter-breakpoints {
+                width: 20px;
+            }
+            
+            .breakpoint {
+                color: #ef4444;
+                cursor: pointer;
+                font-size: 16px;
+                line-height: 16px;
+                text-align: center;
+            }
+            
+            .breakpoint::before {
+                content: "●";
+            }
+            
+            .current-line {
+                background-color: rgba(245, 158, 11, 0.2) !important;
+            }
+            
+            .breakpoint-line {
+                background-color: rgba(239, 68, 68, 0.1) !important;
+            }
+            
+            .debug-info {
+                padding: 8px;
+                margin: 4px 0;
+                background: rgba(59, 130, 246, 0.1);
+                border-left: 3px solid #3b82f6;
+                border-radius: 4px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 12px;
+            }
+            
+            .debug-warning {
+                background: rgba(245, 158, 11, 0.1);
+                border-left-color: #f59e0b;
+            }
+            
+            .debug-error {
+                background: rgba(239, 68, 68, 0.1);
+                border-left-color: #ef4444;
+            }
+            
+            .debug-success {
+                background: rgba(16, 185, 129, 0.1);
+                border-left-color: #10b981;
+            }
+            
+            .variable-watch {
+                display: flex;
+                justify-content: space-between;
+                padding: 4px 8px;
+                background: rgba(148, 163, 184, 0.1);
+                border-radius: 4px;
+                margin: 2px 0;
+                font-size: 11px;
+            }
+            
+            .variable-name {
+                color: #cbd5e1;
+                font-weight: 500;
+            }
+            
+            .variable-value {
+                color: #10b981;
+                font-family: 'JetBrains Mono', monospace;
+            }
         `;
+        document.head.appendChild(style);
     }
     
-    // Breakpoint management
     toggleBreakpoint(line) {
         if (this.breakpoints.has(line)) {
-            this.removeBreakpoint(line);
+            this.breakpoints.delete(line);
+            this.editor.removeLineClass(line, 'background', 'breakpoint-line');
+            this.log(`Breakpoint removed at line ${line + 1}`, 'info');
         } else {
-            this.addBreakpoint(line);
+            this.breakpoints.add(line);
+            this.editor.addLineClass(line, 'background', 'breakpoint-line');
+            this.log(`Breakpoint set at line ${line + 1}`, 'info');
+        }
+        
+        // Update gutter
+        const info = this.editor.lineInfo(line);
+        if (info.gutterMarkers) {
+            delete info.gutterMarkers.breakpoints;
+        } else {
+            const marker = document.createElement('div');
+            marker.className = 'breakpoint';
+            this.editor.setGutterMarker(line, 'breakpoints', marker);
         }
     }
     
-    addBreakpoint(line) {
-        this.breakpoints.add(line);
-        this.highlightBreakpoint(line);
-        this.saveBreakpoints();
-    }
-    
-    removeBreakpoint(line) {
-        this.breakpoints.delete(line);
-        this.removeHighlight(line);
-        this.saveBreakpoints();
-    }
-    
-    highlightBreakpoint(line) {
-        if (!this.options.editor) return;
+    startDebugging(code) {
+        if (!code || !this.output) return false;
         
-        // Add breakpoint marker in gutter
-        const marker = document.createElement('div');
-        marker.className = 'breakpoint-marker';
-        marker.innerHTML = '●';
-        marker.style.color = '#ef4444';
-        marker.style.fontSize = '12px';
-        
-        this.options.editor.setGutterMarker(line, 'breakpoints', marker);
-    }
-    
-    removeHighlight(line) {
-        if (!this.options.editor) return;
-        this.options.editor.setGutterMarker(line, 'breakpoints', null);
-    }
-    
-    // Debug execution
-    async startDebugging(code) {
-        if (!code || this.isRunning) return;
-        
-        this.isRunning = true;
-        this.isPaused = false;
+        this.isDebugging = true;
         this.currentLine = 0;
+        this.codeLines = code.split('\n');
         this.variables.clear();
         this.callStack = [];
         
-        // Parse code into lines
-        this.codeLines = code.split('\n');
+        this.clearOutput();
+        this.log('=== Debugging Session Started ===', 'info');
+        this.log(`Total lines: ${this.codeLines.length}`, 'info');
+        this.log(`Breakpoints: ${this.breakpoints.size}`, 'info');
+        this.log('Commands: step, continue, stop, watch <var>', 'info');
         
-        // Clear output
-        if (this.options.output) {
-            this.options.output.innerHTML = '<div class="debug-start">Debugging started...</div>';
-        }
-        
-        // Run until first breakpoint or end
-        await this.run();
-    }
-    
-    async run() {
-        while (this.isRunning && this.currentLine < this.codeLines.length) {
-            // Check for breakpoints
-            if (this.breakpoints.has(this.currentLine)) {
-                this.pauseAtLine(this.currentLine);
-                await this.waitForContinue();
-            }
-            
-            // Execute current line
-            await this.executeLine(this.codeLines[this.currentLine]);
-            
-            // Move to next line
-            this.currentLine++;
-            
-            // Small delay for visualization
-            if (this.isRunning) {
-                await this.delay(100);
-            }
-        }
-        
-        if (this.isRunning) {
-            this.stop();
-            this.log('Debugging finished');
-        }
-    }
-    
-    async executeLine(line) {
-        // Highlight current line
+        // Highlight first line
         this.highlightCurrentLine();
         
-        // Log execution
-        this.log(`Executing line ${this.currentLine + 1}: ${line.trim()}`);
+        return true;
+    }
+    
+    step() {
+        if (!this.isDebugging || this.currentLine >= this.codeLines.length) {
+            this.stop();
+            return;
+        }
         
-        try {
-            // Parse and execute line
-            const result = this.parseLine(line);
-            
-            // Update variables
-            if (result.variable) {
-                this.variables.set(result.variable.name, result.variable.value);
-                this.updateVariableDisplay();
+        // Check for breakpoint
+        if (this.breakpoints.has(this.currentLine)) {
+            this.log(`⏸️ Breakpoint hit at line ${this.currentLine + 1}`, 'warning');
+            this.displayVariables();
+            return;
+        }
+        
+        const line = this.codeLines[this.currentLine].trim();
+        
+        if (line) {
+            this.log(`→ Line ${this.currentLine + 1}: ${line}`, 'info');
+            this.executeLine(line);
+        }
+        
+        // Move to next line
+        this.clearHighlight();
+        this.currentLine++;
+        
+        if (this.currentLine < this.codeLines.length) {
+            this.highlightCurrentLine();
+        } else {
+            this.log('✅ Program execution completed', 'success');
+            this.stop();
+        }
+    }
+    
+    executeLine(line) {
+        // Simple line execution simulation
+        if (line.includes('int ') && line.includes('=')) {
+            // Variable declaration
+            const match = line.match(/(int|float|double|char)\s+(\w+)\s*=\s*(.+);/);
+            if (match) {
+                const [, type, name, value] = match;
+                this.variables.set(name, { type, value: this.evaluateExpression(value) });
+                this.log(`  Declared ${type} ${name} = ${this.variables.get(name).value}`, 'info');
             }
-            
-            // Evaluate expressions
-            if (result.expression) {
-                const value = this.evaluateExpression(result.expression);
-                this.log(`Expression result: ${value}`);
+        } else if (line.includes('=') && !line.includes('int ') && !line.includes('float ') && !line.includes('double ')) {
+            // Variable assignment
+            const match = line.match(/(\w+)\s*=\s*(.+);/);
+            if (match) {
+                const [, name, value] = match;
+                if (this.variables.has(name)) {
+                    const oldValue = this.variables.get(name).value;
+                    this.variables.get(name).value = this.evaluateExpression(value);
+                    this.log(`  ${name} = ${oldValue} → ${this.variables.get(name).value}`, 'info');
+                }
             }
-            
-        } catch (error) {
-            this.log(`Error at line ${this.currentLine + 1}: ${error.message}`, 'error');
+        } else if (line.includes('printf') || line.includes('cout')) {
+            // Output statement
+            this.log(`  Output: ${this.extractOutput(line)}`, 'success');
+        } else if (line.includes('if') || line.includes('for') || line.includes('while')) {
+            // Control structure
+            this.log(`  Control structure evaluated`, 'info');
+        } else if (line.includes('return')) {
+            // Return statement
+            this.log(`  Return statement executed`, 'info');
         }
     }
     
-    parseLine(line) {
-        line = line.trim();
+    evaluateExpression(expr) {
+        // Simple expression evaluation
+        expr = expr.trim().replace(/;$/, '');
         
-        // Remove comments
-        line = line.split('//')[0].trim();
+        // Handle basic arithmetic
+        if (expr.match(/^\d+$/)) return parseInt(expr);
+        if (expr.match(/^\d+\.\d+$/)) return parseFloat(expr);
+        if (expr.match(/^".*"$/)) return expr.slice(1, -1);
+        if (expr.match(/^'.'$/)) return expr[1];
         
-        // Check for variable assignment
-        const varAssignment = line.match(/(?:var|let|const)\s+(\w+)\s*=\s*(.+)/);
-        if (varAssignment) {
-            return {
-                type: 'assignment',
-                variable: {
-                    name: varAssignment[1],
-                    value: this.evaluateExpression(varAssignment[2])
-                }
-            };
+        // Handle variable references
+        if (this.variables.has(expr)) {
+            return this.variables.get(expr).value;
         }
         
-        // Check for reassignment
-        const reassignment = line.match(/(\w+)\s*=\s*(.+)/);
-        if (reassignment && this.variables.has(reassignment[1])) {
-            return {
-                type: 'reassignment',
-                variable: {
-                    name: reassignment[1],
-                    value: this.evaluateExpression(reassignment[2])
-                }
-            };
-        }
-        
-        // Check for function call
-        const functionCall = line.match(/(\w+)\((.*)\)/);
-        if (functionCall) {
-            return {
-                type: 'function',
-                expression: line
-            };
-        }
-        
-        // Check for console.log
-        if (line.includes('console.log')) {
-            return {
-                type: 'log',
-                expression: line
-            };
-        }
-        
-        return {
-            type: 'expression',
-            expression: line
-        };
+        return expr;
     }
     
-    evaluateExpression(expression) {
-        // Create a safe evaluation context
-        const context = {
-            console: {
-                log: (...args) => {
-                    this.log(args.join(' '));
-                }
-            },
-            Math: Math,
-            Date: Date,
-            JSON: JSON,
-            ...Object.fromEntries(this.variables)
-        };
-        
-        // Wrap in try-catch for safety
-        try {
-            // Use Function constructor for safe evaluation
-            const func = new Function(...Object.keys(context), `return ${expression}`);
-            return func(...Object.values(context));
-        } catch (error) {
-            throw new Error(`Evaluation error: ${error.message}`);
+    extractOutput(line) {
+        // Extract string from printf/cout
+        const stringMatch = line.match(/"([^"]+)"/);
+        if (stringMatch) {
+            return stringMatch[1].replace(/\\n/g, '\n').replace(/\\t/g, '\t');
         }
-    }
-    
-    // Debug controls
-    stepOver() {
-        if (this.isPaused) {
-            this.isPaused = false;
-            this.resume();
-        }
-    }
-    
-    stepInto() {
-        if (this.isPaused) {
-            // For simple debugger, stepInto is same as stepOver
-            this.stepOver();
-        }
-    }
-    
-    stepOut() {
-        if (this.isPaused) {
-            // Continue to next breakpoint or end
-            this.isPaused = false;
-            this.resume();
-        }
+        return "Output generated";
     }
     
     continue() {
-        if (this.isPaused) {
-            this.isPaused = false;
-            this.resume();
-        }
-    }
-    
-    pause() {
-        if (this.isRunning && !this.isPaused) {
-            this.isPaused = true;
-            this.pauseAtLine(this.currentLine);
+        if (!this.isDebugging) return;
+        
+        this.log('▶️ Continuing execution...', 'info');
+        
+        while (this.isDebugging && this.currentLine < this.codeLines.length) {
+            if (this.breakpoints.has(this.currentLine)) {
+                this.log(`⏸️ Breakpoint reached at line ${this.currentLine + 1}`, 'warning');
+                this.highlightCurrentLine();
+                this.displayVariables();
+                break;
+            }
+            
+            this.step();
+            
+            // Small delay for animation
+            if (this.isDebugging) {
+                setTimeout(() => {}, 100);
+            }
         }
     }
     
     stop() {
-        this.isRunning = false;
-        this.isPaused = false;
-        this.clearHighlights();
-        this.log('Debugging stopped');
-    }
-    
-    // Internal methods
-    pauseAtLine(line) {
-        this.isPaused = true;
-        this.highlightCurrentLine();
-        this.log(`Paused at line ${line + 1}`);
-        this.updateControls();
+        this.isDebugging = false;
+        this.clearHighlight();
+        this.log('🛑 Debugging session stopped', 'info');
     }
     
     highlightCurrentLine() {
-        if (!this.options.editor) return;
-        
-        // Clear previous highlights
-        this.clearHighlights();
-        
-        // Add highlight to current line
-        this.currentLineMarker = this.options.editor.markText(
-            { line: this.currentLine, ch: 0 },
-            { line: this.currentLine + 1, ch: 0 },
-            { className: 'current-line' }
-        );
-        
-        // Scroll to line
-        this.options.editor.scrollIntoView(
-            { line: this.currentLine, ch: 0 },
-            100
-        );
-    }
-    
-    clearHighlights() {
-        if (this.currentLineMarker) {
-            this.currentLineMarker.clear();
+        if (this.editor) {
+            this.editor.addLineClass(this.currentLine, 'background', 'current-line');
         }
     }
     
-    async waitForContinue() {
-        return new Promise(resolve => {
-            this.continueResolve = resolve;
-        });
-    }
-    
-    resume() {
-        if (this.continueResolve) {
-            this.continueResolve();
-            this.continueResolve = null;
+    clearHighlight() {
+        if (this.editor && this.currentLine < this.codeLines.length) {
+            this.editor.removeLineClass(this.currentLine, 'background', 'current-line');
         }
     }
     
-    async delay(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-    
-    // UI updates
-    updateControls() {
-        const controls = document.querySelector('.debug-controls');
-        if (!controls) return;
+    displayVariables() {
+        if (this.variables.size === 0) return;
         
-        const buttons = controls.querySelectorAll('button');
-        buttons.forEach(btn => {
-            const action = btn.dataset.action;
-            if (action) {
-                btn.disabled = !this.isRunning;
-                
-                if (this.isPaused) {
-                    // Enable step controls when paused
-                    if (['step-over', 'step-into', 'step-out', 'continue'].includes(action)) {
-                        btn.disabled = false;
-                    }
-                }
-            }
-        });
-    }
-    
-    updateVariableDisplay() {
-        const varList = document.querySelector('.variables-list');
-        if (!varList) return;
-        
-        varList.innerHTML = '';
+        const varDiv = document.createElement('div');
+        varDiv.className = 'debug-info';
+        varDiv.innerHTML = '<strong>Variables:</strong>';
         
         this.variables.forEach((value, name) => {
-            const item = document.createElement('div');
-            item.className = 'variable-item';
-            item.innerHTML = `
-                <span class="var-name">${name}</span>
-                <span class="var-value">${JSON.stringify(value)}</span>
+            const varEl = document.createElement('div');
+            varEl.className = 'variable-watch';
+            varEl.innerHTML = `
+                <span class="variable-name">${name}</span>
+                <span class="variable-value">${value.value} (${value.type})</span>
             `;
-            varList.appendChild(item);
+            varDiv.appendChild(varEl);
         });
+        
+        this.output.appendChild(varDiv);
     }
     
     log(message, type = 'info') {
-        if (!this.options.output) return;
+        if (!this.output) return;
         
-        const logEntry = document.createElement('div');
-        logEntry.className = `debug-log debug-${type}`;
-        logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
-        
-        this.options.output.appendChild(logEntry);
-        this.options.output.scrollTop = this.options.output.scrollHeight;
+        const div = document.createElement('div');
+        div.className = `debug-info debug-${type}`;
+        div.textContent = message;
+        this.output.appendChild(div);
+        this.output.scrollTop = this.output.scrollHeight;
     }
     
-    // Persistence
-    saveBreakpoints() {
-        const breakpoints = Array.from(this.breakpoints);
-        try {
-            localStorage.setItem('debugger-breakpoints', JSON.stringify(breakpoints));
-        } catch (e) {
-            console.warn('Failed to save breakpoints:', e);
+    clearOutput() {
+        if (this.output) {
+            this.output.innerHTML = '';
         }
     }
     
-    loadBreakpoints() {
-        try {
-            const saved = localStorage.getItem('debugger-breakpoints');
-            if (saved) {
-                const breakpoints = JSON.parse(saved);
-                breakpoints.forEach(line => {
-                    this.addBreakpoint(line);
-                });
-            }
-        } catch (e) {
-            console.warn('Failed to load breakpoints:', e);
-        }
-    }
-    
-    // Watch expressions
-    addWatchExpression(expression) {
-        this.watchExpressions.add(expression);
-        this.updateWatchDisplay();
-    }
-    
-    removeWatchExpression(expression) {
-        this.watchExpressions.delete(expression);
-        this.updateWatchDisplay();
-    }
-    
-    updateWatchDisplay() {
-        const watchList = document.querySelector('.watch-list');
-        if (!watchList) return;
-        
-        watchList.innerHTML = '';
-        
-        this.watchExpressions.forEach(expression => {
-            try {
-                const value = this.evaluateExpression(expression);
-                const item = document.createElement('div');
-                item.className = 'watch-item';
-                item.innerHTML = `
-                    <span class="watch-expression">${expression}</span>
-                    <span class="watch-value">${JSON.stringify(value)}</span>
-                    <button class="remove-watch" data-expression="${expression}">×</button>
-                `;
-                watchList.appendChild(item);
-            } catch (error) {
-                // Skip invalid expressions
-            }
-        });
-    }
-    
-    // Export for external use
-    getState() {
-        return {
-            isRunning: this.isRunning,
-            isPaused: this.isPaused,
-            currentLine: this.currentLine,
-            breakpoints: Array.from(this.breakpoints),
-            variables: Object.fromEntries(this.variables),
-            callStack: [...this.callStack]
-        };
-    }
-    
-    setState(state) {
-        if (state.breakpoints) {
-            this.breakpoints = new Set(state.breakpoints);
-        }
-        if (state.variables) {
-            this.variables = new Map(Object.entries(state.variables));
-        }
-        if (state.currentLine !== undefined) {
-            this.currentLine = state.currentLine;
+    watchVariable(name) {
+        if (this.variables.has(name)) {
+            const value = this.variables.get(name);
+            this.log(`👀 Watching ${name}: ${value.value} (${value.type})`, 'info');
+        } else {
+            this.log(`Variable "${name}" not found`, 'error');
         }
     }
 }
 
-// Initialize debugger when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    window.codeDebugger = new CodeDebugger({
-        editor: window.codeEditor,
-        output: document.getElementById('consoleOutput')
-    });
-    
-    // Load saved breakpoints
-    window.codeDebugger.loadBreakpoints();
-    
-    // Add debug control event listeners
-    document.querySelectorAll('[data-debug-action]').forEach(button => {
-        button.addEventListener('click', () => {
-            const action = button.dataset.debugAction;
-            if (window.codeDebugger[action]) {
-                window.codeDebugger[action]();
-            }
-        });
-    });
-});
-
-// Export for module systems
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = CodeDebugger;
-}
+// Make globally available
+window.CodeDebugger = CodeDebugger;

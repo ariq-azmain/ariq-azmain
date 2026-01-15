@@ -16,147 +16,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/fold/foldgutter.min.css">
     
     <!-- CSS Files -->
-    <link rel="stylesheet" href="../../../styles/lab-main.css">
-    <link rel="stylesheet" href="../../../styles/lab-animations.css">
+    <link rel="stylesheet" href="../../../styles/main.css">
+    <link rel="stylesheet" href="../../../styles/animations.css">
     <link rel="stylesheet" href="style.css">
-    
-    <style>
-        /* C++ Specific Animation Timeline Effects */
-        
-        /* Animation Timeline Example 1: Editor Slide In */
-        .code-editor-container {
-            animation: editorSlideIn linear both;
-            animation-timeline: view();
-            animation-range: entry 0% cover 30%;
-        }
-        
-        @keyframes editorSlideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        /* Animation Timeline Example 2: Console Fade In */
-        .console-panel {
-            animation: consoleFadeIn linear both;
-            animation-timeline: view();
-            animation-range: entry 10% cover 40%;
-        }
-        
-        @keyframes consoleFadeIn {
-            from {
-                opacity: 0;
-                filter: blur(10px);
-            }
-            to {
-                opacity: 1;
-                filter: blur(0);
-            }
-        }
-        
-        /* Animation Timeline Example 3: Button Scale */
-        .btn-run {
-            animation: buttonScale linear both;
-            animation-timeline: view();
-            animation-range: entry 0% cover 25%;
-        }
-        
-        @keyframes buttonScale {
-            from {
-                transform: scale(0.8);
-                opacity: 0.5;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-        
-        /* Animation Timeline Example 4: Code Glow */
-        .code-editor {
-            animation: codeGlow linear both;
-            animation-timeline: view();
-            animation-range: entry 0% cover 35%;
-        }
-        
-        @keyframes codeGlow {
-            0%, 100% {
-                box-shadow: 0 0 0 rgba(0, 89, 156, 0);
-            }
-            50% {
-                box-shadow: 0 0 30px rgba(0, 89, 156, 0.3);
-            }
-        }
-        
-        /* Animation Timeline Example 5: Panel Border */
-        .ide-panel {
-            animation: panelBorder linear both;
-            animation-timeline: view();
-            animation-range: entry 0% cover 30%;
-        }
-        
-        @keyframes panelBorder {
-            from {
-                border-color: rgba(148, 163, 184, 0);
-            }
-            to {
-                border-color: rgba(148, 163, 184, 0.1);
-            }
-        }
-        
-        /* Additional Animations */
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0) rotate(0deg);
-            }
-            33% {
-                transform: translateY(-10px) rotate(120deg);
-            }
-            66% {
-                transform: translateY(10px) rotate(240deg);
-            }
-        }
-        
-        .floating-icon {
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        /* Typewriter effect for examples */
-        .typewriter-example {
-            overflow: hidden;
-            border-right: 2px solid #00599c;
-            white-space: nowrap;
-            margin: 0 auto;
-            animation: 
-                typing 3.5s steps(40, end),
-                blink-caret 0.75s step-end infinite;
-        }
-        
-        @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
-        }
-        
-        @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: #00599c }
-        }
-    </style>
 </head>
 <body>
     <!-- Animated Background -->
     <div class="animated-bg">
-        <div class="cpp-particles">
-            <!-- C++ themed particles -->
-            <div class="cpp-particle"></div>
-            <div class="cpp-particle"></div>
-            <div class="cpp-particle"></div>
-        </div>
+        <div class="code-particles"></div>
     </div>
 
     <!-- IDE Container -->
@@ -325,7 +192,7 @@ int main() {
         </div>
 
         <!-- Bottom Panel: Examples and Tools -->
-        <div class="ide-bottom">
+        <div class="ide-bottom" id="ideBottom">
             <div class="panel-header">
                 <div class="panel-tabs">
                     <button class="tab active" data-tab="examples">Examples</button>
@@ -337,6 +204,9 @@ int main() {
                     <input type="text" placeholder="Search examples..." id="exampleSearch">
                     <i class="fas fa-search"></i>
                 </div>
+                <button class="action-btn" id="toggleExamplesBtn" title="Toggle Examples">
+                    <i class="fas fa-chevron-down"></i>
+                </button>
             </div>
             <div class="examples-container" id="examplesContainer">
                 <!-- Examples loaded dynamically -->
@@ -345,41 +215,6 @@ int main() {
 
         <!-- Resizer for Bottom Panel -->
         <div class="panel-resizer horizontal-resizer" id="horizontalResizer"></div>
-    </div>
-
-    <!-- Modals -->
-    <div class="modal-overlay" id="exampleModal">
-        <div class="modal modal-lg">
-            <div class="modal-header">
-                <h3>Load Example Code</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="example-preview" id="examplePreview">
-                    <div class="preview-header">
-                        <div class="preview-title">
-                            <div class="lang-icon cpp small">C++</div>
-                            <h4 id="exampleTitle">Example Title</h4>
-                        </div>
-                        <div class="preview-actions">
-                            <button class="btn btn-sm" id="copyExampleBtn">
-                                <i class="fas fa-copy"></i> Copy
-                            </button>
-                        </div>
-                    </div>
-                    <div class="preview-content">
-                        <pre id="exampleCode"></pre>
-                    </div>
-                    <div class="preview-description">
-                        <p id="exampleDescription">Example description...</p>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" id="cancelLoad">Cancel</button>
-                <button class="btn btn-primary" id="confirmLoad">Load into Editor</button>
-            </div>
-        </div>
     </div>
 
     <!-- JavaScript Files -->
@@ -396,7 +231,7 @@ int main() {
     
     <!-- Our Scripts -->
     <script>
-// Simulated Compiler for C++ Language
+// Improved C++ Compiler with better output handling
 class CppCompiler {
     constructor() {
         this.name = 'C++ Compiler';
@@ -407,37 +242,83 @@ class CppCompiler {
     async execute(code, input = '') {
         return new Promise((resolve) => {
             setTimeout(() => {
-                // C++ কোডের জন্য সিমুলেটেড আউটপুট
                 let output = '';
+                let success = true;
+                let error = null;
                 
-                if (code.includes('cout') && code.includes('Hello')) {
-                    output = 'Hello, C++ World!\n';
-                } else if (code.includes('cin')) {
-                    output = `Input received: ${input}\nProcessed input successfully.\n`;
-                } else if (code.includes('class') || code.includes('object')) {
-                    output = 'Object-oriented program executed successfully.\n';
-                } else if (code.includes('vector') || code.includes('map')) {
-                    output = 'STL containers initialized and used.\n';
-                } else if (code.includes('int main')) {
-                    output = 'C++ program compiled and executed successfully.\n';
-                } else {
-                    output = 'Code executed successfully.\n';
+                try {
+                    // Parse C++ code for output
+                    if (code.includes('cout') || code.includes('std::cout')) {
+                        // Extract text from cout statements
+                        const coutMatches = code.match(/cout\s*<<\s*[^;]+/g) || 
+                                           code.match(/std::cout\s*<<\s*[^;]+/g);
+                        
+                        if (coutMatches) {
+                            coutMatches.forEach(match => {
+                                // Extract quoted strings
+                                const stringMatches = match.match(/"([^"]+)"/g);
+                                if (stringMatches) {
+                                    stringMatches.forEach(str => {
+                                        const cleanStr = str.replace(/"/g, '').replace(/\\n/g, '\n').replace(/\\t/g, '\t');
+                                        output += cleanStr;
+                                    });
+                                }
+                                
+                                // Extract variables and endl
+                                if (match.includes('endl')) {
+                                    output += '\n';
+                                }
+                            });
+                        }
+                        
+                        if (output === '' && code.includes('Hello')) {
+                            output = 'Hello, World!\n';
+                        }
+                    }
+                    
+                    if (code.includes('cin') || code.includes('std::cin')) {
+                        if (input) {
+                            output += `Input received: ${input}\n`;
+                        } else {
+                            output += "Waiting for input...\n";
+                        }
+                    }
+                    
+                    // Check for C++ specific patterns
+                    if (code.includes('class ') || code.includes('struct ')) {
+                        output += "Class/struct defined successfully\n";
+                    }
+                    
+                    if (code.includes('vector<') || code.includes('std::vector')) {
+                        output += "Vector operations completed\n";
+                    }
+                    
+                    if (code.includes('template<')) {
+                        output += "Template instantiated\n";
+                    }
+                    
+                    if (output.trim() === "") {
+                        output = "Program executed successfully (no output)\n";
+                    }
+                    
+                } catch (err) {
+                    success = false;
+                    error = err.message;
+                    output = `Error: ${err.message}\n`;
                 }
-                
-                const executionTime = Math.random() * 150 + 50; // 50-200ms
-                const memoryUsed = Math.random() * 3 + 2; // 2-5MB
+
+                const executionTime = Math.random() * 60 + 30; // 30-90ms
                 
                 resolve({
-                    success: true,
-                    output: `✓ C++ Program Compiled Successfully\n\nOutput:\n${output}\n╔════════════════════════════════════╗\n║ Execution Details                  ║\n╠════════════════════════════════════╣\n║ Time: ${executionTime.toFixed(2)}ms               ║\n║ Memory: ${memoryUsed.toFixed(1)}MB               ║\n║ Status: ✓ Success                 ║\n╚════════════════════════════════════╝`,
-                    error: null,
+                    success: success,
+                    output: output,
+                    error: error,
                     language: 'cpp',
                     timestamp: Date.now(),
-                    executionTime: `${executionTime.toFixed(2)}ms`,
-                    memory: `${memoryUsed.toFixed(1)}MB`,
-                    simulated: false
+                    executionTime: `${executionTime.toFixed(0)}ms`,
+                    simulated: true
                 });
-            }, 1000); // 1 second delay
+            }, 300);
         });
     }
 }
@@ -452,13 +333,13 @@ window.compilerAPI = {
             return await window.cppCompiler.execute(code, input);
         }
         
-        // Fallback for other languages
         return {
             success: true,
             output: `Simulated execution for ${language}\nCode executed successfully.`,
             error: null,
             language,
             timestamp: Date.now(),
+            executionTime: "50ms",
             simulated: true
         };
     }
@@ -466,9 +347,7 @@ window.compilerAPI = {
 
 console.log('C++ Compiler initialized successfully');
 </script>
-    <script src="../../../scripts/resizable.js"></script>
-    <script src="../../../scripts/compiler-api.js"></script>
-    <script src="../../../scripts/debugger.js"></script>
+    
     <script src="script.js"></script>
 </body>
 </html>

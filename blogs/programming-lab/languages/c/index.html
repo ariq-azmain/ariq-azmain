@@ -37,95 +37,6 @@
         <link rel="stylesheet" href="../../../styles/main.css" />
         <link rel="stylesheet" href="../../styles/animations.css" />
         <link rel="stylesheet" href="style.css" />
-
-        <style>
-            /* Animation Timeline Example 1: Code Editor Fade In */
-            .code-editor-container {
-                animation: editorFadeIn linear both;
-                animation-timeline: view();
-                animation-range: entry 0% cover 30%;
-            }
-
-            @keyframes editorFadeIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(20px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-
-            /* Animation Timeline Example 2: Console Slide Up */
-            .console-panel {
-                animation: consoleSlideUp linear both;
-                animation-timeline: view();
-                animation-range: entry 10% cover 40%;
-            }
-
-            @keyframes consoleSlideUp {
-                from {
-                    opacity: 0;
-                    transform: translateY(40px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-
-            /* Animation Timeline Example 3: Examples Scale In */
-            .examples-container {
-                animation: examplesScaleIn linear both;
-                animation-timeline: view();
-                animation-range: entry 20% cover 50%;
-            }
-
-            @keyframes examplesScaleIn {
-                from {
-                    opacity: 0;
-                    transform: scale(0.8);
-                }
-                to {
-                    opacity: 1;
-                    transform: scale(1);
-                }
-            }
-
-            /* Animation Timeline Example 4: Button Pulse */
-            .btn-run {
-                animation: buttonPulse linear both;
-                animation-timeline: view();
-                animation-range: entry 0% cover 25%;
-            }
-
-            @keyframes buttonPulse {
-                0%,
-                100% {
-                    transform: scale(1);
-                }
-                50% {
-                    transform: scale(1.05);
-                }
-            }
-
-            /* Animation Timeline Example 5: Panel Glow */
-            .ide-panel {
-                animation: panelGlow linear both;
-                animation-timeline: view();
-                animation-range: entry 0% cover 35%;
-            }
-
-            @keyframes panelGlow {
-                from {
-                    box-shadow: 0 0 0 rgba(59, 130, 246, 0);
-                }
-                to {
-                    box-shadow: 0 0 30px rgba(59, 130, 246, 0.2);
-                }
-            }
-        </style>
     </head>
     <body>
         <!-- Animated Background -->
@@ -379,7 +290,7 @@ int main() {
             </div>
 
             <!-- Bottom Panel: Examples and Tools -->
-            <div class="ide-bottom">
+            <div class="ide-bottom" id="ideBottom">
                 <div class="panel-header">
                     <div class="panel-tabs">
                         <button class="tab active" data-tab="examples">
@@ -403,6 +314,13 @@ int main() {
                         />
                         <i class="fas fa-search"></i>
                     </div>
+                    <button
+                        class="action-btn"
+                        id="toggleExamplesBtn"
+                        title="Toggle Examples"
+                    >
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
                 </div>
                 <div class="examples-container" id="examplesContainer">
                     <!-- Examples loaded dynamically -->
@@ -414,149 +332,6 @@ int main() {
                 class="panel-resizer horizontal-resizer"
                 id="horizontalResizer"
             ></div>
-        </div>
-
-        <!-- Modals -->
-        <div class="modal-overlay" id="exampleModal">
-            <div class="modal modal-lg">
-                <div class="modal-header">
-                    <h3>Load Example Code</h3>
-                    <button class="close-modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="example-preview" id="examplePreview">
-                        <div class="preview-header">
-                            <div class="preview-title">
-                                <i class="fab fa-c"></i>
-                                <h4 id="exampleTitle">Example Title</h4>
-                            </div>
-                            <div class="preview-actions">
-                                <button class="btn btn-sm" id="copyExampleBtn">
-                                    <i class="fas fa-copy"></i> Copy
-                                </button>
-                            </div>
-                        </div>
-                        <div class="preview-content">
-                            <pre id="exampleCode"></pre>
-                        </div>
-                        <div class="preview-description">
-                            <p id="exampleDescription">
-                                Example description...
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" id="cancelLoad">
-                        Cancel
-                    </button>
-                    <button class="btn btn-primary" id="confirmLoad">
-                        Load into Editor
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- New File Modal -->
-        <div class="modal-overlay" id="newFileModal">
-            <div class="modal">
-                <div class="modal-header">
-                    <h3>Create New File</h3>
-                    <button class="close-modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="fileName">File Name</label>
-                        <input
-                            type="text"
-                            id="fileName"
-                            placeholder="e.g., program.c"
-                            value="main.c"
-                        />
-                    </div>
-                    <div class="form-group">
-                        <label for="fileTemplate">Template</label>
-                        <select id="fileTemplate">
-                            <option value="empty">Empty File</option>
-                            <option value="hello">Hello World</option>
-                            <option value="basic">Basic Structure</option>
-                            <option value="advanced">Advanced Template</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="fileLocation">Save Location</label>
-                        <select id="fileLocation">
-                            <option value="browser">Browser Storage</option>
-                            <option value="download">
-                                Download to Computer
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" id="cancelNewFile">
-                        Cancel
-                    </button>
-                    <button class="btn btn-primary" id="createFile">
-                        Create File
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Save File Modal -->
-        <div class="modal-overlay" id="saveFileModal">
-            <div class="modal">
-                <div class="modal-header">
-                    <h3>Save File</h3>
-                    <button class="close-modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="saveFileName">File Name</label>
-                        <input
-                            type="text"
-                            id="saveFileName"
-                            placeholder="program.c"
-                        />
-                    </div>
-                    <div class="form-group">
-                        <label for="saveLocation">Save Location</label>
-                        <select id="saveLocation">
-                            <option value="browser">Browser Storage</option>
-                            <option value="computer">Computer</option>
-                        </select>
-                    </div>
-                    <div class="save-preview">
-                        <h4>Preview:</h4>
-                        <div class="preview-code" id="savePreview"></div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" id="cancelSave">
-                        Cancel
-                    </button>
-                    <button class="btn btn-primary" id="confirmSave">
-                        Save File
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Upload Images from Internet -->
-        <div class="image-gallery" style="display: none">
-            <img
-                src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
-                alt="Code Background"
-            />
-            <img
-                src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
-                alt="Programming"
-            />
-            <img
-                src="https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
-                alt="Developer"
-            />
         </div>
 
         <!-- JavaScript Files -->
@@ -572,9 +347,8 @@ int main() {
         <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/selection/active-line.min.js"></script>
 
         <!-- Our Scripts -->
-        <!-- compiler-api.js সরাসরি এম্বেড করি -->
         <script>
-            // Simulated Compiler for C Language
+            // Improved C Compiler with better output handling
             class CCompiler {
                 constructor() {
                     this.name = "C Compiler";
@@ -585,58 +359,82 @@ int main() {
                 async execute(code, input = "") {
                     return new Promise(resolve => {
                         setTimeout(() => {
-                            // C কোডের জন্য সিমুলেটেড আউটপুট
+                            // Real execution simulation
                             let output = "";
+                            let error = null;
+                            let success = true;
 
-                            // কোড বিশ্লেষণ করে আউটপুট জেনারেট
-                            if (
-                                code.includes("printf") &&
-                                code.includes("Hello")
-                            ) {
-                                output = "Hello, World!\n";
-                            } else if (code.includes("scanf")) {
-                                output = `Input received: ${input}\nProcessed input successfully.\n`;
-                            } else if (
-                                code.includes("for") ||
-                                code.includes("while")
-                            ) {
-                                output =
-                                    "Loop execution completed successfully.\n";
-                            } else if (
-                                code.includes("if") ||
-                                code.includes("else")
-                            ) {
-                                output = "Conditional logic executed.\n";
-                            } else if (code.includes("int main")) {
-                                output =
-                                    "Program compiled and executed successfully.\n";
-                            } else {
-                                output = "Code executed successfully.\n";
+                            try {
+                                // Parse the code to generate appropriate output
+                                if (code.includes("printf")) {
+                                    // Extract text from printf statements
+                                    const printfMatches = code.match(
+                                        /printf\s*\(\s*"([^"]+)"[^)]*\)/g
+                                    );
+                                    if (printfMatches) {
+                                        printfMatches.forEach(match => {
+                                            const textMatch =
+                                                match.match(/"([^"]+)"/);
+                                            if (textMatch) {
+                                                output +=
+                                                    textMatch[1]
+                                                        .replace(/\\n/g, "\n")
+                                                        .replace(/\\t/g, "\t") +
+                                                    "\n";
+                                            }
+                                        });
+                                    }
+                                }
+
+                                if (code.includes("scanf")) {
+                                    if (input) {
+                                        output += `Input received: ${input}\n`;
+                                    } else {
+                                        output += "Waiting for input...\n";
+                                    }
+                                }
+
+                                // Check for common C patterns
+                                if (
+                                    code.includes("for") ||
+                                    code.includes("while")
+                                ) {
+                                    output += "Loop executed successfully\n";
+                                }
+
+                                if (
+                                    code.includes("if") ||
+                                    code.includes("else")
+                                ) {
+                                    output += "Conditional logic executed\n";
+                                }
+
+                                if (output.trim() === "") {
+                                    output =
+                                        "Program executed successfully (no output)\n";
+                                }
+                            } catch (err) {
+                                success = false;
+                                error = err.message;
+                                output = `Error: ${err.message}\n`;
                             }
 
-                            const executionTime = Math.random() * 100 + 50; // 50-150ms
-                            const memoryUsed = Math.random() * 2 + 1; // 1-3MB
+                            const executionTime = Math.random() * 50 + 20; // 20-70ms
 
                             resolve({
-                                success: true,
-                                output: `✓ C Program Compiled Successfully\n\nOutput:\n${output}\n╔════════════════════════════════════╗\n║ Execution Details                  ║\n╠════════════════════════════════════╣\n║ Time: ${executionTime.toFixed(
-                                    2
-                                )}ms               ║\n║ Memory: ${memoryUsed.toFixed(
-                                    1
-                                )}MB               ║\n║ Status: ✓ Success                 ║\n╚════════════════════════════════════╝`,
-                                error: null,
+                                success: success,
+                                output: output,
+                                error: error,
                                 language: "c",
                                 timestamp: Date.now(),
-                                executionTime: `${executionTime.toFixed(2)}ms`,
-                                memory: `${memoryUsed.toFixed(1)}MB`,
-                                simulated: false
+                                executionTime: `${executionTime.toFixed(0)}ms`,
+                                simulated: true
                             });
-                        }, 800); // 800ms delay for realistic feel
+                        }, 300); // Reduced delay for better UX
                     });
                 }
 
                 formatCode(code) {
-                    // Basic C code formatting
                     let formatted = code
                         .replace(/\s*{\s*/g, " {\n")
                         .replace(/\s*}\s*/g, "\n}\n")
@@ -644,14 +442,11 @@ int main() {
                         .replace(/\n\s*\n/g, "\n")
                         .replace(/^\s+/gm, "");
 
-                    // Add proper indentation
                     let indentLevel = 0;
                     const lines = formatted.split("\n");
                     formatted = lines
                         .map(line => {
                             line = line.trim();
-
-                            // Decrease indent for closing braces
                             if (line.startsWith("}") || line === "};") {
                                 indentLevel = Math.max(0, indentLevel - 1);
                             }
@@ -659,7 +454,6 @@ int main() {
                             const indentedLine =
                                 "    ".repeat(indentLevel) + line;
 
-                            // Increase indent for opening braces
                             if (line.endsWith("{") || line === "{") {
                                 indentLevel++;
                             }
@@ -669,51 +463,6 @@ int main() {
                         .join("\n");
 
                     return formatted;
-                }
-
-                validateCode(code) {
-                    const errors = [];
-                    const warnings = [];
-
-                    // Basic validation
-                    if (!code.includes("int main")) {
-                        warnings.push(
-                            "Main function not found. Program may not execute properly."
-                        );
-                    }
-
-                    if (code.includes("scanf") && !code.includes("&")) {
-                        errors.push(
-                            "scanf requires address-of operator (&) for variables"
-                        );
-                    }
-
-                    if (
-                        code.includes("printf") &&
-                        code.match(/printf\s*\([^)]*\)\s*;/g)?.length > 0
-                    ) {
-                        // Check for missing newline
-                        const printfStatements = code.match(
-                            /printf\s*\([^)]*\)\s*;/g
-                        );
-                        printfStatements?.forEach(stmt => {
-                            if (
-                                !stmt.includes("\\n") &&
-                                !stmt.includes("\\t") &&
-                                !stmt.includes("\\r")
-                            ) {
-                                warnings.push(
-                                    "printf without newline (\\n) may cause output formatting issues"
-                                );
-                            }
-                        });
-                    }
-
-                    return {
-                        isValid: errors.length === 0,
-                        errors,
-                        warnings
-                    };
                 }
             }
 
@@ -725,35 +474,21 @@ int main() {
                 async execute(language, code, input = "", options = {}) {
                     if (language === "c") {
                         return await window.cCompiler.execute(code, input);
-                    } else if (language === "cpp") {
-                        // For C++, use similar simulation
-                        return await window.cCompiler.execute(
-                            code
-                                .replace("iostream", "stdio.h")
-                                .replace("cout", "printf")
-                                .replace("cin", "scanf"),
-                            input
-                        );
                     }
 
-                    // Fallback for other languages
                     return {
                         success: true,
                         output: `Simulated execution for ${language}\nCode executed successfully.`,
                         error: null,
                         language,
                         timestamp: Date.now(),
+                        executionTime: "50ms",
                         simulated: true
                     };
                 }
             };
-
-            console.log("C Compiler initialized successfully");
         </script>
 
-        <!-- Existing scripts -->
-        <script src="../../../scripts/resizable.js"></script>
-        <script src="../../../scripts/debugger.js"></script>
         <script src="script.js"></script>
     </body>
 </html>
